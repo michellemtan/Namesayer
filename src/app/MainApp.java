@@ -1,4 +1,4 @@
-package model;
+package app;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +17,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Name Sayer");
-        Parent root = FXMLLoader.load(getClass().getResource("../resources/Menu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("resources/Menu.fxml"));
         Scene scene = new Scene(root, 800, 500);
         primaryStage.setScene(scene);
         primaryStage.show();

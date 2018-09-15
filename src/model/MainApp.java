@@ -1,9 +1,12 @@
 package model;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class MainApp extends Application {
 
@@ -12,10 +15,10 @@ public class MainApp extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Name Sayer");
-        AnchorPane layout = new AnchorPane();
-        Scene scene = new Scene(layout, 800, 500);
+        Parent root = FXMLLoader.load(getClass().getResource("../resources/Menu.fxml"));
+        Scene scene = new Scene(root, 800, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

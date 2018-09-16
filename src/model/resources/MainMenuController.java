@@ -56,6 +56,7 @@ public class MainMenuController implements Initializable {
             String dbName = dbListview.getSelectionModel().getSelectedItem().toString();
 
             DatabaseParser parser = new DatabaseParser(dbListview.getSelectionModel().getSelectedItem());
+            //TODO: Make this run in background - could be computation heavy task
             parser.parseDB();
         }
     }

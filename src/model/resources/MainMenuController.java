@@ -40,11 +40,8 @@ public class MainMenuController {
     //Code to be run when continue is pressed, changes scene root to be database menu fxml file
     public void continueBtnPressed() throws IOException {
         if(dbListview.getSelectionModel().getSelectedIndex() != -1){
-            System.out.println("1");
             Parent root = FXMLLoader.load(getClass().getResource("DatabaseMenu.fxml"));
-            System.out.println("2");
             continueBtn.getScene().setRoot(root);
-            System.out.println("3");
 
             //The name that should be used in label for DatabaseMenu
             String dbName = dbListview.getSelectionModel().getSelectedItems().toString();

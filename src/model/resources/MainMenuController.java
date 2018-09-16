@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import model.DatabaseParser;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,9 +22,9 @@ public class MainMenuController implements Initializable {
     @FXML private ListView<String> dbListview;
     @FXML private Button continueBtn;
     private Preferences addPref = Preferences.userRoot();
-    private String[] prefKeys;
 
     //Code to be run when add directory button is pressed, opens simple directory chooser and adds selected item to list
+    //TODO: add numbers if added directory has same name as existing directory
     public void addBtnPressed() {
         DirectoryChooser dc = new DirectoryChooser();
         dc.setTitle("Choose database folder");
@@ -31,22 +32,16 @@ public class MainMenuController implements Initializable {
         File selectedDirectory = dc.showDialog(dcStage);
 
         if (selectedDirectory != null) {
-            dbListview.getItems().add(selectedDirectory.getName());
             //Add selected file to preferences to be saved
-            addPref.put(selectedDirectory.getPath(), selectedDirectory.getName());
-
+            dbListview.getItems().add(selectedDirectory.getPath());
+            addPref.put(selectedDirectory.getPath(), selectedDirectory.getPath());
         }
     }
 
     //Code to be run when delete directory is pressed, removes selected directory from directory listview and preferences
     public void deleteBtnPressed() {
         if(dbListview.getSelectionModel().getSelectedIndex() != -1){
-            for(String key : prefKeys) {
-                if(addPref.get(key, "").equals(dbListview.getSelectionModel().getSelectedItem())) {
-                    addPref.remove(key);
-                    System.out.println("Here");
-                }
-            }
+            addPref.remove(dbListview.getSelectionModel().getSelectedItem());
             dbListview.getItems().remove(dbListview.getSelectionModel().getSelectedIndex());
         }
     }
@@ -59,6 +54,9 @@ public class MainMenuController implements Initializable {
 
             //The name that should be used in label for DatabaseMenu
             String dbName = dbListview.getSelectionModel().getSelectedItem().toString();
+
+            DatabaseParser parser = new DatabaseParser(dbListview.getSelectionModel().getSelectedItem());
+            parser.parseDB();
         }
     }
 
@@ -66,7 +64,7 @@ public class MainMenuController implements Initializable {
     //databases and ensures they're still in the listview
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        prefKeys = new String[0];
+        String[] prefKeys = new String[0];
         try {
             prefKeys = addPref.keys();
         } catch (BackingStoreException e) {

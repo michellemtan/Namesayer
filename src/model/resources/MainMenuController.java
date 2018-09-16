@@ -20,7 +20,8 @@ public class MainMenuController implements Initializable {
 
     @FXML private ListView<String> dbListview;
     @FXML private Button continueBtn;
-    private Preferences addPref = Preferences.systemNodeForPackage(MainMenuController.class);
+    private Preferences addPref = Preferences.userRoot();
+    private String[] prefKeys;
 
     //Code to be run when add directory button is pressed, opens simple directory chooser and adds selected item to list
     public void addBtnPressed() {
@@ -37,9 +38,15 @@ public class MainMenuController implements Initializable {
         }
     }
 
-    //Code to be run when delete directory is pressed, removes selected directory from directory listview
+    //Code to be run when delete directory is pressed, removes selected directory from directory listview and preferences
     public void deleteBtnPressed() {
         if(dbListview.getSelectionModel().getSelectedIndex() != -1){
+            for(String key : prefKeys) {
+                if(addPref.get(key, "").equals(dbListview.getSelectionModel().getSelectedItem())) {
+                    addPref.remove(key);
+                    System.out.println("Here");
+                }
+            }
             dbListview.getItems().remove(dbListview.getSelectionModel().getSelectedIndex());
         }
     }
@@ -51,15 +58,15 @@ public class MainMenuController implements Initializable {
             continueBtn.getScene().setRoot(root);
 
             //The name that should be used in label for DatabaseMenu
-            String dbName = dbListview.getSelectionModel().getSelectedItems().toString();
+            String dbName = dbListview.getSelectionModel().getSelectedItem().toString();
         }
     }
 
     //Initialize method is called when the fxml file is loaded, this code just iterates through previously loaded
-    //databases and ensures they're still in the listview. Currently gives me warnings so may edit method in future
+    //databases and ensures they're still in the listview
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String[] prefKeys = new String[0];
+        prefKeys = new String[0];
         try {
             prefKeys = addPref.keys();
         } catch (BackingStoreException e) {
@@ -68,5 +75,12 @@ public class MainMenuController implements Initializable {
         for(String key : prefKeys) {
             dbListview.getItems().add(addPref.get(key, key));
         }
+
+        //Code to clear preferences
+        /*try {
+            addPref.clear();
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
+        }*/
     }
 }

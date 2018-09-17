@@ -65,4 +65,8 @@ public class DatabaseProcessor {
     //TODO: trim silence and normalise volume and then add to tree view in database menu.
     //TODO: fix onJonothan
     //ffmpeg -y -i path/to/in.wav -af silenceremove=1:0:-35dB path/to/out.wav for removing silence
+
 }
+
+
+

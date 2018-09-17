@@ -1,11 +1,16 @@
 package model.resources;
 
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import model.DatabaseProcessor;
@@ -21,7 +26,10 @@ public class MainMenuController implements Initializable {
 
     @FXML private ListView<String> dbListview;
     @FXML private Button continueBtn;
+    @FXML private ProgressBar progressBar;
     private Preferences addPref = Preferences.userRoot();
+    private Stage progressStage;
+    private TaskService service;
 
     //Code to be run when add directory button is pressed, opens simple directory chooser and adds selected item to list
     //TODO: instead of directory path make directory name displayed, and implement numbers for matching name dirs. Possibly
@@ -48,18 +56,12 @@ public class MainMenuController implements Initializable {
     }
 
     //Code to be run when continue is pressed, changes scene root to be database menu fxml file
-    public void continueBtnPressed() throws IOException {
+    public void continueBtnPressed() {
         if(dbListview.getSelectionModel().getSelectedIndex() != -1){
-
             //The name that should be used in label for DatabaseMenu
-            String dbName = dbListview.getSelectionModel().getSelectedItem().toString();
+            String dbName = dbListview.getSelectionModel().getSelectedItem();
 
-            DatabaseProcessor processor = new DatabaseProcessor(dbListview.getSelectionModel().getSelectedItem());
-            //TODO: Make this run in background
-            processor.processDB();
-
-            Parent root = FXMLLoader.load(getClass().getResource("DatabaseMenu.fxml"));
-            continueBtn.getScene().setRoot(root);
+            service.restart();
         }
     }
 
@@ -78,11 +80,45 @@ public class MainMenuController implements Initializable {
             dbListview.getItems().add(addPref.get(key, key));
         }
 
+        service = new TaskService();
+        service.setOnScheduled(e -> progressStage.show());
+        service.setOnSucceeded(e -> progressStage.hide());
+
+        progressBar = new ProgressBar();
+        progressBar.progressProperty().bind(service.progressProperty());
+        progressBar.setPrefSize(200, 50);
+
+        progressStage = new Stage();
+        progressStage.setTitle("Processing Database");
+        progressStage.setScene(new Scene(new StackPane(progressBar), 400, 150));
+        progressStage.setAlwaysOnTop(true);
+
         //Code to clear preferences
 /*        try {
             addPref.clear();
         } catch (BackingStoreException e) {
             e.printStackTrace();
         }*/
+    }
+
+
+    /**
+     * Class that creates/runs the task to process the database in the background
+     */
+    private class TaskService extends Service<Void> {
+        @Override
+        protected Task<Void> createTask() {
+            return new Task<Void>() {
+                @Override
+                protected Void call() throws IOException {
+                    DatabaseProcessor processor = new DatabaseProcessor(dbListview.getSelectionModel().getSelectedItem());
+                    processor.processDB();
+
+                    Parent root = FXMLLoader.load(getClass().getResource("DatabaseMenu.fxml"));
+                    continueBtn.getScene().setRoot(root);
+                    return null;
+                }
+            };
+        }
     }
 }

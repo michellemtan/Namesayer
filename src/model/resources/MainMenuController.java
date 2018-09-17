@@ -54,9 +54,9 @@ public class MainMenuController implements Initializable {
             //The name that should be used in label for DatabaseMenu
             String dbName = dbListview.getSelectionModel().getSelectedItem().toString();
 
-            DatabaseProcessor parser = new DatabaseProcessor(dbListview.getSelectionModel().getSelectedItem());
-            //TODO: Make this run in background - could be computation heavy task
-            parser.processDB();
+            DatabaseProcessor processor = new DatabaseProcessor(dbListview.getSelectionModel().getSelectedItem());
+            //TODO: Make this run in background
+            processor.processDB();
 
             Parent root = FXMLLoader.load(getClass().getResource("DatabaseMenu.fxml"));
             continueBtn.getScene().setRoot(root);

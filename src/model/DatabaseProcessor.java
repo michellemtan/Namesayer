@@ -36,7 +36,6 @@ public class DatabaseProcessor {
                     //Move trimmed audio file into it's directory & move old file into hidden /.uncut folder
                     boolean resultMove = trimFile.renameTo(new File(pathToDB + "/" + finalName + "/" + trimFile.getName()));
                     file.renameTo(new File(pathToDB + "/uncut_files/" + file.getName()));
-                    System.out.println(finalName + " created: " + resultMkdir + " moved: " + resultMove);
                 }
             }
         }

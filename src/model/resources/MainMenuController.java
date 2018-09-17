@@ -26,7 +26,6 @@ public class MainMenuController implements Initializable {
 
     @FXML private ListView<String> dbListview;
     @FXML private Button continueBtn;
-    @FXML private ProgressBar progressBar;
     private Preferences addPref = Preferences.userRoot();
     private Stage progressStage;
     private TaskService service;
@@ -84,7 +83,7 @@ public class MainMenuController implements Initializable {
         service.setOnScheduled(e -> progressStage.show());
         service.setOnSucceeded(e -> progressStage.hide());
 
-        progressBar = new ProgressBar();
+        ProgressBar progressBar = new ProgressBar();
         progressBar.progressProperty().bind(service.progressProperty());
         progressBar.setPrefSize(200, 50);
 
@@ -94,7 +93,7 @@ public class MainMenuController implements Initializable {
         progressStage.setAlwaysOnTop(true);
 
         //Code to clear preferences
-/*        try {
+        /*try {
             addPref.clear();
         } catch (BackingStoreException e) {
             e.printStackTrace();
@@ -111,10 +110,17 @@ public class MainMenuController implements Initializable {
             return new Task<Void>() {
                 @Override
                 protected Void call() throws IOException {
+                    //Instantiate database processor and start processing
                     DatabaseProcessor processor = new DatabaseProcessor(dbListview.getSelectionModel().getSelectedItem());
                     processor.processDB();
 
-                    Parent root = FXMLLoader.load(getClass().getResource("DatabaseMenu.fxml"));
+                    //Load new scene upon completion
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("DatabaseMenu.fxml"));
+                    Parent root = loader.load();
+
+                    DatabaseMenuController controller = loader.getController();
+                    //Pass database location to controller for database menu
+                    controller.initialise(dbListview.getSelectionModel().getSelectedItem());
                     continueBtn.getScene().setRoot(root);
                     return null;
                 }

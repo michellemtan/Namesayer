@@ -3,10 +3,7 @@ package model.resources;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,9 +12,11 @@ public class DatabaseMenuController {
 
     @FXML private Label databaseName;
     @FXML private Button backBtn;
+    @FXML private Button deleteBtn;
     @FXML private TreeView<String> dbTreeView;
 
-    void initialise(String path) {
+    //TODO: make folders only containing 1 item to be not expandable
+    void initialize(String path) {
         databaseName.setText(path.substring(path.lastIndexOf("/") + 1));
 
         File dir = new File(path);
@@ -40,10 +39,11 @@ public class DatabaseMenuController {
 
         //Make tree
         dbTreeView.setRoot(rootItem);
+        dbTreeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         dbTreeView.setShowRoot(false);
     }
 
-    public void buildTree(String path, String name, TreeItem<String> parent) {
+    private void buildTree(String path, String name, TreeItem<String> parent) {
         //Iterate through audio files in named folder, rename them and make them a TreeItem
         File dir = new File(path);
         File[] directoryListing = dir.listFiles();
@@ -57,6 +57,17 @@ public class DatabaseMenuController {
                     TreeItem<String> fileName = makeBranch(name + "(" + String.valueOf(i) + ")", parent);
                 }
             }
+        }
+    }
+
+    public void selectAllPressed() {
+        dbTreeView.getSelectionModel().selectAll();
+    }
+
+    public void deleteBtnPressed() throws IOException {
+        if(dbTreeView.getSelectionModel().getSelectedIndex() != -1) {
+            Parent root = FXMLLoader.load(getClass().getResource("DeleteMenu.fxml"));
+            deleteBtn.getScene().setRoot(root);
         }
     }
 

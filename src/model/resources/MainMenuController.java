@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-public class MainMenuController implements Initializable {
+public class MainMenuController {
 
     @FXML private ListView<String> dbListview;
     @FXML private Button continueBtn;
@@ -67,8 +67,7 @@ public class MainMenuController implements Initializable {
     //Initialize method is called when the fxml file is loaded, this code just iterates through previously loaded
     //databases and ensures they're still in the listview.
     //TODO: sometimes a garbage value appears in preferences, not too sure why/where it comes from.
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         String[] prefKeys = new String[0];
         try {
             prefKeys = addPref.keys();
@@ -91,6 +90,7 @@ public class MainMenuController implements Initializable {
         progressStage.setTitle("Processing Database");
         progressStage.setScene(new Scene(new StackPane(progressBar), 400, 150));
         progressStage.setAlwaysOnTop(true);
+
 
         //Code to clear preferences
         /*try {
@@ -120,7 +120,7 @@ public class MainMenuController implements Initializable {
 
                     DatabaseMenuController controller = loader.getController();
                     //Pass database location to controller for database menu
-                    controller.initialise(dbListview.getSelectionModel().getSelectedItem());
+                    controller.initialize(dbListview.getSelectionModel().getSelectedItem());
                     continueBtn.getScene().setRoot(root);
                     return null;
                 }

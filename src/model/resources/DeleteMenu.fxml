@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -13,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.resources.DeleteMenuController">
    <left>
       <Region prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
    </left>
@@ -27,7 +26,7 @@
                <font>
                   <Font size="24.0" />
                </font></Button>
-            <Button mnemonicParsing="false" text="Cancel" translateX="-230.0">
+            <Button mnemonicParsing="false" onAction="#backBtnPressed" text="Cancel" translateX="-230.0">
                <font>
                   <Font size="24.0" />
                </font></Button>
@@ -37,7 +36,6 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField prefHeight="0.0" prefWidth="500.0" promptText="Search" />
             <ListView prefHeight="270.0" prefWidth="500.0" />
          </children>
       </VBox>
@@ -60,7 +58,7 @@
                   <Font size="40.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" text="←" translateX="10.0" />
+            <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtnPressed" text="←" translateX="10.0" />
          </children>
       </GridPane>
    </top>

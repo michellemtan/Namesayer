@@ -11,31 +11,31 @@ import java.io.IOException;
 public class StartMenuController {
 
     @FXML
-    private Button DatabaseButton;
+    private Button databaseButton;
 
     @FXML
-    private Button PracticeButton;
+    private Button practiceButton;
 
     @FXML
-    private Button HelpButton;
+    private Button helpButton;
 
     @FXML
-    void DatabaseButtonClicked(MouseEvent event) throws IOException {
+    void databaseButtonClicked(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        DatabaseButton.getScene().setRoot(root);
+        databaseButton.getScene().setRoot(root);
     }
 
     @FXML
-    void HelpButtonClicked(MouseEvent event) {
+    void helpButtonClicked(MouseEvent event) {
         //TO DO: Add HelpMenu with instructions
         //Parent root = FXMLLoader.load(getClass().getResource("HelpMenu.fxml"));
         //DatabaseButton.getScene().setRoot(root);
     }
 
     @FXML
-    void PracticeButtonClicked(MouseEvent event) throws IOException {
+    void practiceButtonClicked(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("PracticeMenu.fxml"));
-        DatabaseButton.getScene().setRoot(root);
+        practiceButton.getScene().setRoot(root);
     }
 
 }

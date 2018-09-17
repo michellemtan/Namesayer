@@ -27,7 +27,7 @@
             <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#deleteBtnPressed" text="Delete" translateX="-200.0" />
             <Button mnemonicParsing="false" text="Set Default" translateX="-150.0" />
             <Button mnemonicParsing="false" onAction="#selectAllPressed" text="Select All" translateX="-100.0" />
-            <Button mnemonicParsing="false" text="Practice!" translateX="-50.0" />
+            <Button fx:id="practiceButton" mnemonicParsing="false" onMouseClicked="#practiceButtonClicked" text="Practice" translateX="-50.0" />
          </buttons>
       </ButtonBar>
    </bottom>

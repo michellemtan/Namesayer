@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ public class DatabaseMenuController {
     @FXML private Label databaseName;
     @FXML private Button backBtn;
     @FXML private Button deleteBtn;
+    @FXML private Button practiceButton;
     @FXML private TreeView<String> dbTreeView;
 
     //TODO: make folders only containing 1 item to be not expandable
@@ -74,6 +76,13 @@ public class DatabaseMenuController {
     public void backBtnPressed() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         backBtn.getScene().setRoot(root);
+    }
+
+
+    @FXML
+    void practiceButtonClicked(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("PracticeMenu.fxml"));
+        practiceButton.getScene().setRoot(root);
     }
 
     private TreeItem<String> makeBranch(String title, TreeItem<String> parent){

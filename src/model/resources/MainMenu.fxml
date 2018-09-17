@@ -70,7 +70,7 @@
                   <Font size="40.0" />
                </font>
             </Text>
-            <Button mnemonicParsing="false" text="←" translateX="10.0" translateY="10.0" />
+            <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backButtonClicked" text="←" translateX="10.0" translateY="10.0" />
             <Button mnemonicParsing="false" text="Mic" translateX="-10.0" translateY="10.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
          </children>
       </GridPane>

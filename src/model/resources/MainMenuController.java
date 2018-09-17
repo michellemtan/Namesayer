@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -24,6 +25,7 @@ public class MainMenuController {
 
     @FXML private ListView<String> dbListview;
     @FXML private Button continueBtn;
+    @FXML private Button backButton;
     private Preferences addPref = Preferences.userRoot();
     private Stage progressStage;
     private TaskService service;
@@ -76,6 +78,12 @@ public class MainMenuController {
             error.showAndWait();
 
         }
+    }
+
+    //When the back button is pressed, changes scene root to start menu fxml file
+    public void backButtonClicked() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("StartMenu.fxml"));
+        backButton.getScene().setRoot(root);
     }
 
     //Initialize method is called when the fxml file is loaded, this code just iterates through previously loaded

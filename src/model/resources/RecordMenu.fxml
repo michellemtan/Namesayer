@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.resources.RecordMenuController">
    <children>
       <BorderPane prefHeight="500.0" prefWidth="800.0">
          <top>
@@ -52,22 +52,22 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" text="↺ Playback" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="playbackButton" mnemonicParsing="false" onMouseClicked="#playbackButtonClicked" text="↺ Playback" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Record" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <Button fx:id="recordButton" mnemonicParsing="false" onMouseClicked="#recordButtonClicked" text="Record" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Compare" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <Button fx:id="compareButton" mnemonicParsing="false" onMouseClicked="#compareButtonClicked" text="Compare" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="→ Continue" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <Button fx:id="continueButton" mnemonicParsing="false" onMouseClicked="#continueButtonClicked" text="→ Continue" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <font>
                         <Font size="24.0" />
                      </font>

@@ -43,17 +43,17 @@
                 <RowConstraints maxHeight="77.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="DatabaseButton" mnemonicParsing="false" onMouseClicked="#DatabaseButtonClicked" prefHeight="297.0" prefWidth="184.0" text="Database&#10;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="databaseButton" mnemonicParsing="false" onMouseClicked="#databaseButtonClicked" prefHeight="297.0" prefWidth="184.0" text="Database&#10;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="30.0" />
                      </font>
                   </Button>
-                  <Button fx:id="PracticeButton" mnemonicParsing="false" onMouseClicked="#PracticeButtonClicked" prefHeight="299.0" prefWidth="161.0" text="Practice" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="practiceButton" mnemonicParsing="false" onMouseClicked="#practiceButtonClicked" prefHeight="299.0" prefWidth="161.0" text="Practice" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="30.0" />
                      </font>
                   </Button>
-                  <Button fx:id="HelpButton" mnemonicParsing="false" onMouseClicked="#HelpButtonClicked" prefHeight="295.0" prefWidth="184.0" text="Help" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="helpButton" mnemonicParsing="false" onMouseClicked="#helpButtonClicked" prefHeight="295.0" prefWidth="184.0" text="Help" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="30.0" />
                      </font>

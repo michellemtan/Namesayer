@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import model.DatabaseParser;
+import model.DatabaseProcessor;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +24,8 @@ public class MainMenuController implements Initializable {
     private Preferences addPref = Preferences.userRoot();
 
     //Code to be run when add directory button is pressed, opens simple directory chooser and adds selected item to list
-    //TODO: add numbers if added directory has same name as existing directory
+    //TODO: instead of directory path make directory name displayed, and implement numbers for matching name dirs. Possibly
+    //store keys in hash map in initialise to do this?
     public void addBtnPressed() {
         DirectoryChooser dc = new DirectoryChooser();
         dc.setTitle("Choose database folder");
@@ -49,20 +50,22 @@ public class MainMenuController implements Initializable {
     //Code to be run when continue is pressed, changes scene root to be database menu fxml file
     public void continueBtnPressed() throws IOException {
         if(dbListview.getSelectionModel().getSelectedIndex() != -1){
-            Parent root = FXMLLoader.load(getClass().getResource("DatabaseMenu.fxml"));
-            continueBtn.getScene().setRoot(root);
 
             //The name that should be used in label for DatabaseMenu
             String dbName = dbListview.getSelectionModel().getSelectedItem().toString();
 
-            DatabaseParser parser = new DatabaseParser(dbListview.getSelectionModel().getSelectedItem());
+            DatabaseProcessor parser = new DatabaseProcessor(dbListview.getSelectionModel().getSelectedItem());
             //TODO: Make this run in background - could be computation heavy task
-            parser.parseDB();
+            parser.processDB();
+
+            Parent root = FXMLLoader.load(getClass().getResource("DatabaseMenu.fxml"));
+            continueBtn.getScene().setRoot(root);
         }
     }
 
     //Initialize method is called when the fxml file is loaded, this code just iterates through previously loaded
-    //databases and ensures they're still in the listview
+    //databases and ensures they're still in the listview.
+    //TODO: sometimes a garbage value appears in preferences, not too sure why/where it comes from.
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String[] prefKeys = new String[0];
@@ -76,7 +79,7 @@ public class MainMenuController implements Initializable {
         }
 
         //Code to clear preferences
-        /*try {
+/*        try {
             addPref.clear();
         } catch (BackingStoreException e) {
             e.printStackTrace();

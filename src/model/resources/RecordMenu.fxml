@@ -36,7 +36,7 @@
             </GridPane>
          </top>
          <center>
-            <ProgressBar prefHeight="59.0" prefWidth="556.0" progress="0.31" BorderPane.alignment="CENTER" />
+            <ProgressBar fx:id="progressBar" prefHeight="59.0" prefWidth="556.0" progress="0.31" BorderPane.alignment="CENTER" />
          </center>
          <bottom>
             <GridPane prefHeight="148.0" prefWidth="812.0" BorderPane.alignment="CENTER">

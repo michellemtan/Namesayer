@@ -27,37 +27,36 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="smileButton" mnemonicParsing="false" text="☺" translateX="-60.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                  <Button fx:id="sadButton" layoutX="544.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#sadButtonClicked" text="☹" translateX="-15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="17/30" translateX="-16.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+                  <Button mnemonicParsing="false" text="☺" translateX="-60.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Button fx:id="sadButton" layoutX="544.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#sadButtonClicked" text="☹" translateX="-15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="17/30" translateX="-16.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                   <Label prefHeight="49.0" prefWidth="327.0" text="Creation Name" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
                         <Font size="40.0" />
                      </font>
                   </Label>
-                  <Button fx:id="backMenuButton" mnemonicParsing="false" onMouseClicked="#backMenuButtonClicked" text="←" translateX="10.0" translateY="10.0" />
                </children>
             </GridPane>
          </top>
          <center>
-            <ProgressBar prefHeight="59.0" prefWidth="556.0" progress="0.31" BorderPane.alignment="CENTER" />
+            <ProgressBar fx:id="progressBar" prefHeight="59.0" prefWidth="556.0" progress="0.31" BorderPane.alignment="CENTER" />
          </center>
          <right>
-            <Button fx:id="nextCreationButton" mnemonicParsing="false" onMouseClicked="#nextCreationButtonClicked" text="►" translateX="-15.0" BorderPane.alignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#nextCreationButtonClicked" onMouseClicked="#nextCreationButtonClicked" text="→" translateX="-15.0" BorderPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
          </right>
          <left>
-            <Button fx:id="backCreationButton" mnemonicParsing="false" onMouseClicked="#backCreationButtonClicked" text="◄" translateX="15.0" BorderPane.alignment="CENTER">
+            <Button fx:id="backCreationButton" mnemonicParsing="false" onMouseClicked="#backCreationButtonClicked" text="←" translateX="15.0" BorderPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
          </left>
          <bottom>
-            <GridPane prefHeight="148.0" prefWidth="812.0" BorderPane.alignment="CENTER">
+            <GridPane onMouseClicked="#recordButtonClicked" prefHeight="148.0" prefWidth="812.0" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.0" minWidth="10.0" prefWidth="297.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="237.0" />

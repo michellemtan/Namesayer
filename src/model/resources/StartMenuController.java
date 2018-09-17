@@ -32,10 +32,4 @@ public class StartMenuController {
         //DatabaseButton.getScene().setRoot(root);
     }
 
-    @FXML
-    void practiceButtonClicked(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("PracticeMenu.fxml"));
-        practiceButton.getScene().setRoot(root);
-    }
-
 }

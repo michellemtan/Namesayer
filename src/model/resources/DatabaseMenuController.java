@@ -16,9 +16,10 @@ public class DatabaseMenuController {
     @FXML private Button deleteBtn;
     @FXML private Button practiceButton;
     @FXML private TreeView<String> dbTreeView;
+    private Parent parentRoot;
 
     //TODO: make folders only containing 1 item to be not expandable
-    void initialize(String path) {
+    void initialize(String path, Parent root) {
         databaseName.setText(path.substring(path.lastIndexOf("/") + 1));
 
         File dir = new File(path);
@@ -43,6 +44,8 @@ public class DatabaseMenuController {
         dbTreeView.setRoot(rootItem);
         dbTreeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         dbTreeView.setShowRoot(false);
+        //set parentRoot field to
+        parentRoot = root;
     }
 
     private void buildTree(String path, String name, TreeItem<String> parent) {
@@ -68,7 +71,11 @@ public class DatabaseMenuController {
 
     public void deleteBtnPressed() throws IOException {
         if(dbTreeView.getSelectionModel().getSelectedIndex() != -1) {
-            Parent root = FXMLLoader.load(getClass().getResource("DeleteMenu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("DeleteMenu.fxml"));
+            Parent root = loader.load();
+
+            DeleteMenuController controller = loader.getController();
+            controller.setParentRoot(parentRoot);
             deleteBtn.getScene().setRoot(root);
         }
     }
@@ -80,9 +87,13 @@ public class DatabaseMenuController {
 
 
     @FXML
-    void practiceButtonClicked(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("PracticeMenu.fxml"));
-        practiceButton.getScene().setRoot(root);
+    void practiceButtonClicked() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PracticeMenu.fxml"));
+        Parent root = loader.load();
+
+        PracticeMenuController controller = loader.getController();
+        controller.setParentRoot(parentRoot);
+        deleteBtn.getScene().setRoot(root);
     }
 
     private TreeItem<String> makeBranch(String title, TreeItem<String> parent){

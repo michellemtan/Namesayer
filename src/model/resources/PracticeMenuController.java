@@ -21,10 +21,12 @@ public class PracticeMenuController {
     @FXML
     private CheckBox randomiseCheckBox;
 
+    private Parent parentRoot;
+
+    //TODO: back button take back to database menu, not start menu
     @FXML
-    void backButtonClicked(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("StartMenu.fxml"));
-        backButton.getScene().setRoot(root);
+    void backButtonClicked() throws IOException {
+        backButton.getScene().setRoot(parentRoot);
     }
 
     @FXML
@@ -38,4 +40,10 @@ public class PracticeMenuController {
         startButton.getScene().setRoot(root);
     }
 
+    //parentRoot is the Parent created be loading the database menu fxml. It's been passed through to here so the back button
+    //doesn't cause the database menu to reload, just loads it with the same root as the first time it was loaded so
+    //the treeview is preserved.
+    void setParentRoot(Parent root) {
+        parentRoot = root;
+    }
 }

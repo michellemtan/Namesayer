@@ -142,7 +142,7 @@ public class MainMenuController {
 
                     DatabaseMenuController controller = loader.getController();
                     //Pass database location to controller for database menu
-                    controller.initialize(dbListview.getSelectionModel().getSelectedItem());
+                    controller.initialize(dbListview.getSelectionModel().getSelectedItem(), root);
                     continueBtn.getScene().setRoot(root);
                     return null;
                 }

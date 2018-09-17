@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.resources.StartMenuController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="model.resources.StartMenuController">
    <children>
       <VBox prefHeight="500.0" prefWidth="800.0">
          <children>
@@ -33,7 +33,6 @@
             </GridPane>
             <GridPane prefHeight="395.0" prefWidth="763.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="394.0" minWidth="10.0" prefWidth="318.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="413.0" minWidth="10.0" prefWidth="221.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="413.0" minWidth="10.0" prefWidth="307.0" />
               </columnConstraints>
@@ -43,17 +42,12 @@
                 <RowConstraints maxHeight="77.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="databaseButton" mnemonicParsing="false" onMouseClicked="#databaseButtonClicked" prefHeight="297.0" prefWidth="184.0" text="Database&#10;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="databaseButton" mnemonicParsing="false" onMouseClicked="#databaseButtonClicked" prefHeight="297.0" prefWidth="184.0" text="Database&#10;" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="30.0" />
                      </font>
                   </Button>
-                  <Button fx:id="practiceButton" mnemonicParsing="false" onMouseClicked="#practiceButtonClicked" prefHeight="299.0" prefWidth="161.0" text="Practice" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="helpButton" mnemonicParsing="false" onMouseClicked="#helpButtonClicked" prefHeight="295.0" prefWidth="184.0" text="Help" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="helpButton" mnemonicParsing="false" onMouseClicked="#helpButtonClicked" prefHeight="295.0" prefWidth="184.0" text="Help" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="30.0" />
                      </font>

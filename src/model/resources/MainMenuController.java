@@ -7,9 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -51,6 +49,14 @@ public class MainMenuController {
         if(dbListview.getSelectionModel().getSelectedIndex() != -1){
             addPref.remove(dbListview.getSelectionModel().getSelectedItem());
             dbListview.getItems().remove(dbListview.getSelectionModel().getSelectedIndex());
+        } else {
+            //Display error message when no database is selected and delete button is pressed
+            Alert error = new Alert(Alert.AlertType.ERROR,
+                    "Please select a database to delete.", ButtonType.OK);
+            error.setHeaderText("ERROR: No Database Selected");
+            error.setTitle("No Database Selected");
+            error.showAndWait();
+
         }
     }
 
@@ -61,6 +67,14 @@ public class MainMenuController {
             String dbName = dbListview.getSelectionModel().getSelectedItem();
 
             service.restart();
+        } else {
+            //Display error message when no database is selected and continue button is pressed
+            Alert error = new Alert(Alert.AlertType.ERROR,
+                    "Please select a database before pressing continue.", ButtonType.OK);
+            error.setHeaderText("ERROR: No Database Selected");
+            error.setTitle("No Database Selected");
+            error.showAndWait();
+
         }
     }
 

@@ -7,8 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 
 public class PlayMenuController {
@@ -55,7 +58,7 @@ public class PlayMenuController {
 
     @FXML
     void playPauseButtonClicked(MouseEvent event) {
-        Task<Void> task = new Task<Void>() {
+        /*Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 try {
@@ -65,7 +68,12 @@ public class PlayMenuController {
                 }
                 return null;
             }
-        };
+        };*/
+
+        MediaPlayer audioPlayer;
+        Media media = new Media(new File("path/to/audio.file").toURI().toString());
+        audioPlayer = new MediaPlayer(media);
+        audioPlayer.play();
     }
 
     @FXML

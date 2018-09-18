@@ -149,7 +149,7 @@ public class MainMenuController {
 
     //This method determines if the buttons are disabled or not, depending on the state of the database list view
     public void checkButtonBehaviour(){
-        //Disable the Continue and Delete buttons so user must add a directory
+        //If the database list is empty, disable the Continue and Delete buttons so user must add a directory
         if (dbListview.getItems().isEmpty()) {
             continueBtn.setDisable(true);
             deleteBtn.setDisable(true);
@@ -158,6 +158,7 @@ public class MainMenuController {
             deleteBtn.setDisable(true);
             continueBtn.setDisable(true);
         } else {
+            //If the database list is not empty and an item has been selected, allow the user to delete and continue
             deleteBtn.setDisable(false);
             continueBtn.setDisable(false);
         }

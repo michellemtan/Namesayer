@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.resources.SetUp;
 
 import java.io.IOException;
 
@@ -17,8 +18,8 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Name Sayer");
-        Parent root = FXMLLoader.load(getClass().getResource("resources/StartMenu.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+
+        Scene scene = SetUp.getInstance().startMenu; // load menu scene
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();

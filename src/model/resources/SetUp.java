@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class SetUp {
 
-    //Single instance of Namesayer can be running at a time
+    //Single instance of NameSayer can be running at a time
     private static SetUp setUp;
 
     //Initialise controllers to allow for data to be passed between scenes
@@ -47,16 +47,17 @@ public class SetUp {
         recordMenu = new Scene(FXMLLoader.load(getClass().getResource("RecordMenu.fxml")));
         startMenu = new Scene(FXMLLoader.load(getClass().getResource("StartMenu.fxml")));
 
-        //compareMenuLoader();
-        //createMenuLoader();
+        //Load load menu
         databaseMenuLoader();
         deleteMenuLoader();
-        //finishedMenuLoader();
         mainMenuLoader();
         playMenuLoader();
         practiceMenuLoader();
         recordMenuLoader();
         startMenuLoader();
+        //compareMenuLoader();
+        //createMenuLoader();
+        //finishedMenuLoader();
     }
 
     //Constructor implementing Singleton pattern to create one instance of SetUp class where different scenes are created
@@ -98,12 +99,6 @@ public class SetUp {
         mainMenuController = loader.getController();
     }
 
-    /*private void finishedMenuLoader() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FinishedMenu.fxml"));
-        finishedMenu = new Scene(loader.load());
-        deleteMenuController = loader.getController();
-    }*/
-
     private void deleteMenuLoader() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DeleteMenu.fxml"));
         deleteMenu = new Scene(loader.load());
@@ -127,4 +122,11 @@ public class SetUp {
         compareMenu = new Scene(loader.load());
         compareMenuController = loader.getController();
     }*/
+
+    /*private void finishedMenuLoader() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FinishedMenu.fxml"));
+        finishedMenu = new Scene(loader.load());
+        deleteMenuController = loader.getController();
+    }*/
+
 }

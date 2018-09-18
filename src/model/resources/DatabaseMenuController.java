@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseMenuController {
 
@@ -26,15 +28,26 @@ public class DatabaseMenuController {
         //Create root of tree
         TreeItem<String> rootItem = new TreeItem<>();
         rootItem.setExpanded(true);
+        List<String> names = new ArrayList<>();
 
         //Add all names to tree
         if(directoryListing != null) {
             for(File file : directoryListing) {
                 if(file.isDirectory() && !file.getName().equals("uncut_files")){
-                    TreeItem<String> dirName = makeBranch(file.getName(), rootItem);
-                    buildTree(file.getPath(), file.getName(), dirName);
+                    //TreeItem<String> dirName = makeBranch(file.getName(), rootItem);
+                    //buildChildren(file.getPath(), file.getName(), dirName);
+                    names.add(file.getName());
                 }
             }
+        }
+
+        //Sort list case insensitive
+        names.sort(String.CASE_INSENSITIVE_ORDER);
+
+        //Make tree items for each item in list and it's children & add to root
+        for(String name : names){
+            TreeItem<String> dirName = makeBranch(name, rootItem);
+            buildChildren(path + "/" + name, name, dirName);
         }
 
         //Make tree
@@ -43,7 +56,7 @@ public class DatabaseMenuController {
         dbTreeView.setShowRoot(false);
     }
 
-    private void buildTree(String path, String name, TreeItem<String> parent) {
+    private void buildChildren(String path, String name, TreeItem<String> parent) {
         //Iterate through audio files in named folder, rename them and make them a TreeItem
         File dir = new File(path);
         File[] directoryListing = dir.listFiles();

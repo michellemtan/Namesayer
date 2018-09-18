@@ -1,10 +1,13 @@
 package model.resources;
 
+import javafx.animation.PauseTransition;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -52,7 +55,17 @@ public class PlayMenuController {
 
     @FXML
     void playPauseButtonClicked(MouseEvent event) {
-
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ffplay -autoexit -i audio.wav");
+                    Process audio = builder.start();
+                } catch (IOException e) {
+                }
+                return null;
+            }
+        };
     }
 
     @FXML

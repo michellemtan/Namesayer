@@ -5,10 +5,12 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -16,48 +18,34 @@ import java.io.IOException;
 
 public class PlayMenuController {
 
-    @FXML
-    private Button smileButton;
+    @FXML private Button smileButton;
+    @FXML private Button sadButton;
+    @FXML private Button backMenuButton;
+    @FXML private Button nextCreationButton;
+    @FXML private Button backCreationButton;
+    @FXML private Button replayAudioButton;
+    @FXML private Button playPauseButton;
+    @FXML private Button recordButton;
 
     @FXML
-    private Button sadButton;
-
-    @FXML
-    private Button backMenuButton;
-
-    @FXML
-    private Button nextCreationButton;
-
-    @FXML
-    private Button backCreationButton;
-
-    @FXML
-    private Button replayAudioButton;
-
-    @FXML
-    private Button playPauseButton;
-
-    @FXML
-    private Button recordButton;
-
-    @FXML
-    void backCreationButtonClicked(MouseEvent event) {
+    void backCreationButtonClicked() {
 
     }
 
     @FXML
-    void backMenuButtonClicked(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("PracticeMenu.fxml"));
-        backMenuButton.getScene().setRoot(root);
+    void backMenuButtonClicked() throws IOException {
+        Scene scene = SetUp.getInstance().practiceMenu;
+        Stage window = (Stage) backMenuButton.getScene().getWindow();
+        window.setScene(scene);
     }
 
     @FXML
-    void nextCreationButtonClicked(MouseEvent event) {
+    void nextCreationButtonClicked() {
 
     }
 
     @FXML
-    void playPauseButtonClicked(MouseEvent event) {
+    void playPauseButtonClicked() {
         /*Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -77,18 +65,19 @@ public class PlayMenuController {
     }
 
     @FXML
-    void recordButtonClicked(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("RecordMenu.fxml"));
-        recordButton.getScene().setRoot(root);
+    void recordButtonClicked() throws IOException {
+        Scene scene = SetUp.getInstance().recordMenu;
+        Stage window = (Stage) recordButton.getScene().getWindow();
+        window.setScene(scene);
     }
 
     @FXML
-    void replayAudioButtonClicked(MouseEvent event) {
+    void replayAudioButtonClicked() {
 
     }
 
     @FXML
-    void sadButtonClicked(MouseEvent event) {
+    void sadButtonClicked() {
 
     }
 

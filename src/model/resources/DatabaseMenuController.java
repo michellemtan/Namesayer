@@ -1,9 +1,9 @@
 package model.resources;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,10 +15,9 @@ public class DatabaseMenuController {
     @FXML private Button deleteBtn;
     @FXML private Button practiceButton;
     @FXML private TreeView<String> dbTreeView;
-    private Parent parentRoot;
 
     //TODO: make folders only containing 1 item to be not expandable
-    void initialize(String path, Parent root) {
+    void initialize(String path) {
         databaseName.setText(path.substring(path.lastIndexOf("/") + 1));
 
         File dir = new File(path);
@@ -27,7 +26,6 @@ public class DatabaseMenuController {
         //Create root of tree
         TreeItem<String> rootItem = new TreeItem<>();
         rootItem.setExpanded(true);
-
 
         //Add all names to tree
         if(directoryListing != null) {
@@ -43,8 +41,6 @@ public class DatabaseMenuController {
         dbTreeView.setRoot(rootItem);
         dbTreeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         dbTreeView.setShowRoot(false);
-        //set parentRoot field to
-        parentRoot = root;
     }
 
     private void buildTree(String path, String name, TreeItem<String> parent) {
@@ -70,29 +66,24 @@ public class DatabaseMenuController {
 
     public void deleteBtnPressed() throws IOException {
         if(dbTreeView.getSelectionModel().getSelectedIndex() != -1) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("DeleteMenu.fxml"));
-            Parent root = loader.load();
-
-            DeleteMenuController controller = loader.getController();
-            controller.setParentRoot(parentRoot);
-            deleteBtn.getScene().setRoot(root);
+            Scene scene = SetUp.getInstance().deleteMenu;
+            Stage window = (Stage) deleteBtn.getScene().getWindow();
+            window.setScene(scene);
         }
     }
 
     public void backBtnPressed() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        backBtn.getScene().setRoot(root);
+        Scene scene = SetUp.getInstance().mainMenu;
+        Stage window = (Stage) backBtn.getScene().getWindow();
+        window.setScene(scene);
     }
 
 
     @FXML
     void practiceButtonClicked() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("PracticeMenu.fxml"));
-        Parent root = loader.load();
-
-        PracticeMenuController controller = loader.getController();
-        controller.setParentRoot(parentRoot);
-        deleteBtn.getScene().setRoot(root);
+        Scene scene = SetUp.getInstance().practiceMenu;
+        Stage window = (Stage) practiceButton.getScene().getWindow();
+        window.setScene(scene);
     }
 
     private TreeItem<String> makeBranch(String title, TreeItem<String> parent){

@@ -5,8 +5,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
@@ -28,6 +26,8 @@ public class MainMenuController {
     private Preferences addPref = Preferences.userRoot();
     private Stage progressStage;
     private TaskService service;
+    private Stage window; //Main window which all scenes are in
+    private Scene scene; //The database menu scene which is next scene
 
     //TODO: Rename this file to something other than MainMenu?
 
@@ -67,8 +67,9 @@ public class MainMenuController {
 
     //When the back button is pressed, changes scene root to start menu fxml file
     public void backButtonClicked() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("StartMenu.fxml"));
-        backButton.getScene().setRoot(root);
+        Scene scene = SetUp.getInstance().startMenu;
+        Stage window = (Stage) backButton.getScene().getWindow();
+        window.setScene(scene);
     }
 
     //Initialize method is called when the fxml file is loaded, this code just iterates through previously loaded
@@ -99,7 +100,10 @@ public class MainMenuController {
 
         service = new TaskService();
         service.setOnScheduled(e -> progressStage.show());
-        service.setOnSucceeded(e -> progressStage.hide());
+        service.setOnSucceeded(e -> {
+            progressStage.hide();
+            window.setScene(scene);
+        });
 
         ProgressBar progressBar = new ProgressBar();
         progressBar.progressProperty().bind(service.progressProperty());
@@ -132,14 +136,12 @@ public class MainMenuController {
                     DatabaseProcessor processor = new DatabaseProcessor(dbListview.getSelectionModel().getSelectedItem());
                     processor.processDB();
 
-                    //Load new scene upon completion
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("DatabaseMenu.fxml"));
-                    Parent root = loader.load();
 
-                    DatabaseMenuController controller = loader.getController();
-                    //Pass database location to controller for database menu
-                    controller.initialize(dbListview.getSelectionModel().getSelectedItem(), root);
-                    continueBtn.getScene().setRoot(root);
+                    //Get scene of next menu, and initialize tree view of files
+                    //TODO: instead of using overloaded initialize method, setup tree in a way it can just be added to existing scene (model class)
+                    scene = SetUp.getInstance().databaseMenu;
+                    window = (Stage) continueBtn.getScene().getWindow();
+                    SetUp.getInstance().dbMenuController.initialize(dbListview.getSelectionModel().getSelectedItem());
                     return null;
                 }
             };

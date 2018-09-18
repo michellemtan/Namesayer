@@ -24,11 +24,11 @@ public class DatabaseProcessor {
                     String pathToFile = file.getPath().substring(0, file.getPath().length() - 4);
                     //-35dB seems to work on MOST files, but a few (zkon) don't work
                     String trimCommand = "ffmpeg -y -i " + file.getPath() + " -af silenceremove=1:0:-35dB " + pathToFile + "_TRIM.wav";
-                    this.trimAudio(trimCommand);
+                    trimAudio(trimCommand);
 
-                    String fileTrim = file.getName().replaceAll("[^A-Za-z]", "");
+                    String fileTrim = file.getName().substring(file.getName().lastIndexOf("_") + 1);
+                    String finalName = fileTrim.substring(0, fileTrim.length() - 4);
                     //Get just name from file name
-                    String finalName = fileTrim.substring(2, fileTrim.length() - 3);
                     //Create directory of name
                     boolean resultMkdir = new File(pathToDB + "/" + finalName).mkdir();
                     //Create File object for trimmed audio file

@@ -1,6 +1,7 @@
 package model;
 
 import java.io.*;
+import java.util.Objects;
 
 public class DatabaseProcessor {
 
@@ -10,6 +11,7 @@ public class DatabaseProcessor {
         pathToDB = path;
     }
 
+    //TODO: Possible functionality to add: if jonothan and Jonothan, ask user if they want to merge?
     /**Iterates through files in database directory and converts to readable name. Creates folders of said names, and places
     audio files into corresponding folder. If 2 of same name found, they go into the same folder. Trims audio at same time,
     overwriting, original file with trimmed one **/
@@ -21,21 +23,30 @@ public class DatabaseProcessor {
         if(directoryListing != null) {
             for(File file : directoryListing) {
                 if(!file.isDirectory()) {
-                    String pathToFile = file.getPath().substring(0, file.getPath().length() - 4);
+                    String originalName = file.getPath().substring(0, file.getPath().length() - 4);
                     //-35dB seems to work on MOST files, but a few (zkon) don't work
-                    String trimCommand = "ffmpeg -y -i " + file.getPath() + " -af silenceremove=1:0:-35dB " + pathToFile + "_TRIM.wav";
+                    String trimCommand = "ffmpeg -y -i " + file.getPath() + " -af silenceremove=1:0:-35dB " + originalName + "_TRIM.wav";
                     trimAudio(trimCommand);
 
-                    String fileTrim = file.getName().substring(file.getName().lastIndexOf("_") + 1);
-                    String finalName = fileTrim.substring(0, fileTrim.length() - 4);
-                    //Get just name from file name
+                    String fileTrim = file.getName().substring(file.getName().lastIndexOf("_") + 1); //Trims down to 'example.wav'
+                    String finalName = fileTrim.substring(0, fileTrim.length() - 4); //Trims down to 'example'
+
                     //Create directory of name
                     boolean resultMkdir = new File(pathToDB + "/" + finalName).mkdir();
+
                     //Create File object for trimmed audio file
                     File trimFile = new File(file.getPath().substring(0, file.getPath().length() - 4) + "_TRIM.wav");
-                    //Move trimmed audio file into it's directory & move old file into hidden /.uncut folder
-                    boolean resultMove = trimFile.renameTo(new File(pathToDB + "/" + finalName + "/" + trimFile.getName()));
-                    file.renameTo(new File(pathToDB + "/uncut_files/" + file.getName()));
+
+                    File parentDir = new File(file.getParent() + "/" + finalName);
+                    //Move trimmed audio file into it's directory, rename to correct file if there is more than 1 of them
+                    if(parentDir.isDirectory() && Objects.requireNonNull(parentDir.list()).length == 0) {
+                        boolean resultMove = trimFile.renameTo(new File(pathToDB + "/" + finalName + "/" + finalName));
+                    } else {
+                        boolean resultMove = trimFile.renameTo(new File(pathToDB + "/" + finalName + "/" + finalName + "(" + Objects.requireNonNull(parentDir.list()).length + ")"));
+                    }
+
+                    //Save uncut files into uncut_files folder
+                    boolean resultMoveUncut = file.renameTo(new File(pathToDB + "/uncut_files/" + file.getName()));
                 }
             }
         }

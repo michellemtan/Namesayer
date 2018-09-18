@@ -141,7 +141,7 @@ public class MainMenuController {
                     //TODO: instead of using overloaded initialize method, setup tree in a way it can just be added to existing scene (model class)
                     scene = SetUp.getInstance().databaseMenu;
                     window = (Stage) continueBtn.getScene().getWindow();
-                    SetUp.getInstance().dbMenuController.initialize(dbListview.getSelectionModel().getSelectedItem());
+                    //SetUp.getInstance().dbMenuController.initialize(dbListview.getSelectionModel().getSelectedItem());
                     return null;
                 }
             };

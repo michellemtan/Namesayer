@@ -50,10 +50,8 @@ public class DatabaseMenuController {
         if(directoryListing != null) {
             for(int i=0; i<directoryListing.length; i++) {
                 if(i==0) {
-                    directoryListing[i].renameTo(new File(path + "/"  + name));
                     TreeItem<String> fileName = makeBranch(name, parent);
                 } else {
-                    directoryListing[i].renameTo(new File(path + "/"  + name + "(" + String.valueOf(i) + ")"));
                     TreeItem<String> fileName = makeBranch(name + "(" + String.valueOf(i) + ")", parent);
                 }
             }

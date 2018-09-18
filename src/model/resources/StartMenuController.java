@@ -11,18 +11,17 @@ import java.io.IOException;
 public class StartMenuController {
 
     @FXML
-    private Button databaseButton;
-
-    @FXML
-    private Button practiceButton;
+    private Button startButton;
 
     @FXML
     private Button helpButton;
 
+    //When the startButton is clicked, the scene changes to the "MainMenu" where the user selects the database they
+    //wish to practice
     @FXML
-    void databaseButtonClicked(MouseEvent event) throws IOException {
+    void startButtonClicked(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        databaseButton.getScene().setRoot(root);
+        startButton.getScene().setRoot(root);
     }
 
     @FXML

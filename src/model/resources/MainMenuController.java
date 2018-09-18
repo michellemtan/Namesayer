@@ -1,10 +1,11 @@
 package model.resources;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,19 +17,20 @@ import model.DatabaseProcessor;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 public class MainMenuController {
 
     @FXML private ListView<String> dbListview;
+    @FXML private Button deleteBtn;
     @FXML private Button continueBtn;
     @FXML private Button backButton;
     private Preferences addPref = Preferences.userRoot();
     private Stage progressStage;
     private TaskService service;
+
+    //TODO: Rename this file to something other than MainMenu?
 
     //Code to be run when add directory button is pressed, opens simple directory chooser and adds selected item to list
     //TODO: instead of directory path make directory name displayed, and implement numbers for matching name dirs. Possibly
@@ -51,14 +53,6 @@ public class MainMenuController {
         if(dbListview.getSelectionModel().getSelectedIndex() != -1){
             addPref.remove(dbListview.getSelectionModel().getSelectedItem());
             dbListview.getItems().remove(dbListview.getSelectionModel().getSelectedIndex());
-        } else {
-            //Display error message when no database is selected and delete button is pressed
-            Alert error = new Alert(Alert.AlertType.ERROR,
-                    "Please select a database to delete.", ButtonType.OK);
-            error.setHeaderText("ERROR: No Database Selected");
-            error.setTitle("No Database Selected");
-            error.showAndWait();
-
         }
     }
 
@@ -69,14 +63,6 @@ public class MainMenuController {
             String dbName = dbListview.getSelectionModel().getSelectedItem();
 
             service.restart();
-        } else {
-            //Display error message when no database is selected and continue button is pressed
-            Alert error = new Alert(Alert.AlertType.ERROR,
-                    "Please select a database before pressing continue.", ButtonType.OK);
-            error.setHeaderText("ERROR: No Database Selected");
-            error.setTitle("No Database Selected");
-            error.showAndWait();
-
         }
     }
 
@@ -90,6 +76,7 @@ public class MainMenuController {
     //databases and ensures they're still in the listview.
     //TODO: sometimes a garbage value appears in preferences, not too sure why/where it comes from.
     public void initialize() {
+
         String[] prefKeys = new String[0];
         try {
             prefKeys = addPref.keys();
@@ -99,6 +86,17 @@ public class MainMenuController {
         for(String key : prefKeys) {
             dbListview.getItems().add(addPref.get(key, key));
         }
+
+        checkButtonBehaviour();
+
+        //Set database list to only select one database at a time
+        dbListview.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        dbListview.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                checkButtonBehaviour();
+            }
+        });
 
         service = new TaskService();
         service.setOnScheduled(e -> progressStage.show());
@@ -112,7 +110,6 @@ public class MainMenuController {
         progressStage.setTitle("Processing Database");
         progressStage.setScene(new Scene(new StackPane(progressBar), 400, 150));
         progressStage.setAlwaysOnTop(true);
-
 
         //Code to clear preferences
         /*try {
@@ -147,6 +144,22 @@ public class MainMenuController {
                     return null;
                 }
             };
+        }
+    }
+
+    //This method determines if the buttons are disabled or not, depending on the state of the database list view
+    public void checkButtonBehaviour(){
+        //Disable the Continue and Delete buttons so user must add a directory
+        if (dbListview.getItems().isEmpty()) {
+            continueBtn.setDisable(true);
+            deleteBtn.setDisable(true);
+        } else if (dbListview.getSelectionModel().getSelectedItems().isEmpty()){
+            //If no item in the list is selected, the delete and continue buttons should be disabled
+            deleteBtn.setDisable(true);
+            continueBtn.setDisable(true);
+        } else {
+            deleteBtn.setDisable(false);
+            continueBtn.setDisable(false);
         }
     }
 }

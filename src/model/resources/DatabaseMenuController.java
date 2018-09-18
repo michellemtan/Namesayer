@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class DatabaseMenuController {
 
-    @FXML private Label databaseName; //TODO: figure out how to make this the dbName from MMC class
+    @FXML private Label databaseName;
     @FXML private Button backBtn;
     @FXML private Button deleteBtn;
     @FXML private Button practiceButton;

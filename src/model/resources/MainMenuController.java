@@ -29,11 +29,9 @@ public class MainMenuController {
     private Stage window; //Main window which all scenes are in
     private Scene scene; //The database menu scene which is next scene
 
-    //TODO: Rename this file to something other than MainMenu?
-
-    //Code to be run when add directory button is pressed, opens simple directory chooser and adds selected item to list
     //TODO: instead of directory path make directory name displayed, and implement numbers for matching name dirs. Possibly
     //store keys in hash map in initialise to do this?
+    //Code to be run when add directory button is pressed, opens simple directory chooser and adds selected item to list
     public void addBtnPressed() {
         DirectoryChooser dc = new DirectoryChooser();
         dc.setTitle("Choose database folder");
@@ -141,7 +139,7 @@ public class MainMenuController {
                     //TODO: instead of using overloaded initialize method, setup tree in a way it can just be added to existing scene (model class)
                     scene = SetUp.getInstance().databaseMenu;
                     window = (Stage) continueBtn.getScene().getWindow();
-                    //SetUp.getInstance().dbMenuController.initialize(dbListview.getSelectionModel().getSelectedItem());
+                    SetUp.getInstance().dbMenuController.initialize(dbListview.getSelectionModel().getSelectedItem());
                     return null;
                 }
             };

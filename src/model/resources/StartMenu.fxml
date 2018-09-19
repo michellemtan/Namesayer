@@ -28,7 +28,8 @@
                         <Font size="40.0" />
                      </font>
                   </Text>
-                  <Button mnemonicParsing="false" text="Mic" translateX="-15.0" translateY="15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+                  <Button fx:id="micButton" mnemonicParsing="false" onMouseClicked="#micButtonClicked" text="Mic" translateX="-15.0" translateY="15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+                  <Button fx:id="sadFaceButton" mnemonicParsing="false" onMouseClicked="#sadFaceButtonClicked" text="☹" translateX="-70.0" translateY="15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
                </children>
             </GridPane>
             <GridPane prefHeight="395.0" prefWidth="763.0">

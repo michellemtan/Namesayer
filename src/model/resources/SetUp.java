@@ -18,6 +18,7 @@ public class SetUp {
     public PracticeMenuController practiceMenuController;
     public RecordMenuController recordMenuController;
     public StartMenuController startMenuController;
+    public BadRecordingsMenuController badRecordingsMenuController;
     //public CompareMenuController compareMenuController;
     //public CreateMenuController createMenuController;
     //public FinishedMenuController finishedMenuController;
@@ -32,6 +33,7 @@ public class SetUp {
     public Scene practiceMenu;
     public Scene recordMenu;
     public Scene startMenu;
+    public Scene badRecordingsMenu;
 
     private SetUp() throws IOException {
 
@@ -46,6 +48,7 @@ public class SetUp {
         practiceMenu = new Scene(FXMLLoader.load(getClass().getResource("PracticeMenu.fxml")));
         recordMenu = new Scene(FXMLLoader.load(getClass().getResource("RecordMenu.fxml")));
         startMenu = new Scene(FXMLLoader.load(getClass().getResource("StartMenu.fxml")));
+        badRecordingsMenu = new Scene(FXMLLoader.load(getClass().getResource("BadRecordingsMenu.fxml")));
 
         //compareMenuLoader();
         //createMenuLoader();
@@ -57,6 +60,7 @@ public class SetUp {
         practiceMenuLoader();
         recordMenuLoader();
         startMenuLoader();
+        badRecordingsMenuLoader();
     }
 
     //Constructor implementing Singleton pattern to create one instance of SetUp class where different scenes are created
@@ -114,6 +118,12 @@ public class SetUp {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DatabaseMenu.fxml"));
         databaseMenu = new Scene(loader.load());
         dbMenuController = loader.getController();
+    }
+
+    private void badRecordingsMenuLoader() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("BadRecordingsMenu.fxml"));
+        badRecordingsMenu = new Scene(loader.load());
+        badRecordingsMenuController = loader.getController();
     }
 
     /*private void createMenuLoader() throws IOException {

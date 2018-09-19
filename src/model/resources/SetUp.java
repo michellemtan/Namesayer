@@ -13,7 +13,7 @@ public class SetUp {
     //Initialise controllers to allow for data to be passed between scenes
     public DatabaseMenuController dbMenuController;
     public DeleteMenuController deleteMenuController;
-    public MainMenuController mainMenuController;
+    public DatabaseSelectMenuController databaseSelectMenuController;
     public PlayMenuController playMenuController;
     public PracticeMenuController practiceMenuController;
     public RecordMenuController recordMenuController;
@@ -27,7 +27,7 @@ public class SetUp {
     public Scene databaseMenu;
     public Scene deleteMenu;
     public Scene finishedMenu;
-    public Scene mainMenu;
+    public Scene databaseSelectMenu;
     public Scene playMenu;
     public Scene practiceMenu;
     public Scene recordMenu;
@@ -41,7 +41,7 @@ public class SetUp {
         databaseMenu = new Scene(FXMLLoader.load(getClass().getResource("DatabaseMenu.fxml")));
         deleteMenu = new Scene(FXMLLoader.load(getClass().getResource("DeleteMenu.fxml")));
         finishedMenu = new Scene(FXMLLoader.load(getClass().getResource("FinishedMenu.fxml")));
-        mainMenu = new Scene(FXMLLoader.load(getClass().getResource("MainMenu.fxml")));
+        databaseSelectMenu = new Scene(FXMLLoader.load(getClass().getResource("DatabaseSelectMenu.fxml")));
         playMenu = new Scene(FXMLLoader.load(getClass().getResource("PlayMenu.fxml")));
         practiceMenu = new Scene(FXMLLoader.load(getClass().getResource("PracticeMenu.fxml")));
         recordMenu = new Scene(FXMLLoader.load(getClass().getResource("RecordMenu.fxml")));
@@ -94,9 +94,9 @@ public class SetUp {
     }
 
     private void mainMenuLoader() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
-        mainMenu = new Scene(loader.load());
-        mainMenuController = loader.getController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DatabaseSelectMenu.fxml"));
+        databaseSelectMenu = new Scene(loader.load());
+        databaseSelectMenuController = loader.getController();
     }
 
     private void deleteMenuLoader() throws IOException {

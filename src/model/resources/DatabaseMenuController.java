@@ -103,7 +103,7 @@ public class DatabaseMenuController {
     }
 
     public void backBtnPressed() throws IOException {
-        Scene scene = SetUp.getInstance().mainMenu;
+        Scene scene = SetUp.getInstance().databaseSelectMenu;
         Stage window = (Stage) backBtn.getScene().getWindow();
         window.setScene(scene);
     }

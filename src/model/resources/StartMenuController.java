@@ -19,7 +19,7 @@ public class StartMenuController {
     //wish to practice
     @FXML
     void startButtonClicked() throws IOException {
-        Scene scene = SetUp.getInstance().mainMenu;
+        Scene scene = SetUp.getInstance().databaseSelectMenu;
         Stage window = (Stage) startButton.getScene().getWindow();
         window.setScene(scene);
     }

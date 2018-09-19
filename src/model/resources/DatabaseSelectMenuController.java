@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-public class MainMenuController {
+public class DatabaseSelectMenuController {
 
     @FXML private ListView<String> dbListview;
     @FXML private Button deleteBtn;

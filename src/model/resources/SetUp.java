@@ -88,6 +88,7 @@ public class SetUp {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("RecordMenu.fxml"));
         recordMenu = new Scene(loader.load());
         recordMenuController = loader.getController();
+        recordMenuController.initialize();
     }
 
     private void practiceMenuLoader() throws IOException {

@@ -117,7 +117,7 @@ public class PlayMenuController {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to stop practicing?", ButtonType.NO, ButtonType.YES);
             alert.setHeaderText(null);
             alert.setGraphic(null);
-            alert.setTitle("Record Audio");
+            alert.setTitle("Exit Practice?");
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {

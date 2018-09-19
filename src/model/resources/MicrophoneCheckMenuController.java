@@ -82,6 +82,7 @@ public class MicrophoneCheckMenuController {
                         });
 
                     } catch (IOException e) {
+                        e.printStackTrace();
                     }
                     return null;
 
@@ -104,6 +105,10 @@ public class MicrophoneCheckMenuController {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+
+                        //Allow for some processing time
+                        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+                        delay.play();
 
                         //Video has been created, let the user have control of buttons again
                         playButton.setDisable(false);

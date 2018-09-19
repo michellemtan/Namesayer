@@ -24,14 +24,16 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Record Audio" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Record Audio" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font size="40.0" />
                      </font>
                   </Text>
-                  <Button fx:id="micButton" layoutX="544.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#micButtonClicked" text="Mic" translateX="-15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Button fx:id="micButton" layoutX="544.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#micButtonClicked" text="Mic" translateX="-15.0" translateY="15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+                  <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backButtonClicked" text="←" translateX="15.0" translateY="15.0" />
                </children>
             </GridPane>
          </top>

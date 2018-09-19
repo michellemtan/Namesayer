@@ -44,6 +44,8 @@ public class RecordMenuController {
     @FXML
     private Button micButton;
 
+    @FXML private Button backButton;
+
     private RecordAudioService service;
 
     private MediaPlayer audioPlayer;
@@ -95,6 +97,13 @@ public class RecordMenuController {
 
     @FXML
     void continueButtonClicked(MouseEvent event) throws IOException {
+        Scene scene = SetUp.getInstance().playMenu;
+        Stage window = (Stage) continueButton.getScene().getWindow();
+        window.setScene(scene);
+    }
+
+    @FXML
+    void backButtonClicked(MouseEvent event) throws IOException {
         Scene scene = SetUp.getInstance().playMenu;
         Stage window = (Stage) continueButton.getScene().getWindow();
         window.setScene(scene);

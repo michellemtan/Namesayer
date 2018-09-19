@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: Should we rename this class to creations list or something else?
 public class DatabaseMenuController {
 
     @FXML
@@ -103,6 +104,8 @@ public class DatabaseMenuController {
     @FXML
     void selectAllButtonClicked(MouseEvent event) {
         dbTreeView.getSelectionModel().selectAll();
+        deleteBtn.setDisable(false);
+        practiceButton.setDisable(false);
     }
 
     public void deleteBtnPressed() throws IOException {
@@ -160,6 +163,8 @@ public class DatabaseMenuController {
             defaultButton.setDisable(true);
             selectAllButton.setDisable(true);
             practiceButton.setDisable(true);
+        } else if (dbTreeView.getSelectionModel().getSelectedItems().size()>1){
+            defaultButton.setDisable(true);
         } else {
             //If the tree view list is not empty and a creation has been selected, allow the user to delete creations etc.
             deleteBtn.setDisable(false);

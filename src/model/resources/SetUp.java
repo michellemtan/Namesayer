@@ -19,6 +19,7 @@ public class SetUp {
     public RecordMenuController recordMenuController;
     public StartMenuController startMenuController;
     public BadRecordingsMenuController badRecordingsMenuController;
+    public InstructionsMenuController instructionsMenuController;
     //public CompareMenuController compareMenuController;
     //public CreateMenuController createMenuController;
     //public FinishedMenuController finishedMenuController;
@@ -33,6 +34,7 @@ public class SetUp {
     public Scene practiceMenu;
     public Scene recordMenu;
     public Scene startMenu;
+    public Scene instructionsMenu;
     public Scene badRecordingsMenu;
 
     private SetUp() throws IOException {
@@ -49,6 +51,7 @@ public class SetUp {
         recordMenu = new Scene(FXMLLoader.load(getClass().getResource("RecordMenu.fxml")));
         startMenu = new Scene(FXMLLoader.load(getClass().getResource("StartMenu.fxml")));
         badRecordingsMenu = new Scene(FXMLLoader.load(getClass().getResource("BadRecordingsMenu.fxml")));
+        instructionsMenu = new Scene(FXMLLoader.load(getClass().getResource("InstructionsMenu.fxml")));
 
         //Load load menu
         databaseMenuLoader();
@@ -59,6 +62,7 @@ public class SetUp {
         recordMenuLoader();
         startMenuLoader();
         badRecordingsMenuLoader();
+        instructionsMenuLoader();
         //compareMenuLoader();
         //createMenuLoader();
         //finishedMenuLoader();
@@ -121,6 +125,11 @@ public class SetUp {
         badRecordingsMenu = new Scene(loader.load());
         badRecordingsMenuController = loader.getController();
         badRecordingsMenuController.initialize();
+    }
+    private void instructionsMenuLoader() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("InstructionsMenu.fxml"));
+        instructionsMenu= new Scene(loader.load());
+        instructionsMenuController = loader.getController();
     }
 
     /*private void createMenuLoader() throws IOException {

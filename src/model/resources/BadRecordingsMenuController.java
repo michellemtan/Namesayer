@@ -29,6 +29,7 @@ public class BadRecordingsMenuController {
 
     }
 
+    //TODO: ENSURE THAT IF A RECORDING ALREADY EXISTS IN THE TEXT FILE, TO SKIP REPRINTING IT ONTO THE SCREEN
     //This method displays the contents of the text file containing a list of bad recordings
     void initialize(){
 

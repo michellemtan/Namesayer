@@ -48,9 +48,9 @@
                         <Font size="30.0" />
                      </font>
                   </Button>
-                  <Button fx:id="helpButton" mnemonicParsing="false" onMouseClicked="#helpButtonClicked" prefHeight="295.0" prefWidth="184.0" text="Help" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="instructionsButton" mnemonicParsing="false" onMouseClicked="#instructionsButtonClicked" prefHeight="295.0" prefWidth="184.0" text="Instructions" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
-                        <Font size="30.0" />
+                        <Font size="25.0" />
                      </font>
                   </Button>
                </children>

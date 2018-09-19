@@ -8,6 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.Mixer;
+import javax.sound.sampled.Port;
 import java.io.IOException;
 
 public class StartMenuController {
@@ -15,7 +19,7 @@ public class StartMenuController {
     @FXML
     private Button startButton;
     @FXML
-    private Button helpButton;
+    private Button instructionsButton;
     @FXML
     private Button micButton;
     @FXML
@@ -31,13 +35,17 @@ public class StartMenuController {
     }
 
     @FXML
-    void helpButtonClicked() {
-        //TODO: Add HelpMenu with instructions
+    void instructionsButtonClicked() throws IOException {
+        Scene scene = SetUp.getInstance().instructionsMenu;
+        Stage window = (Stage) instructionsButton.getScene().getWindow();
+        window.setScene(scene);
     }
 
 
+    //TO DO:
     @FXML
     void micButtonClicked(MouseEvent event) {
+
 
     }
 

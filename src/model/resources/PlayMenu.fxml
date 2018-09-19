@@ -68,7 +68,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="replayAudioButton" mnemonicParsing="false" onMouseClicked="#replayAudioButtonClicked" text="↺ Play Again" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="replayAudioButton" mnemonicParsing="false" onMouseClicked="#replayAudioButtonClicked" text="↺ Replay" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>

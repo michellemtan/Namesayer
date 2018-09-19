@@ -1,6 +1,8 @@
 package model.resources;
 
 import javafx.animation.PauseTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -42,11 +44,14 @@ public class RecordMenuController {
 
     private TaskService service;
 
-    //TO DO
+    private MediaPlayer audioPlayer;
+
+    //TODO:SET SO IF PLAYING, ALL OTHER BUTTONS ARE DISABLED
     void initialize (){
         playbackButton.setDisable(true);
         compareButton.setDisable(true);
         continueButton.setDisable(true);
+
     }
 
     @FXML
@@ -66,7 +71,11 @@ public class RecordMenuController {
 
     @FXML
     void playbackButtonClicked(MouseEvent event) {
-        MediaPlayer audioPlayer;
+        //If an audio file is already playing, stop and play the audio from the start
+        if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            audioPlayer.stop();
+        }
+
         Media media = new Media(new File("audio.wav").toURI().toString());
         audioPlayer = new MediaPlayer(media);
         audioPlayer.play();
@@ -83,7 +92,7 @@ public class RecordMenuController {
         //TODO: Find a way to ask the user to record again
         service = new TaskService();
         service.setOnSucceeded(e -> {
-            askRerecord();
+           // askRerecord();
         });
 
         //TODO: Make the progress bar change so it slowly loads when 5 seconds is reached
@@ -126,7 +135,7 @@ public class RecordMenuController {
                     continueButton.setDisable(true);
 
                     try {
-                        ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -f alsa -i  default -t 5 audio.wav");
+                        ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -f alsa -i default -t 5 ./audio.wav");
                         Process audio = builder.start();
 
                         PauseTransition delay = new PauseTransition(Duration.seconds(5));

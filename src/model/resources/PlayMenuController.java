@@ -43,6 +43,8 @@ public class PlayMenuController {
     @FXML
     private ProgressBar progressBar;
 
+    private MediaPlayer audioPlayer;
+
     @FXML
     void backCreationButtonClicked(MouseEvent event) {
 
@@ -62,22 +64,19 @@ public class PlayMenuController {
 
     @FXML
     void playPauseButtonClicked(MouseEvent event) {
-        /*Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ffplay -autoexit -i audio.wav");
-                    Process audio = builder.start();
-                } catch (IOException e) {
-                }
-                return null;
-            }
-        };*/
 
-        MediaPlayer audioPlayer;
-        Media media = new Media(new File("path/to/audio.file").toURI().toString());
-        audioPlayer = new MediaPlayer(media);
-        audioPlayer.play();
+        if (audioPlayer == null){
+            //Start playing audio
+            Media media = new Media(new File("audio.wav").toURI().toString());
+            audioPlayer = new MediaPlayer(media);
+            audioPlayer.play();
+        }//If an audio file is already playing, stop
+        else if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            audioPlayer.pause();
+            //If audio is already stopped, play from where it was paused
+        } else if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
+            audioPlayer.play();
+        }
     }
 
     @FXML
@@ -91,6 +90,14 @@ public class PlayMenuController {
     @FXML
     void replayAudioButtonClicked(MouseEvent event) {
 
+        //If an audio file is already playing, stop and play the audio from the start
+        if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            audioPlayer.stop();
+        }
+
+        Media media = new Media(new File("audio.wav").toURI().toString());
+        audioPlayer = new MediaPlayer(media);
+        audioPlayer.play();
     }
 
     @FXML

@@ -101,6 +101,7 @@ public class SetUp {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayMenu.fxml"));
         playMenu = new Scene(loader.load());
         playMenuController = loader.getController();
+        playMenuController.initialize();
     }
 
     private void mainMenuLoader() throws IOException {

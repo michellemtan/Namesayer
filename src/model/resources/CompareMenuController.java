@@ -41,6 +41,28 @@ public class CompareMenuController {
         window.setScene(scene);
     }
 
+    //TODO: Make this a public class?
+    //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
+    private class AudioRunnable implements Runnable {
+
+        private boolean isFinished;
+
+        private AudioRunnable(boolean status){
+            isFinished = status;
+        }
+
+        @Override
+        public void run() {
+            //When the media player has finished, the buttons will be enabled
+            if (isFinished) {
+                backButton.setDisable(false);
+                //When the media player is playing the audio file, the buttons will be disabled to prevent the user from navigating away
+            } else {
+                backButton.setDisable(true);
+            }
+        }
+    }
+
     @FXML
     void playPauseButtonClicked(MouseEvent event) {
 
@@ -49,8 +71,11 @@ public class CompareMenuController {
             audioPlayer.stop();
         }
 
+        //Create a new media player instance and set the event handlers to create a thread that listens for when the audio is playing
         Media media = new Media(new File("audio.wav").toURI().toString());
         audioPlayer = new MediaPlayer(media);
+        audioPlayer.setOnPlaying(new AudioRunnable(false));
+        audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
         audioPlayer.play();
 
     }

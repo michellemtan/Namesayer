@@ -69,6 +69,8 @@ public class PlayMenuController {
             //Start playing audio
             Media media = new Media(new File("audio.wav").toURI().toString());
             audioPlayer = new MediaPlayer(media);
+            audioPlayer.setOnPlaying(new AudioRunnable(false));
+            audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
             audioPlayer.play();
         }//If an audio file is already playing, stop
         else if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
@@ -79,6 +81,8 @@ public class PlayMenuController {
         }
     }
 
+
+    //TODO: ADD FEATURE WHERE IF YOU ENTER A NEW SCREEN, YOU CAN PRESS PLAY AND REPLAY IS DISABLED
     @FXML
     void recordButtonClicked(MouseEvent event) throws IOException {
         Scene scene = SetUp.getInstance().recordMenu;
@@ -97,6 +101,8 @@ public class PlayMenuController {
 
         Media media = new Media(new File("audio.wav").toURI().toString());
         audioPlayer = new MediaPlayer(media);
+        audioPlayer.setOnPlaying(new AudioRunnable(false));
+        audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
         audioPlayer.play();
     }
 
@@ -111,6 +117,37 @@ public class PlayMenuController {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    //TODO: Make this a public class?
+    //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
+    private class AudioRunnable implements Runnable {
+
+        private boolean isFinished;
+
+        private AudioRunnable(boolean status){
+            isFinished = status;
+        }
+
+        @Override
+        public void run() {
+            //When the media player has finished, the buttons will be enabled
+            if (isFinished) {
+                playPauseButton.setDisable(true);
+                backMenuButton.setDisable(false);
+                backCreationButton.setDisable(false);
+                nextCreationButton.setDisable(false);
+                recordButton.setDisable(false);
+                replayAudioButton.setDisable(false);
+                //When the media player is playing the audio file, the buttons will be disabled to prevent the user from navigating away
+            } else {
+                playPauseButton.setDisable(false);
+                backMenuButton.setDisable(true);
+                backCreationButton.setDisable(true);
+                nextCreationButton.setDisable(true);
+                recordButton.setDisable(true);
+            }
         }
     }
 
@@ -135,6 +172,10 @@ public class PlayMenuController {
                 alert.close();
             }
 
+        }
+
+        void initialize() {
+            replayAudioButton.setDisable(true);
         }
 
     }

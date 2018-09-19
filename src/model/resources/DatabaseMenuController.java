@@ -16,27 +16,15 @@ import java.util.List;
 //TODO: Should we rename this class to creations list or something else?
 public class DatabaseMenuController {
 
-    @FXML
-    private Label databaseName;
-    @FXML
-    private Button backBtn;
-    @FXML
-    private Button deleteBtn;
-    @FXML
-    private Button practiceButton;
-    @FXML
-    private ListView<String> dbListView;
+    @FXML private Label databaseName;
+    @FXML private Button backBtn;
+    @FXML private Button deleteBtn;
+    @FXML private Button practiceButton;
+    @FXML private ListView<String> dbListView;
+    @FXML private Button createButton;
+    @FXML private Button defaultButton;
+    @FXML private Button selectAllButton;
     private String pathToDB;
-
-    @FXML
-    private Button createButton;
-
-
-    @FXML
-    private Button defaultButton;
-
-    @FXML
-    private Button selectAllButton;
 
     //TODO: should jonothan and Jonothan be the same name!?
     void initialize(String path) {

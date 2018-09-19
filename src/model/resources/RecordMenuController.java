@@ -135,7 +135,7 @@ public class RecordMenuController {
                             playbackButton.setDisable(false);
                             compareButton.setDisable(false);
                             continueButton.setDisable(false);
-                            recordButton.setDisable(false)
+                            recordButton.setDisable(false);
                             progressBar.progressProperty().unbind();
                             progressBar.progressProperty().set(1.0);
                         });

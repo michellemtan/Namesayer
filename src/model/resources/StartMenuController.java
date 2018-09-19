@@ -44,8 +44,10 @@ public class StartMenuController {
 
     //TO DO:
     @FXML
-    void micButtonClicked(MouseEvent event) {
-
+    void micButtonClicked(MouseEvent event) throws IOException {
+        Scene scene = SetUp.getInstance().microphoneCheckMenu;
+        Stage window = (Stage) micButton.getScene().getWindow();
+        window.setScene(scene);
 
     }
 

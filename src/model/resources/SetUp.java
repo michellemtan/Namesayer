@@ -21,9 +21,11 @@ public class SetUp {
     public BadRecordingsMenuController badRecordingsMenuController;
     public InstructionsMenuController instructionsMenuController;
     public NameDetailsController nameDetailsController;
+    public MicrophoneCheckMenuController microphoneCheckMenuController;
     //public CompareMenuController compareMenuController;
     //public CreateMenuController createMenuController;
     //public FinishedMenuController finishedMenuController;
+
 
     public Scene compareMenu;
     public Scene createMenu;
@@ -38,6 +40,7 @@ public class SetUp {
     public Scene instructionsMenu;
     public Scene badRecordingsMenu;
     public Scene nameDetailsMenu;
+    public Scene microphoneCheckMenu;
 
     private SetUp() throws IOException {
 
@@ -55,6 +58,7 @@ public class SetUp {
         badRecordingsMenu = new Scene(FXMLLoader.load(getClass().getResource("BadRecordingsMenu.fxml")));
         instructionsMenu = new Scene(FXMLLoader.load(getClass().getResource("InstructionsMenu.fxml")));
         nameDetailsMenu = new Scene(FXMLLoader.load(getClass().getResource("NameDetailsMenu.fxml")));
+        microphoneCheckMenu = new Scene(FXMLLoader.load(getClass().getResource("MicrophoneCheckMenu.fxml")));
 
 
         //Load load menu
@@ -68,6 +72,7 @@ public class SetUp {
         badRecordingsMenuLoader();
         instructionsMenuLoader();
         nameDetailsMenuLoader();
+        microphoneCheckMenuLoader();
         //compareMenuLoader();
         //createMenuLoader();
         //finishedMenuLoader();
@@ -144,6 +149,12 @@ public class SetUp {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("NameDetailsMenu.fxml"));
         nameDetailsMenu = new Scene(loader.load());
         nameDetailsController = loader.getController();
+    }
+
+    private void microphoneCheckMenuLoader() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MicrophoneCheckMenu.fxml"));
+        microphoneCheckMenu = new Scene(loader.load());
+        microphoneCheckMenuController = loader.getController();
     }
 
     /*private void createMenuLoader() throws IOException {

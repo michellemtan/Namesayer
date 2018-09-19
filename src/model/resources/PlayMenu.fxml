@@ -39,7 +39,7 @@
             </GridPane>
          </top>
          <center>
-            <ProgressBar fx:id="progressBar" prefHeight="59.0" prefWidth="556.0" progress="0.31" BorderPane.alignment="CENTER" />
+            <ProgressBar fx:id="progressBar" prefHeight="59.0" prefWidth="556.0" progress="0.0" BorderPane.alignment="CENTER" />
          </center>
          <right>
             <Button fx:id="nextCreationButton" mnemonicParsing="false" onAction="#nextCreationButtonClicked" onMouseClicked="#nextCreationButtonClicked" text="→" translateX="-15.0" BorderPane.alignment="CENTER">

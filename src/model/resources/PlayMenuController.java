@@ -1,6 +1,8 @@
 package model.resources;
 
 import javafx.animation.PauseTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -67,11 +69,7 @@ public class PlayMenuController {
 
         if (audioPlayer == null){
             //Start playing audio
-            Media media = new Media(new File("audio.wav").toURI().toString());
-            audioPlayer = new MediaPlayer(media);
-            audioPlayer.setOnPlaying(new AudioRunnable(false));
-            audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
-            audioPlayer.play();
+            mediaPlayerCreator();
         }//If an audio file is already playing, stop
         else if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
             audioPlayer.pause();
@@ -99,11 +97,7 @@ public class PlayMenuController {
             audioPlayer.stop();
         }
 
-        Media media = new Media(new File("audio.wav").toURI().toString());
-        audioPlayer = new MediaPlayer(media);
-        audioPlayer.setOnPlaying(new AudioRunnable(false));
-        audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
-        audioPlayer.play();
+    mediaPlayerCreator();
     }
 
     @FXML
@@ -111,7 +105,7 @@ public class PlayMenuController {
         try {
             File f = new File("BadRecordings.txt");
             BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
-            bw.append("Creation");
+            bw.append("Creation"+"\n");
             bw.flush();
             bw.close();
 
@@ -178,6 +172,28 @@ public class PlayMenuController {
             replayAudioButton.setDisable(true);
         }
 
+        private void mediaPlayerCreator(){
+
+            Media media = new Media(new File("audio.wav").toURI().toString());
+            audioPlayer = new MediaPlayer(media);
+            audioPlayer.setOnPlaying(new AudioRunnable(false));
+            audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
+            audioPlayer.play();
+
+            audioPlayer.currentTimeProperty().addListener(new ChangeListener() {
+                @Override
+                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                    Duration newDuration = (Duration) newValue;
+                    progressBar.setProgress(newDuration.toSeconds()/5);
+
+                }
+            });
+            audioPlayer.setOnReady(new Runnable() {
+                public void run() {
+                    progressBar.setProgress(0.0);
+                }
+            });
+        }
     }
 
 

@@ -5,6 +5,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -46,12 +48,42 @@ public class RecordMenuController {
 
     private MediaPlayer audioPlayer;
 
-    //TODO:SET SO IF PLAYING, ALL OTHER BUTTONS ARE DISABLED
+    private int audioRecorded;
+
     void initialize (){
+        //Disable buttons when scene is initialised
         playbackButton.setDisable(true);
         compareButton.setDisable(true);
         continueButton.setDisable(true);
 
+        //Instantiate audioRecorded field to keep count of number of recordings
+        audioRecorded=0;
+    }
+
+    //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
+    private class AudioRunnable implements Runnable {
+
+        private boolean isFinished;
+
+        private AudioRunnable(boolean status){
+            isFinished = status;
+        }
+
+        @Override
+        public void run() {
+            //When the media player has finished, the buttons will be enabled
+            if (isFinished) {
+                playbackButton.setDisable(false);
+                compareButton.setDisable(false);
+                continueButton.setDisable(false);
+                recordButton.setDisable(false);
+                //When the media player is playing the audio file, the buttons will be disabled to prevent the user from navigating away
+            } else {
+                recordButton.setDisable(true);
+                compareButton.setDisable(true);
+                continueButton.setDisable(true);
+            }
+        }
     }
 
     @FXML
@@ -59,7 +91,6 @@ public class RecordMenuController {
         Scene scene = SetUp.getInstance().compareMenu;
         Stage window = (Stage) compareButton.getScene().getWindow();
         window.setScene(scene);
-
     }
 
     @FXML
@@ -76,23 +107,40 @@ public class RecordMenuController {
             audioPlayer.stop();
         }
 
+        //Create a new media player instance and set the event handlers to create a thread that listens for when the audio is playing
         Media media = new Media(new File("audio.wav").toURI().toString());
         audioPlayer = new MediaPlayer(media);
+        audioPlayer.setOnPlaying(new AudioRunnable(false));
+        audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
         audioPlayer.play();
 
     }
 
     @FXML
     void recordButtonClicked(MouseEvent event) {
-        record();
+        if (audioRecorded==0) {
+            record();
+        } else {
+            //Confirm if the user wants to overwrite existing recording
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to overwrite your recording?", ButtonType.NO, ButtonType.YES);
+            alert.setHeaderText(null);
+            alert.setGraphic(null);
+            alert.setTitle("Overwrite Recording?");
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                record();
+            } else {
+                alert.close();
+            }
+        }
     }
 
     private void record() {
 
-        //TODO: Find a way to ask the user to record again
         service = new TaskService();
         service.setOnSucceeded(e -> {
-           // askRerecord();
+            audioRecorded++;
         });
 
         //TODO: Make the progress bar change so it slowly loads when 5 seconds is reached

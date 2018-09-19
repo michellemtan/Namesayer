@@ -15,6 +15,7 @@ public class DeleteMenuController {
     @FXML private Button backBtn;
     @FXML private ListView<String> deleteListView;
     @FXML private Label deleteLabel;
+    private List<String> toDelete;
 
     public void backBtnPressed() throws IOException {
         //Clear list view
@@ -28,17 +29,21 @@ public class DeleteMenuController {
     public void setUpList(List<String> list) {
         //Change label if only 1 to delete selected
         if(list.size() == 1) {
-            deleteLabel.setText("Delete Creation?");
+            deleteLabel.setText("Delete Name?");
         } else {
-            deleteLabel.setText("Delete Creations?");
+            deleteLabel.setText("Delete Names?");
         }
-
-        for(String name : list) {
-            deleteListView.getItems().add(name);
-        }
+        toDelete = list;
+        deleteListView.getItems().addAll(list);
     }
 
-    public void confirmBtnPressed() {
-
+    public void confirmBtnPressed() throws IOException {
+        SetUp.getInstance().dbMenuController.deleteFiles(toDelete);
+        //Clear list view
+        deleteListView.getItems().clear();
+        //Switch scenes back
+        Scene scene = SetUp.getInstance().databaseMenu;
+        Stage window = (Stage) backBtn.getScene().getWindow();
+        window.setScene(scene);
     }
 }

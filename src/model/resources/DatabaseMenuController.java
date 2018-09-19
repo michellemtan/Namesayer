@@ -16,82 +16,39 @@ public class DatabaseMenuController {
     @FXML private Button backBtn;
     @FXML private Button deleteBtn;
     @FXML private Button practiceButton;
-    @FXML private TreeView<String> dbTreeView;
-    private TreeItem<String> rootItem;
+    @FXML private ListView<String> dbListView;
+    private String pathToDB;
 
     //TODO: should jonothan and Jonothan be the same name!?
     void initialize(String path) {
+        pathToDB = path;
         databaseName.setText(path.substring(path.lastIndexOf("/") + 1));
-
-        File dir = new File(path);
-        File[] directoryListing = dir.listFiles();
-
-        //Create root of tree
-        rootItem = new TreeItem<>();
-        rootItem.setExpanded(true);
         List<String> names = new ArrayList<>();
 
-        //Add all names to tree
-        if(directoryListing != null) {
-            for(File file : directoryListing) {
-                if(file.isDirectory() && !file.getName().equals("uncut_files")){
-                    names.add(file.getName());
-                }
-            }
-        }
-
-        //Sort list case insensitive
-        names.sort(String.CASE_INSENSITIVE_ORDER);
-
-        //Make tree items for each item in list and it's children & add to root
-        for(String name : names){
-            TreeItem<String> dirName = makeBranch(name, rootItem);
-            buildChildren(path + "/" + name, name, dirName);
-        }
-
-        //Make tree
-        dbTreeView.setRoot(rootItem);
-        dbTreeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        dbTreeView.setShowRoot(false);
-    }
-
-    private void buildChildren(String path, String name, TreeItem<String> parent) {
-        //Iterate through audio files in named folder, rename them and make them a TreeItem
+        //Iterate through folders and create list of names
         File dir = new File(path);
         File[] directoryListing = dir.listFiles();
-        //Build children for folders with more than 1 child
-        if(directoryListing != null && directoryListing.length > 1) {
-            for(int i=0; i<directoryListing.length; i++) {
-                if(i!=0) {
-                    TreeItem<String> fileName = makeBranch(name + "(" + String.valueOf(i) + ")", parent);
-                } else {
-                    TreeItem<String> originalName = makeBranch(name, parent);
-                }
-
+        if (directoryListing != null) {
+            for (File child : directoryListing) {
+                names.add(child.getName());
+                //dbListView.getItems().add(child.getName());
             }
         }
+
+        //Sort name and add to list view
+        names.sort(String.CASE_INSENSITIVE_ORDER);
+        dbListView.getItems().addAll(names);
+        dbListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     public void selectAllPressed() {
-        dbTreeView.getSelectionModel().selectAll();
+        dbListView.getSelectionModel().selectAll();
     }
 
     public void deleteBtnPressed() throws IOException {
-        if(dbTreeView.getSelectionModel().getSelectedIndex() != -1) {
-
-            //TODO: Selecting the folder name for an expanded folder doesn't add any of its children.
+        if(dbListView.getSelectionModel().getSelectedIndex() != -1) {
             //TODO: Look into directing with tool tip
-            List<String> toDelete = new ArrayList<>(); //List of names to be deleted from current database
-            //Add selected items to list to delete
-            for(TreeItem<String> treeItem : dbTreeView.getSelectionModel().getSelectedItems()) {
-                if(treeItem.getChildren().size() <= 1) {
-                    toDelete.add(treeItem.getValue());
-                } else if(treeItem.getParent() == rootItem && !treeItem.isExpanded()) {
-                    for(TreeItem<String> child : treeItem.getChildren()) {
-                        toDelete.add(child.getValue());
-                    }
-                }
-            }
+            List<String> toDelete = new ArrayList<>(dbListView.getSelectionModel().getSelectedItems());
             //Pass list into deleteMenuController
             SetUp.getInstance().deleteMenuController.setUpList(toDelete);
 
@@ -100,6 +57,25 @@ public class DatabaseMenuController {
             Stage window = (Stage) deleteBtn.getScene().getWindow();
             window.setScene(scene);
         }
+    }
+
+    public void deleteFiles(List<String> list) {
+        for(String name : list) {
+            //Delete all files inside folder (.delete doesn't work on non-empty directories)
+            File dir = new File(pathToDB + "/" + name);
+            File[] directoryListing = dir.listFiles();
+            if(directoryListing != null) {
+                for (File file : directoryListing) {
+                    File toDelete = new File(file.getPath());
+                    toDelete.delete();
+                }
+            }
+            //Delete now empty folder
+            dir.delete();
+        }
+
+        //Remove names from list
+        dbListView.getItems().removeAll(list);
     }
 
     public void backBtnPressed() throws IOException {

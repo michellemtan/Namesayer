@@ -38,7 +38,7 @@ public class DatabaseMenuController {
             }
         }
 
-        //Cell factory
+        //Set up cell factory for right-click > details specific to each name
         dbListView.setCellFactory(lv -> {
             ListCell<String> cell = new ListCell<>();
             ContextMenu contextMenu = new ContextMenu();
@@ -52,7 +52,7 @@ public class DatabaseMenuController {
                 try {
                     scene = SetUp.getInstance().nameDetailsMenu;
                     SetUp.getInstance().nameDetailsController.setName(cell.itemProperty().get());
-                    SetUp.getInstance().nameDetailsController.setUpList(getChildrenFromParent(cell.itemProperty().get()));
+                    SetUp.getInstance().nameDetailsController.setUpList(getChildrenFromParent(cell.itemProperty().get()), cell.itemProperty().get());
                 } catch (IOException e) {
                     System.out.println("Failed to get scene");
                 }
@@ -74,8 +74,8 @@ public class DatabaseMenuController {
             return cell ;
         });
 
-        names.sort(String.CASE_INSENSITIVE_ORDER);
         //Sort name and add to list view
+        names.sort(String.CASE_INSENSITIVE_ORDER);
         dbListView.getItems().addAll(names);
         dbListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -106,7 +106,7 @@ public class DatabaseMenuController {
             //TODO: Look into directing with tool tip
             List<String> toDelete = new ArrayList<>(dbListView.getSelectionModel().getSelectedItems());
             //Pass list into deleteMenuController
-            SetUp.getInstance().deleteMenuController.setUpList(toDelete);
+            SetUp.getInstance().deleteMenuController.setUpList(toDelete, false);
 
             //Switch scenes
             Scene scene = SetUp.getInstance().deleteMenu;
@@ -115,6 +115,7 @@ public class DatabaseMenuController {
         }
     }
 
+    //Method to delete files if coming from this menu
     public void deleteFiles(List<String> list) {
         for (String name : list) {
             //Delete all files inside folder (.delete doesn't work on non-empty directories)
@@ -132,6 +133,22 @@ public class DatabaseMenuController {
 
         //Remove names from list
         dbListView.getItems().removeAll(list);
+    }
+
+    //Method to delete files if coming from the NameDetails menu
+    public void deleteAudioFiles(List<String> list) throws IOException {
+        String dirName = SetUp.getInstance().nameDetailsController.getName();
+        File dir = new File(pathToDB + "/" + dirName);
+        for(String name : list) {
+            File file = new File(pathToDB + "/" + dirName + "/" + name);
+            file.delete();
+
+        }
+        //Try to delete directory, will only work if non-empty - correct behaviour
+        if(dir.delete()) {
+            //Remove name from list if directory now empty
+            dbListView.getItems().remove(dirName);
+        }
     }
 
     public void backBtnPressed() throws IOException {

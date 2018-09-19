@@ -18,12 +18,20 @@ public class NameDetailsController {
     @FXML private ListView<String> nameListView;
     @FXML private Button backBtn;
     @FXML private Button setDefaultBtn;
+    private String dirName;
 
     public void setName(String name) {
+        dirName = name;
         nameName.setText(name);
     }
 
-    public void setUpList(List<String> list) {
+    public String getName() {
+        return dirName;
+    }
+
+    //Builds list of audio files within 'name' folder
+    public void setUpList(List<String> list, String name) {
+        dirName = name;
         nameListView.getItems().addAll(list);
         nameListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -34,6 +42,7 @@ public class NameDetailsController {
         }
     }
 
+    //Select all
     public void selectAllButtonClicked() {
         nameListView.getSelectionModel().selectAll();
     }
@@ -50,7 +59,8 @@ public class NameDetailsController {
     public void deleteBtnPressed() throws IOException {
         if(nameListView.getSelectionModel().getSelectedIndex() != -1) {
             List<String> toDelete = new ArrayList<>(nameListView.getSelectionModel().getSelectedItems());
-            SetUp.getInstance().deleteMenuController.setUpList(toDelete);
+            //Pass list of files to delete through to delete menu
+            SetUp.getInstance().deleteMenuController.setUpList(toDelete, true);
 
             //Clear list view
             nameListView.getItems().clear();

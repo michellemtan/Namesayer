@@ -44,7 +44,7 @@ public class RecordMenuController {
     @FXML
     private Button micButton;
 
-    private TaskService service;
+    private RecordAudioService service;
 
     private MediaPlayer audioPlayer;
 
@@ -138,7 +138,7 @@ public class RecordMenuController {
 
     private void record() {
 
-        service = new TaskService();
+        service = new RecordAudioService();
         service.setOnSucceeded(e -> {
             audioRecorded++;
         });
@@ -162,15 +162,19 @@ public class RecordMenuController {
         }
     }
 
+    //TODO: FIX BACK BUTTON SO IT GOES BACK TO RECORD, NOT MAIN MENU
     @FXML
-    void micButtonClicked(MouseEvent event) {
+    void micButtonClicked(MouseEvent event) throws IOException {
+        Scene scene = SetUp.getInstance().microphoneCheckMenu;
+        Stage window = (Stage) micButton.getScene().getWindow();
+        window.setScene(scene);
 
     }
 
     /**
      * Class that creates/runs the task to record the audio in the background
      */
-    private class TaskService extends Service<Void> {
+    private class RecordAudioService extends Service<Void> {
         @Override
         protected Task<Void> createTask() {
             return new Task<>() {

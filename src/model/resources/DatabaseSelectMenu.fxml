@@ -71,7 +71,6 @@
                </font>
             </Text>
             <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backButtonClicked" text="←" translateX="10.0" translateY="10.0" />
-            <Button mnemonicParsing="false" text="Mic" translateX="-10.0" translateY="10.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
          </children>
       </GridPane>
    </top>

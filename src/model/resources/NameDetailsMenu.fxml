@@ -7,7 +7,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -16,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.resources.DatabaseMenuController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.resources.NameDetailsController">
    <left>
       <Region prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
    </left>
@@ -26,10 +25,10 @@
    <bottom>
       <ButtonBar prefHeight="70.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <buttons>
-            <Button fx:id="createButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#createButtonClicked" text="Create" translateX="-290.0" />
-            <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#deleteBtnPressed" text="Delete" translateX="-240.0" />
-            <Button fx:id="selectAllButton" mnemonicParsing="false" onMouseClicked="#selectAllButtonClicked" text="Select All" translateX="-190.0" />
-            <Button fx:id="practiceButton" mnemonicParsing="false" onMouseClicked="#practiceButtonClicked" text="Practice" translateX="-140.0" />
+            <Button fx:id="setDefaultBtn" alignment="CENTER" mnemonicParsing="false" text="Set Default" translateX="-280.0" />
+            <Button mnemonicParsing="false" onAction="#deleteBtnPressed" text="Delete" translateX="-230.0" />
+            <Button mnemonicParsing="false" onAction="#selectAllButtonClicked" text="Select All" translateX="-180.0" />
+            <Button mnemonicParsing="false" onAction="#backBtnPressed" text="Cancel" translateX="-130.0" />
          </buttons>
          <BorderPane.margin>
             <Insets />
@@ -39,8 +38,12 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField prefHeight="0.0" prefWidth="500.0" promptText="Search" />
-            <ListView fx:id="dbListView" prefHeight="400.0" prefWidth="400.0">
+            <Label text="Audio Files">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <ListView fx:id="nameListView" prefHeight="400.0" prefWidth="400.0">
                <contextMenu>
                   <ContextMenu fx:id="contextMenu">
                     <items>
@@ -64,7 +67,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="databaseName" alignment="CENTER" contentDisplay="CENTER" text="Database" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <Label fx:id="nameName" alignment="CENTER" contentDisplay="CENTER" text="Database" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <font>
                   <Font size="40.0" />
                </font>

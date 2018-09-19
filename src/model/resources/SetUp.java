@@ -20,6 +20,7 @@ public class SetUp {
     public StartMenuController startMenuController;
     public BadRecordingsMenuController badRecordingsMenuController;
     public InstructionsMenuController instructionsMenuController;
+    public NameDetailsController nameDetailsController;
     //public CompareMenuController compareMenuController;
     //public CreateMenuController createMenuController;
     //public FinishedMenuController finishedMenuController;
@@ -36,6 +37,7 @@ public class SetUp {
     public Scene startMenu;
     public Scene instructionsMenu;
     public Scene badRecordingsMenu;
+    public Scene nameDetailsMenu;
 
     private SetUp() throws IOException {
 
@@ -52,6 +54,8 @@ public class SetUp {
         startMenu = new Scene(FXMLLoader.load(getClass().getResource("StartMenu.fxml")));
         badRecordingsMenu = new Scene(FXMLLoader.load(getClass().getResource("BadRecordingsMenu.fxml")));
         instructionsMenu = new Scene(FXMLLoader.load(getClass().getResource("InstructionsMenu.fxml")));
+        nameDetailsMenu = new Scene(FXMLLoader.load(getClass().getResource("NameDetailsMenu.fxml")));
+
 
         //Load load menu
         databaseMenuLoader();
@@ -63,6 +67,7 @@ public class SetUp {
         startMenuLoader();
         badRecordingsMenuLoader();
         instructionsMenuLoader();
+        nameDetailsMenuLoader();
         //compareMenuLoader();
         //createMenuLoader();
         //finishedMenuLoader();
@@ -127,10 +132,17 @@ public class SetUp {
         badRecordingsMenuController = loader.getController();
         badRecordingsMenuController.initialize();
     }
+
     private void instructionsMenuLoader() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("InstructionsMenu.fxml"));
-        instructionsMenu= new Scene(loader.load());
+        instructionsMenu = new Scene(loader.load());
         instructionsMenuController = loader.getController();
+    }
+
+    private void nameDetailsMenuLoader() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("NameDetailsMenu.fxml"));
+        nameDetailsMenu = new Scene(loader.load());
+        nameDetailsController = loader.getController();
     }
 
     /*private void createMenuLoader() throws IOException {

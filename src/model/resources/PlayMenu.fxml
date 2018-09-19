@@ -34,6 +34,7 @@
                      </font>
                   </Label>
                   <Label fx:id="creationNumber" text="creationNumber" translateX="-15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Button fx:id="backMenuButton" mnemonicParsing="false" onMouseClicked="#backMenuButtonClicked" text="←" translateX="15.0" translateY="15.0" />
                </children>
             </GridPane>
          </top>

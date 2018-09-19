@@ -6,9 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -109,6 +107,30 @@ public class PlayMenuController {
         }
     }
 
-}
+        @FXML
+        void backMenuButtonClicked(MouseEvent event) throws IOException {
+            checkExit();
+        }
+
+    //TODO: Have alert or pop up window confirming if the user wants to exit?
+        private void checkExit() throws IOException {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to stop practicing?", ButtonType.NO, ButtonType.YES);
+            alert.setHeaderText(null);
+            alert.setGraphic(null);
+            alert.setTitle("Record Audio");
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                Scene scene = SetUp.getInstance().practiceMenu;
+                Stage window = (Stage) backMenuButton.getScene().getWindow();
+                window.setScene(scene);
+            } else {
+                alert.close();
+            }
+
+        }
+
+    }
+
 
 

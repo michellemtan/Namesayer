@@ -81,6 +81,7 @@ public class DatabaseSelectMenuController {
         } catch (BackingStoreException e) {
             e.printStackTrace();
         }
+
         for(String key : prefKeys) {
             dbListview.getItems().add(addPref.get(key, key));
         }
@@ -133,7 +134,6 @@ public class DatabaseSelectMenuController {
                     //Instantiate database processor and start processing
                     DatabaseProcessor processor = new DatabaseProcessor(dbListview.getSelectionModel().getSelectedItem());
                     processor.processDB();
-
 
                     //Get scene of next menu, and initialize tree view of files
                     //TODO: instead of using overloaded initialize method, setup tree in a way it can just be added to existing scene (model class)

@@ -28,7 +28,8 @@
                         <Font size="40.0" />
                      </font>
                   </Text>
-                  <Button mnemonicParsing="false" text="Mic" translateX="-15.0" translateY="15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+                  <Button fx:id="micButton" mnemonicParsing="false" onMouseClicked="#micButtonClicked" text="Mic" translateX="-15.0" translateY="15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+                  <Button fx:id="sadFaceButton" mnemonicParsing="false" onMouseClicked="#sadFaceButtonClicked" text="☹" translateX="-70.0" translateY="15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
                </children>
             </GridPane>
             <GridPane prefHeight="395.0" prefWidth="763.0">
@@ -47,9 +48,9 @@
                         <Font size="30.0" />
                      </font>
                   </Button>
-                  <Button fx:id="helpButton" mnemonicParsing="false" onMouseClicked="#helpButtonClicked" prefHeight="295.0" prefWidth="184.0" text="Help" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="instructionsButton" mnemonicParsing="false" onMouseClicked="#instructionsButtonClicked" prefHeight="295.0" prefWidth="184.0" text="Instructions" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
-                        <Font size="30.0" />
+                        <Font size="25.0" />
                      </font>
                   </Button>
                </children>

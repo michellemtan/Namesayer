@@ -8,12 +8,22 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.Mixer;
+import javax.sound.sampled.Port;
 import java.io.IOException;
 
 public class StartMenuController {
 
-    @FXML private Button startButton;
-    @FXML private Button helpButton;
+    @FXML
+    private Button startButton;
+    @FXML
+    private Button instructionsButton;
+    @FXML
+    private Button micButton;
+    @FXML
+    private Button sadFaceButton;
 
     //When the startButton is clicked, the scene changes to the "MainMenu" where the user selects the database they
     //wish to practice
@@ -25,8 +35,27 @@ public class StartMenuController {
     }
 
     @FXML
-    void helpButtonClicked() {
-        //TODO: Add HelpMenu with instructions
+    void instructionsButtonClicked() throws IOException {
+        Scene scene = SetUp.getInstance().instructionsMenu;
+        Stage window = (Stage) instructionsButton.getScene().getWindow();
+        window.setScene(scene);
     }
+
+
+    //TO DO:
+    @FXML
+    void micButtonClicked(MouseEvent event) {
+
+
+    }
+
+    @FXML
+    void sadFaceButtonClicked(MouseEvent event) throws IOException {
+        Scene scene = SetUp.getInstance().badRecordingsMenu;
+        Stage window = (Stage) sadFaceButton.getScene().getWindow();
+        window.setScene(scene);
+
+    }
+
 
 }

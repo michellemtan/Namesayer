@@ -23,10 +23,10 @@
    <bottom>
       <ButtonBar prefHeight="70.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <buttons>
-            <Button alignment="CENTER" mnemonicParsing="false" text="Create" translateX="-250.0" />
+            <Button fx:id="createButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#createButtonClicked" text="Create" translateX="-250.0" />
             <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#deleteBtnPressed" text="Delete" translateX="-200.0" />
-            <Button mnemonicParsing="false" text="Set Default" translateX="-150.0" />
-            <Button mnemonicParsing="false" onAction="#selectAllPressed" text="Select All" translateX="-100.0" />
+            <Button fx:id="defaultButton" mnemonicParsing="false" onMouseClicked="#defaultButtonClicked" text="Set Default" translateX="-150.0" />
+            <Button fx:id="selectAllButton" mnemonicParsing="false" onMouseClicked="#selectAllButtonClicked" text="Select All" translateX="-100.0" />
             <Button fx:id="practiceButton" mnemonicParsing="false" onMouseClicked="#practiceButtonClicked" text="Practice" translateX="-50.0" />
          </buttons>
       </ButtonBar>

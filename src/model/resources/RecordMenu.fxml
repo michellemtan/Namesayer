@@ -31,12 +31,12 @@
                         <Font size="40.0" />
                      </font>
                   </Text>
-                  <Button layoutX="544.0" layoutY="72.0" mnemonicParsing="false" text="Mic" translateX="-15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Button fx:id="micButton" layoutX="544.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#micButtonClicked" text="Mic" translateX="-15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </top>
          <center>
-            <ProgressBar fx:id="progressBar" prefHeight="59.0" prefWidth="556.0" progress="0.31" BorderPane.alignment="CENTER" />
+            <ProgressBar fx:id="progressBar" prefHeight="59.0" prefWidth="556.0" progress="0.0" BorderPane.alignment="CENTER" />
          </center>
          <bottom>
             <GridPane prefHeight="148.0" prefWidth="812.0" BorderPane.alignment="CENTER">

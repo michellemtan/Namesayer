@@ -147,7 +147,10 @@ public class PlayMenuController {
 
         @FXML
         void backMenuButtonClicked(MouseEvent event) throws IOException {
-            checkExit();
+            //checkExit();
+            Scene scene = SetUp.getInstance().exitPracticeMenu;
+            Stage window = (Stage) backMenuButton.getScene().getWindow();
+            window.setScene(scene);
         }
 
     //TODO: Have alert or pop up window confirming if the user wants to exit?

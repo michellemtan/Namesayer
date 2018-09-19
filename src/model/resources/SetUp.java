@@ -22,6 +22,7 @@ public class SetUp {
     public InstructionsMenuController instructionsMenuController;
     public NameDetailsController nameDetailsController;
     public MicrophoneCheckMenuController microphoneCheckMenuController;
+    public ExitPracticeMenuController exitPracticeMenuController;
     //public CompareMenuController compareMenuController;
     //public CreateMenuController createMenuController;
     //public FinishedMenuController finishedMenuController;
@@ -41,6 +42,7 @@ public class SetUp {
     public Scene badRecordingsMenu;
     public Scene nameDetailsMenu;
     public Scene microphoneCheckMenu;
+    public Scene exitPracticeMenu;
 
     private SetUp() throws IOException {
 
@@ -59,6 +61,7 @@ public class SetUp {
         instructionsMenu = new Scene(FXMLLoader.load(getClass().getResource("InstructionsMenu.fxml")));
         nameDetailsMenu = new Scene(FXMLLoader.load(getClass().getResource("NameDetailsMenu.fxml")));
         microphoneCheckMenu = new Scene(FXMLLoader.load(getClass().getResource("MicrophoneCheckMenu.fxml")));
+        exitPracticeMenu = new Scene(FXMLLoader.load(getClass().getResource("ExitPracticeMenu.fxml")));
 
 
         //Load load menu
@@ -73,6 +76,7 @@ public class SetUp {
         instructionsMenuLoader();
         nameDetailsMenuLoader();
         microphoneCheckMenuLoader();
+        exitPracticeMenuLoader();
         //compareMenuLoader();
         //createMenuLoader();
         //finishedMenuLoader();
@@ -155,6 +159,12 @@ public class SetUp {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MicrophoneCheckMenu.fxml"));
         microphoneCheckMenu = new Scene(loader.load());
         microphoneCheckMenuController = loader.getController();
+    }
+
+    private void exitPracticeMenuLoader() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ExitPracticeMenu.fxml"));
+        exitPracticeMenu = new Scene(loader.load());
+        exitPracticeMenuController = loader.getController();
     }
 
     /*private void createMenuLoader() throws IOException {

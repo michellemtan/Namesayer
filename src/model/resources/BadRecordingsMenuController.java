@@ -50,6 +50,7 @@ public class BadRecordingsMenuController {
 
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
 

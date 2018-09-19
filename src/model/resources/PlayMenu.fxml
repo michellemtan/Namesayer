@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.resources.PlayMenuController">
    <children>
@@ -29,12 +28,12 @@
                <children>
                   <Button mnemonicParsing="false" text="☺" translateX="-60.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                   <Button fx:id="sadButton" layoutX="544.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#sadButtonClicked" text="☹" translateX="-15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="17/30" translateX="-16.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                  <Label prefHeight="49.0" prefWidth="327.0" text="Creation Name" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <Label fx:id="creationNameLabel" prefHeight="49.0" prefWidth="327.0" text="Creation Name" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
                         <Font size="40.0" />
                      </font>
                   </Label>
+                  <Label fx:id="creationNumber" text="creationNumber" translateX="-15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </top>
@@ -42,7 +41,7 @@
             <ProgressBar fx:id="progressBar" prefHeight="59.0" prefWidth="556.0" progress="0.31" BorderPane.alignment="CENTER" />
          </center>
          <right>
-            <Button mnemonicParsing="false" onAction="#nextCreationButtonClicked" onMouseClicked="#nextCreationButtonClicked" text="→" translateX="-15.0" BorderPane.alignment="CENTER">
+            <Button fx:id="nextCreationButton" mnemonicParsing="false" onAction="#nextCreationButtonClicked" onMouseClicked="#nextCreationButtonClicked" text="→" translateX="-15.0" BorderPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>

@@ -17,8 +17,9 @@ public class DatabaseMenuController {
     @FXML private Button deleteBtn;
     @FXML private Button practiceButton;
     @FXML private TreeView<String> dbTreeView;
+    private TreeItem<String> rootItem;
 
-    //TODO: make folders only containing 1 item to be not expandable
+    //TODO: should jonothan and Jonothan be the same name!?
     void initialize(String path) {
         databaseName.setText(path.substring(path.lastIndexOf("/") + 1));
 
@@ -26,7 +27,7 @@ public class DatabaseMenuController {
         File[] directoryListing = dir.listFiles();
 
         //Create root of tree
-        TreeItem<String> rootItem = new TreeItem<>();
+        rootItem = new TreeItem<>();
         rootItem.setExpanded(true);
         List<String> names = new ArrayList<>();
 
@@ -34,8 +35,6 @@ public class DatabaseMenuController {
         if(directoryListing != null) {
             for(File file : directoryListing) {
                 if(file.isDirectory() && !file.getName().equals("uncut_files")){
-                    //TreeItem<String> dirName = makeBranch(file.getName(), rootItem);
-                    //buildChildren(file.getPath(), file.getName(), dirName);
                     names.add(file.getName());
                 }
             }
@@ -60,13 +59,15 @@ public class DatabaseMenuController {
         //Iterate through audio files in named folder, rename them and make them a TreeItem
         File dir = new File(path);
         File[] directoryListing = dir.listFiles();
-        if(directoryListing != null) {
+        //Build children for folders with more than 1 child
+        if(directoryListing != null && directoryListing.length > 1) {
             for(int i=0; i<directoryListing.length; i++) {
-                if(i==0) {
-                    TreeItem<String> fileName = makeBranch(name, parent);
-                } else {
+                if(i!=0) {
                     TreeItem<String> fileName = makeBranch(name + "(" + String.valueOf(i) + ")", parent);
+                } else {
+                    TreeItem<String> originalName = makeBranch(name, parent);
                 }
+
             }
         }
     }
@@ -77,6 +78,24 @@ public class DatabaseMenuController {
 
     public void deleteBtnPressed() throws IOException {
         if(dbTreeView.getSelectionModel().getSelectedIndex() != -1) {
+
+            //TODO: Selecting the folder name for an expanded folder doesn't add any of its children.
+            //TODO: Look into directing with tool tip
+            List<String> toDelete = new ArrayList<>(); //List of names to be deleted from current database
+            //Add selected items to list to delete
+            for(TreeItem<String> treeItem : dbTreeView.getSelectionModel().getSelectedItems()) {
+                if(treeItem.getChildren().size() <= 1) {
+                    toDelete.add(treeItem.getValue());
+                } else if(treeItem.getParent() == rootItem && !treeItem.isExpanded()) {
+                    for(TreeItem<String> child : treeItem.getChildren()) {
+                        toDelete.add(child.getValue());
+                    }
+                }
+            }
+            //Pass list into deleteMenuController
+            SetUp.getInstance().deleteMenuController.setUpList(toDelete);
+
+            //Switch scenes
             Scene scene = SetUp.getInstance().deleteMenu;
             Stage window = (Stage) deleteBtn.getScene().getWindow();
             window.setScene(scene);

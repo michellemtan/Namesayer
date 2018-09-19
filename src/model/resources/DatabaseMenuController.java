@@ -1,11 +1,9 @@
 package model.resources;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -22,7 +20,6 @@ public class DatabaseMenuController {
     @FXML private Button practiceButton;
     @FXML private ListView<String> dbListView;
     @FXML private Button createButton;
-    @FXML private Button defaultButton;
     @FXML private Button selectAllButton;
     private String pathToDB;
 
@@ -38,19 +35,67 @@ public class DatabaseMenuController {
         if (directoryListing != null) {
             for (File child : directoryListing) {
                 names.add(child.getName());
-                //dbListView.getItems().add(child.getName());
             }
         }
 
-        //Sort name and add to list view
+        //Cell factory
+        dbListView.setCellFactory(lv -> {
+            ListCell<String> cell = new ListCell<>();
+            ContextMenu contextMenu = new ContextMenu();
+
+            MenuItem editItem = new MenuItem();
+            editItem.textProperty().bind((Bindings.format("Details... ")));
+            editItem.setOnAction(event -> {
+                String item = cell.getItem();
+                //Switch scenes
+                Scene scene = null;
+                try {
+                    scene = SetUp.getInstance().nameDetailsMenu;
+                    SetUp.getInstance().nameDetailsController.setName(cell.itemProperty().get());
+                    SetUp.getInstance().nameDetailsController.setUpList(getChildrenFromParent(cell.itemProperty().get()));
+                } catch (IOException e) {
+                    System.out.println("Failed to get scene");
+                }
+                Stage window = (Stage) deleteBtn.getScene().getWindow();
+                window.setScene(scene);
+
+            });
+            contextMenu.getItems().add(editItem);
+
+            cell.textProperty().bind(cell.itemProperty());
+
+            cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
+                if (isNowEmpty) {
+                    cell.setContextMenu(null);
+                } else {
+                    cell.setContextMenu(contextMenu);
+                }
+            });
+            return cell ;
+        });
+
         names.sort(String.CASE_INSENSITIVE_ORDER);
+        //Sort name and add to list view
         dbListView.getItems().addAll(names);
         dbListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
     }
 
+    private List<String> getChildrenFromParent(String name) {
+        //Create list
+        List<String> children = new ArrayList<>();
+        File dir = new File(pathToDB + "/" + name);
+        File[] directoryListing = dir.listFiles();
+        if(directoryListing != null) {
+            for(File file : directoryListing) {
+                children.add(file.getName());
+            }
+        }
+        children.sort(String.CASE_INSENSITIVE_ORDER);
+        return children;
+    }
 
-    @FXML
-    void selectAllButtonClicked(MouseEvent event) {
+    public void selectAllButtonClicked() {
         dbListView.getSelectionModel().selectAll();
         deleteBtn.setDisable(false);
         practiceButton.setDisable(false);
@@ -108,15 +153,11 @@ public class DatabaseMenuController {
         if (dbListView.getSelectionModel().getSelectedItems().isEmpty()) {
             //If no item in the list is selected, the delete and continue buttons should be disabled
             deleteBtn.setDisable(true);
-            defaultButton.setDisable(true);
             selectAllButton.setDisable(true);
             practiceButton.setDisable(true);
-        } else if (dbListView.getSelectionModel().getSelectedItems().size() > 1) {
-            defaultButton.setDisable(true);
         } else {
             //If the tree view list is not empty and a creation has been selected, allow the user to delete creations etc.
             deleteBtn.setDisable(false);
-            defaultButton.setDisable(false);
             selectAllButton.setDisable(false);
             practiceButton.setDisable(false);
         }
@@ -124,12 +165,12 @@ public class DatabaseMenuController {
 
     //TODO: Add alert or disable create button?
     @FXML
-    void createButtonClicked(MouseEvent event) {
+    void createButtonClicked() {
         //To be implemented in assignment 4
     }
 
     @FXML
-    void defaultButtonClicked(MouseEvent event) {
+    void defaultButtonClicked() {
 
     }
 }

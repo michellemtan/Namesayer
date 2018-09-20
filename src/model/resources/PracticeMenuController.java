@@ -27,6 +27,14 @@ public class PracticeMenuController {
     private List<String> creationList;
     private String selectedName;
 
+    //TODO: Dear Michelle,
+    //TODO: Some fixes that must now be made to this class are:
+    //TODO: Make the thumbs up/down buttons,
+    //TODO: Make a practice all button (or some way of playing through all items in creationsListView,
+    //TODO: Pushing the pause button while media is playing just restarts it rather than pausing,
+    //TODO: Maybe make details menu work if you want (or I can I don't mind),
+    //TODO: If you select an audio file that is empty (really quiet/bad quality ones get wiped during silenceremove) e.g Li, then play it, playing others doesn't work.
+
     public void clearListView() {
         creationsListView.getItems().clear();
     }

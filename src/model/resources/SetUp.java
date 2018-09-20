@@ -2,6 +2,7 @@ package model.resources;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import model.redundant.PracticeMenuController;
 
 import java.io.IOException;
 
@@ -56,7 +57,7 @@ public class SetUp {
         finishedMenu = new Scene(FXMLLoader.load(getClass().getResource("FinishedMenu.fxml")));
         databaseSelectMenu = new Scene(FXMLLoader.load(getClass().getResource("DatabaseSelectMenu.fxml")));
         playMenu = new Scene(FXMLLoader.load(getClass().getResource("PlayMenu.fxml")));
-        practiceMenu = new Scene(FXMLLoader.load(getClass().getResource("PracticeMenu.fxml")));
+        practiceMenu = new Scene(FXMLLoader.load(getClass().getResource("../redundant/PracticeMenu.fxml")));
         recordMenu = new Scene(FXMLLoader.load(getClass().getResource("RecordMenu.fxml")));
         startMenu = new Scene(FXMLLoader.load(getClass().getResource("StartMenu.fxml")));
         badRecordingsMenu = new Scene(FXMLLoader.load(getClass().getResource("BadRecordingsMenu.fxml")));
@@ -110,7 +111,7 @@ public class SetUp {
     }
 
     private void practiceMenuLoader() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("PracticeMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../redundant/PracticeMenu.fxml"));
         practiceMenu = new Scene(loader.load());
         practiceMenuController = loader.getController();
     }

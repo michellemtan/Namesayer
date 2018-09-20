@@ -70,7 +70,7 @@ public class MicrophoneCheckMenuController {
 
                     try {
                         //Create a BASH process to record the sample audio
-                        ProcessBuilder audioBuilder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -f alsa -i default -t 5 ./audio.wav");
+                        ProcessBuilder audioBuilder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -f alsa -i default -t 5 ./sampleaudio.wav");
                         Process audio = audioBuilder.start();
 
                         PauseTransition delay = new PauseTransition(Duration.seconds(5));
@@ -99,7 +99,7 @@ public class MicrophoneCheckMenuController {
                     @Override
                     protected Void call() throws IOException {
                         //Create a process calling BASH commands to create a video of the recording's volume levels
-                        ProcessBuilder videoBuilder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -i audio.wav -filter_complex \"[0:a]showvolume=f=0.5:c=VOLUME:b=4:w=1000:h=320,format=yuv420p[v]\" -map \"[v]\" -map 0:a sample.mp4");
+                        ProcessBuilder videoBuilder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -i sampleaudio.wav -filter_complex \"[0:a]showvolume=f=0.5:c=VOLUME:b=4:w=1000:h=320,format=yuv420p[v]\" -map \"[v]\" -map 0:a samplevideo.mp4");
                         try {
                             Process video = videoBuilder.start();
                         } catch (IOException e) {
@@ -119,5 +119,11 @@ public class MicrophoneCheckMenuController {
                     }
                 };
             }
+        }
+
+        @FXML
+        void initialize(){
+            //This ensures that the user records a sample audio file before they can press play
+            playButton.setDisable(true);
         }
 }

@@ -17,6 +17,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class PracticeMenuController {
 
@@ -38,7 +39,7 @@ public class PracticeMenuController {
     private MediaPlayer audioPlayer;
 
     @FXML
-    private ListView<?> creationsListView;
+    private ListView<String> creationsListView;
 
     @FXML
     private ContextMenu contextMenu;
@@ -48,6 +49,12 @@ public class PracticeMenuController {
 
     @FXML
     private Button backButton;
+
+
+    //Fill list with selected items
+    public void setUpList(List<String> list) {
+        creationsListView.getItems().addAll(list);
+    }
 
     @FXML
     void backButtonClicked(MouseEvent event) throws IOException {
@@ -99,7 +106,7 @@ public class PracticeMenuController {
     }
 
     @FXML
-    void shuffleButtonClicked(MouseEvent event) {
+    void shuffleButtonClicked() {
 
     }
 

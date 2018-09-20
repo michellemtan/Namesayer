@@ -87,7 +87,6 @@ public class RecordCreationMenuController {
         window.setScene(scene);
     }
 
-    @FXML
     //Process audio and add to new folder & add to list
     //TODO: make menu say name if newCreation = false
     @FXML

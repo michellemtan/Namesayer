@@ -10,7 +10,7 @@ public enum Menu {
     COMPAREMENU("model/resources/CompareMenu.fxml"),
     CREATEMENU("model/resources/CreateMenu.fxml"),
     DATABASEMENU("model/resources/DatabaseMenu.fxml"),
-    DATABASESELECTMENU("model/resources/CompareMenu.fxml"),
+    DATABASESELECTMENU("model/resources/DatabaseSelectMenu.fxml"),
     DELETEMENU("model/resources/DeleteMenu.fxml"),
     EXITPRACTICEMENU("model/resources/ExitPracticeMenu.fxml"),
     FINISHEDMENU("model/resources/FinishedMenu.fxml"),

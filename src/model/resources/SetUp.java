@@ -24,7 +24,8 @@ public class SetUp {
     public MicrophoneCheckMenuController microphoneCheckMenuController;
     public ExitPracticeMenuController exitPracticeMenuController;
     //public CompareMenuController compareMenuController;
-    //public CreateMenuController createMenuController;
+    public CreateMenuController createMenuController;
+    public RecordCreationMenuController recordCreationMenuController;
     //public FinishedMenuController finishedMenuController;
 
     public Scene compareMenu;
@@ -42,6 +43,7 @@ public class SetUp {
     public Scene nameDetailsMenu;
     public Scene microphoneCheckMenu;
     public Scene exitPracticeMenu;
+    public Scene recordCreationMenu;
 
     private SetUp() throws IOException {
 
@@ -61,6 +63,7 @@ public class SetUp {
         nameDetailsMenu = new Scene(FXMLLoader.load(getClass().getResource("NameDetailsMenu.fxml")));
         microphoneCheckMenu = new Scene(FXMLLoader.load(getClass().getResource("MicrophoneCheckMenu.fxml")));
         exitPracticeMenu = new Scene(FXMLLoader.load(getClass().getResource("ExitPracticeMenu.fxml")));
+        recordCreationMenu = new Scene(FXMLLoader.load(getClass().getResource("RecordCreationMenu.fxml")));
 
 
         //Load load menu
@@ -77,7 +80,8 @@ public class SetUp {
         microphoneCheckMenuLoader();
         exitPracticeMenuLoader();
         //compareMenuLoader();
-        //createMenuLoader();
+        createMenuLoader();
+        recordCreationMenuLoader();
         //finishedMenuLoader();
 
     }
@@ -166,11 +170,17 @@ public class SetUp {
         exitPracticeMenuController = loader.getController();
     }
 
-    /*private void createMenuLoader() throws IOException {
+    private void createMenuLoader() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateMenu.fxml"));
         createMenu = new Scene(loader.load());
         createMenuController = loader.getController();
-    }*/
+    }
+
+    private void recordCreationMenuLoader() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("RecordCreationMenu.fxml"));
+        recordCreationMenu = new Scene(loader.load());
+        recordCreationMenuController = loader.getController();
+    }
 
     /*private void compareMenuLoader() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("CompareMenu.fxml"));

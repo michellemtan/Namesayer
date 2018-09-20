@@ -1,18 +1,16 @@
 package model.resources;
 
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.redundant.Menu;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: Should we rename this class to creations list or something else?
+//TODO: Should we rename this class to creations list or something else? That sounds like a good idea
 public class DatabaseMenuController {
 
     @FXML private Label databaseName;
@@ -24,6 +22,20 @@ public class DatabaseMenuController {
     @FXML private Button selectAllButton;
     private String pathToDB;
 
+    public ListView<String> getDbListView() {
+        return dbListView;
+    }
+
+    public String getPathToDB() {
+        return pathToDB;
+    }
+
+    public void addItem(String name) {
+        dbListView.getItems().add(name);
+        dbListView.getItems().sort(String.CASE_INSENSITIVE_ORDER);
+    }
+
+    //TODO: refactor controllers and fxml files into different packages
     //TODO: should jonothan and Jonothan be the same name!?
     void initialize(String path) {
         pathToDB = path;
@@ -39,7 +51,7 @@ public class DatabaseMenuController {
             }
         }
 
-        //Set up cell factory for right-click > details specific to each name
+        /*//Set up cell factory for right-click > details specific to each name
         dbListView.setCellFactory(lv -> {
             ListCell<String> cell = new ListCell<>();
             ContextMenu contextMenu = new ContextMenu();
@@ -55,7 +67,6 @@ public class DatabaseMenuController {
                     SetUp.getInstance().nameDetailsController.setName(cell.itemProperty().get());
                     SetUp.getInstance().nameDetailsController.setUpList(getChildrenFromParent(cell.itemProperty().get()), cell.itemProperty().get());
                 } catch (IOException e) {
-                    System.out.println("Failed to get scene");
                 }
                 Stage window = (Stage) deleteBtn.getScene().getWindow();
                 window.setScene(scene);
@@ -73,11 +84,11 @@ public class DatabaseMenuController {
                 }
             });
             return cell ;
-        });
+        });*/
 
         //Sort name and add to list view
-        names.sort(String.CASE_INSENSITIVE_ORDER);
         dbListView.getItems().addAll(names);
+        dbListView.getItems().sort(String.CASE_INSENSITIVE_ORDER);
         dbListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
     }
@@ -158,15 +169,13 @@ public class DatabaseMenuController {
         window.setScene(scene);
     }
 
-
-    @FXML
-    void practiceButtonClicked() throws IOException {
-        Scene scene = SetUp.getInstance().practiceMenu;
-        Stage window = (Stage) practiceButton.getScene().getWindow();
-        window.setScene(scene);
-
-//        Scene scene = practiceButton.getScene();
-//        scene.setRoot(Menu.PRACTICEMENU.loader().load());
+    public void practiceButtonClicked() throws IOException {
+        //Only change scenes if they've actually selected something
+        if(dbListView.getSelectionModel().getSelectedItems().size() > 0) {
+            Scene scene = SetUp.getInstance().practiceMenu;
+            Stage window = (Stage) practiceButton.getScene().getWindow();
+            window.setScene(scene);
+        }
     }
 
     //This method determines if the buttons are disabled or not, depending on the state of the tree list view
@@ -184,14 +193,9 @@ public class DatabaseMenuController {
         }
     }
 
-    //TODO: Add alert or disable create button?
-    @FXML
-    void createButtonClicked() {
-        //To be implemented in assignment 4
-    }
-
-    @FXML
-    void defaultButtonClicked() {
-
+    public void createButtonClicked() throws IOException {
+        Scene scene = SetUp.getInstance().createMenu;
+        Stage window = (Stage) createButton.getScene().getWindow();
+        window.setScene(scene);
     }
 }

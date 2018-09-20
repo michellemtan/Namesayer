@@ -31,7 +31,9 @@ public class StartMenuController {
     void startButtonClicked() throws IOException {
         Scene scene = SetUp.getInstance().databaseSelectMenu;
         Stage window = (Stage) startButton.getScene().getWindow();
-        window.setScene(scene);
+        window.setScene(scene);/*
+        Scene scene = micButton.getScene();
+        scene.setRoot(Menu.DATABASESELECTMENU.loader().load());*/
     }
 
     @FXML

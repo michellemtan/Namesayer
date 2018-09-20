@@ -136,7 +136,6 @@ public class DatabaseSelectMenuController {
                     processor.processDB();
 
                     //Get scene of next menu, and initialize tree view of files
-                    //TODO: instead of using overloaded initialize method, setup tree in a way it can just be added to existing scene (model class)
                     scene = SetUp.getInstance().databaseMenu;
                     window = (Stage) continueBtn.getScene().getWindow();
                     SetUp.getInstance().dbMenuController.initialize(dbListview.getSelectionModel().getSelectedItem());

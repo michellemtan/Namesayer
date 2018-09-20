@@ -15,6 +15,8 @@ import java.util.Set;
 
 public class NameDetailsController {
 
+    //TODO: Maybe add a .wav so the user knows that they're audio wav files
+
     @FXML private Label nameName;
     @FXML private ListView<String> nameListView;
     @FXML private Button backBtn;

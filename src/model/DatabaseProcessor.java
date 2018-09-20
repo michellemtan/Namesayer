@@ -56,7 +56,7 @@ public class DatabaseProcessor {
      * Code to trim audio's silence via bash ffmpeg command
      * @param command bash command to be run
      */
-    private void trimAudio(String command) {
+    public void trimAudio(String command) {
         try {
             ProcessBuilder builderRecord = new ProcessBuilder("/bin/bash", "-c", command);
             Process process = builderRecord.start();
@@ -69,7 +69,6 @@ public class DatabaseProcessor {
                 System.out.println(line);
             }
         } catch (IOException e) {
-            System.out.println("Error trimming audio");
         }
     }
 

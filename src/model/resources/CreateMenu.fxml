@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.resources.CreateMenuController">
    <children>
       <BorderPane prefHeight="500.0" prefWidth="800.0">
          <top>
@@ -32,7 +32,7 @@
                         <Font size="40.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" text="←" translateX="10.0" />
+                  <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtnClicked" text="←" translateX="10.0" />
                </children>
             </GridPane>
          </top>
@@ -49,7 +49,7 @@
                 <RowConstraints maxHeight="139.0" minHeight="10.0" prefHeight="139.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField translateY="-20.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField fx:id="textInput" promptText="e.g 'Mike'" translateY="-20.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -59,7 +59,7 @@
                         <Font size="24.0" />
                      </font>
                   </Text>
-                  <Button mnemonicParsing="false" text="Create!" translateX="180.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Button fx:id="createBtn" mnemonicParsing="false" onAction="#createBtnPressed" text="Create!" translateX="180.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="24.0" />
                      </font>

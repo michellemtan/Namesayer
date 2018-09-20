@@ -12,6 +12,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -50,18 +51,25 @@ public class PracticeMenuController {
 
     @FXML
     void backButtonClicked(MouseEvent event) throws IOException {
-        // Load the new scene
-        Scene scene = backButton.getScene();
-        scene.setRoot(Menu.EXITPRACTICEMENU.loader().load());
+//        // Load the new scene
+//        Scene scene = backButton.getScene();
+//        scene.setRoot(Menu.EXITPRACTICEMENU.loader().load());
+
+        Scene scene = SetUp.getInstance().exitPracticeMenu;
+        Stage window = (Stage) backButton.getScene().getWindow();
+        window.setScene(scene);
 
     }
 
     @FXML
     void detailsButtonClicked(MouseEvent event) throws IOException {
-        // Load the new scene
-        Scene scene = detailsButton.getScene();
-        scene.setRoot(Menu.NAMEDETAILSMENU.loader().load());
+//        // Load the new scene
+//        Scene scene = detailsButton.getScene();
+//        scene.setRoot(Menu.NAMEDETAILSMENU.loader().load());
 
+        Scene scene = SetUp.getInstance().nameDetailsMenu;
+        Stage window = (Stage) detailsButton.getScene().getWindow();
+        window.setScene(scene);
     }
 
     @FXML
@@ -83,8 +91,11 @@ public class PracticeMenuController {
 
     @FXML
     void recordButtonClicked(MouseEvent event) throws IOException {
-        Scene scene = recordButton.getScene();
-        scene.setRoot(Menu.RECORDMENU.loader().load());
+//        Scene scene = recordButton.getScene();
+//        scene.setRoot(Menu.RECORDMENU.loader().load());
+        Scene scene = SetUp.getInstance().practiceMenu;
+        Stage window = (Stage) recordButton.getScene().getWindow();
+        window.setScene(scene);
     }
 
     @FXML

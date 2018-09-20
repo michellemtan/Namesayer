@@ -2,7 +2,6 @@ package model.resources;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import model.redundant.PracticeMenuController;
 
 import java.io.IOException;
 
@@ -15,7 +14,7 @@ public class SetUp {
     public DatabaseMenuController dbMenuController;
     public DeleteMenuController deleteMenuController;
     public DatabaseSelectMenuController databaseSelectMenuController;
-    public PlayMenuController playMenuController;
+    //public PlayMenuController playMenuController;
     public PracticeMenuController practiceMenuController;
     public RecordMenuController recordMenuController;
     public StartMenuController startMenuController;
@@ -28,14 +27,13 @@ public class SetUp {
     //public CreateMenuController createMenuController;
     //public FinishedMenuController finishedMenuController;
 
-
     public Scene compareMenu;
     public Scene createMenu;
     public Scene databaseMenu;
     public Scene deleteMenu;
     public Scene finishedMenu;
     public Scene databaseSelectMenu;
-    public Scene playMenu;
+    //public Scene playMenu;
     public Scene practiceMenu;
     public Scene recordMenu;
     public Scene startMenu;
@@ -54,8 +52,8 @@ public class SetUp {
         deleteMenu = new Scene(FXMLLoader.load(getClass().getResource("DeleteMenu.fxml")));
         finishedMenu = new Scene(FXMLLoader.load(getClass().getResource("FinishedMenu.fxml")));
         databaseSelectMenu = new Scene(FXMLLoader.load(getClass().getResource("DatabaseSelectMenu.fxml")));
-        playMenu = new Scene(FXMLLoader.load(getClass().getResource("PlayMenu.fxml")));
-        practiceMenu = new Scene(FXMLLoader.load(getClass().getResource("../redundant/PracticeMenu.fxml")));
+        //playMenu = new Scene(FXMLLoader.load(getClass().getResource("../redundant/PlayMenu.fxml")));
+        practiceMenu = new Scene(FXMLLoader.load(getClass().getResource("PracticeMenu.fxml")));
         recordMenu = new Scene(FXMLLoader.load(getClass().getResource("RecordMenu.fxml")));
         startMenu = new Scene(FXMLLoader.load(getClass().getResource("StartMenu.fxml")));
         badRecordingsMenu = new Scene(FXMLLoader.load(getClass().getResource("BadRecordingsMenu.fxml")));
@@ -69,7 +67,7 @@ public class SetUp {
         databaseMenuLoader();
         deleteMenuLoader();
         mainMenuLoader();
-        playMenuLoader();
+        //playMenuLoader();
         practiceMenuLoader();
         recordMenuLoader();
         startMenuLoader();
@@ -107,17 +105,17 @@ public class SetUp {
     }
 
     private void practiceMenuLoader() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../redundant/PracticeMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PracticeMenu.fxml"));
         practiceMenu = new Scene(loader.load());
         practiceMenuController = loader.getController();
     }
-
-    private void playMenuLoader() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("PlayMenu.fxml"));
-        playMenu = new Scene(loader.load());
-        playMenuController = loader.getController();
-        playMenuController.initialize();
-    }
+//
+//    private void playMenuLoader() throws IOException {
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("../redundant/PlayMenu.fxml"));
+//        playMenu = new Scene(loader.load());
+//        playMenuController = loader.getController();
+//        playMenuController.initialize();
+//    }
 
     private void mainMenuLoader() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DatabaseSelectMenu.fxml"));

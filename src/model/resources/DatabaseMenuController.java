@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.redundant.Menu;
 
 import java.io.File;
 import java.io.IOException;
@@ -160,12 +161,12 @@ public class DatabaseMenuController {
 
     @FXML
     void practiceButtonClicked() throws IOException {
-//        Scene scene = SetUp.getInstance().practiceMenu;
-//        Stage window = (Stage) practiceButton.getScene().getWindow();
-//        window.setScene(scene);
+        Scene scene = SetUp.getInstance().practiceMenu;
+        Stage window = (Stage) practiceButton.getScene().getWindow();
+        window.setScene(scene);
 
-        Scene scene = practiceButton.getScene();
-        scene.setRoot(Menu.PRACTICEMENU.loader().load());
+//        Scene scene = practiceButton.getScene();
+//        scene.setRoot(Menu.PRACTICEMENU.loader().load());
     }
 
     //This method determines if the buttons are disabled or not, depending on the state of the tree list view

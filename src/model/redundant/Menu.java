@@ -1,4 +1,4 @@
-package model.resources;
+package model.redundant;
 import javafx.fxml.FXMLLoader;
 
 import java.net.URL;

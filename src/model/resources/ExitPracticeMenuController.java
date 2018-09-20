@@ -18,7 +18,7 @@ public class ExitPracticeMenuController {
 
     @FXML
     void cancelButtonClicked(MouseEvent event) throws IOException {
-        Scene scene = SetUp.getInstance().playMenu;
+        Scene scene = SetUp.getInstance().practiceMenu;
         Stage window = (Stage) cancelButton.getScene().getWindow();
         window.setScene(scene);
     }

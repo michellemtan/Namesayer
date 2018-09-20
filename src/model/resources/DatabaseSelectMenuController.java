@@ -164,8 +164,4 @@ public class DatabaseSelectMenuController {
             continueBtn.setDisable(false);
         }
     }
-
-    public String returnPath(){
-        return selectedDir;
-    }
 }

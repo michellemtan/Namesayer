@@ -17,14 +17,17 @@ public class ExitPracticeMenuController {
     private Button confirmButton;
 
     @FXML
-    void cancelButtonClicked(MouseEvent event) throws IOException {
+    void cancelButtonClicked() throws IOException {
         Scene scene = SetUp.getInstance().practiceMenu;
         Stage window = (Stage) cancelButton.getScene().getWindow();
         window.setScene(scene);
     }
 
     @FXML
-    void confirmButtonClicked(MouseEvent event) throws IOException {
+    void confirmButtonClicked() throws IOException {
+
+        SetUp.getInstance().practiceMenuController.clearListView();
+
         Scene scene = SetUp.getInstance().databaseMenu;
         Stage window = (Stage) confirmButton.getScene().getWindow();
         window.setScene(scene);

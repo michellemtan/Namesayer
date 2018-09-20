@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 //TODO: Should we rename this class to creations list or something else? That sounds like a good idea
@@ -189,7 +190,9 @@ public class DatabaseMenuController {
 //            List<String> toDelete = new ArrayList<>(dbListView.getSelectionModel().getSelectedItems());
 //            SetUp.getInstance().practiceMenuController.setUpList(toDelete);
 
-            SetUp.getInstance().practiceMenuController.setUpList(dbListView.getSelectionModel().getSelectedItems());
+
+            List<String> toDelete = new ArrayList<>(dbListView.getSelectionModel().getSelectedItems());
+            SetUp.getInstance().practiceMenuController.setUpList(toDelete);
             Scene scene = SetUp.getInstance().practiceMenu;
             Stage window = (Stage) practiceButton.getScene().getWindow();
             window.setScene(scene);

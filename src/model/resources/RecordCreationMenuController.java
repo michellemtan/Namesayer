@@ -25,7 +25,6 @@ public class RecordCreationMenuController {
     @FXML private Button continueButton;
     @FXML private ProgressBar progressBar;
     @FXML private Button micButton;
-    @FXML private Button backButton;
     private String creationName;
     private MediaPlayer audioPlayer;
     private int audioRecorded;
@@ -88,6 +87,7 @@ public class RecordCreationMenuController {
         window.setScene(scene);
     }
 
+    @FXML
     //Process audio and add to new folder & add to list
     //TODO: make menu say name if newCreation = false
     @FXML
@@ -161,27 +161,36 @@ public class RecordCreationMenuController {
     }
 
     @FXML
-    void recordButtonClicked() {
+    void recordButtonClicked() throws IOException {
         if (audioRecorded==0) {
             record();
         } else {
-            //Confirm if the user wants to overwrite existing recording
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to overwrite your recording?", ButtonType.NO, ButtonType.YES);
-            alert.setHeaderText(null);
-            alert.setGraphic(null);
-            alert.setTitle("Overwrite Recording?");
-            alert.showAndWait();
+//            //Confirm if the user wants to overwrite existing recording
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to overwrite your recording?", ButtonType.NO, ButtonType.YES);
+//            alert.setHeaderText(null);
+//            alert.setGraphic(null);
+//            alert.setTitle("Overwrite Recording?");
+//            alert.showAndWait();
+//
+//            if (alert.getResult() == ButtonType.YES) {
+//                record();
+//            } else {
+//                alert.close();
+//            }
 
-            if (alert.getResult() == ButtonType.YES) {
+            //Switch scenes
+            Scene scene = SetUp.getInstance().overwriteRecordingMenu;
+            Stage window = (Stage) recordButton.getScene().getWindow();
+            window.setScene(scene);
+
+            if (SetUp.getInstance().overwriteRecordingMenuController.isOverwriteRecording()){
                 record();
-            } else {
-                alert.close();
             }
         }
     }
 
     private void record() {
-
+        backBtn.setDisable(true);
         RecordAudioService service = new RecordAudioService();
         service.setOnSucceeded(e -> {
             audioRecorded++;

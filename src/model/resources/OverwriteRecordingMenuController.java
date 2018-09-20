@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ExitPracticeMenuController {
+public class OverwriteRecordingMenuController {
 
     @FXML
     private Button cancelButton;
@@ -16,17 +16,29 @@ public class ExitPracticeMenuController {
     @FXML
     private Button confirmButton;
 
+    private boolean overwriteRecording;
+
     @FXML
     void cancelButtonClicked(MouseEvent event) throws IOException {
-        Scene scene = SetUp.getInstance().practiceMenu;
+        overwriteRecording = false;
+        Scene scene = SetUp.getInstance().recordCreationMenu;
         Stage window = (Stage) cancelButton.getScene().getWindow();
         window.setScene(scene);
     }
 
     @FXML
     void confirmButtonClicked(MouseEvent event) throws IOException {
-        Scene scene = SetUp.getInstance().practiceMenu;
+        overwriteRecording = true;
+        Scene scene = SetUp.getInstance().recordCreationMenu;
         Stage window = (Stage) confirmButton.getScene().getWindow();
         window.setScene(scene);
+    }
+
+    public boolean isOverwriteRecording(){
+        if (overwriteRecording == true){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

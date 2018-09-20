@@ -1,6 +1,9 @@
 package model.resources;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
@@ -97,14 +100,14 @@ public class RecordMenuController {
 
     @FXML
     void continueButtonClicked(MouseEvent event) throws IOException {
-        Scene scene = SetUp.getInstance().playMenu;
+        Scene scene = SetUp.getInstance().practiceMenu;
         Stage window = (Stage) continueButton.getScene().getWindow();
         window.setScene(scene);
     }
 
     @FXML
     void backButtonClicked(MouseEvent event) throws IOException {
-        Scene scene = SetUp.getInstance().playMenu;
+        Scene scene = SetUp.getInstance().practiceMenu;
         Stage window = (Stage) continueButton.getScene().getWindow();
         window.setScene(scene);
     }
@@ -153,10 +156,20 @@ public class RecordMenuController {
         });
 
         //TODO: Make the progress bar change so it slowly loads when 5 seconds is reached
-        progressBar.progressProperty().bind(service.progressProperty());
+        //progressBar.progressProperty().bind(service.progressProperty());
 
         service.start();
     }
+
+    private void progressBar() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(5), new KeyValue(progressBar.progressProperty(), 1))
+        );
+        timeline.setCycleCount(1);
+        timeline.play();
+    }
+
 
     //This method asks the user if they want to record their audio again
     private void askRerecord() {
@@ -189,7 +202,7 @@ public class RecordMenuController {
             return new Task<Void>() {
                 @Override
                 protected Void call() {
-
+                    progressBar();
                     recordButton.setDisable(true);
                     playbackButton.setDisable(true);
                     compareButton.setDisable(true);
@@ -205,9 +218,9 @@ public class RecordMenuController {
                             playbackButton.setDisable(false);
                             compareButton.setDisable(false);
                             continueButton.setDisable(false);
-                            recordButton.setDisable(false);
-                            progressBar.progressProperty().unbind();
-                            progressBar.progressProperty().set(1.0);
+                           recordButton.setDisable(false);
+//                            progressBar.progressProperty().unbind();
+//                            progressBar.progressProperty().set(1.0);
                         });
 
 

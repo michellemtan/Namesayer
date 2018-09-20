@@ -19,14 +19,14 @@ public class InstructionsMenuController {
 
     //Return the user to the start menu when the back button is clicked
     @FXML
-    void backButtonClicked() throws IOException {
+    void backButtonClicked(MouseEvent event) throws IOException {
         Scene scene = SetUp.getInstance().startMenu;
         Stage window = (Stage) backButton.getScene().getWindow();
         window.setScene(scene);
 
-//        // Load the new scene
-        /*Scene scene = backButton.getScene();
-        scene.setRoot(Menu.STARTMENU.loader().load());*/
+////        // Load the new scene
+//        Scene scene = backButton.getScene();
+//        scene.setRoot(Menu.STARTMENU.loader().load());
 
     }
 

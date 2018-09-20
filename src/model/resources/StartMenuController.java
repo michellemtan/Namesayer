@@ -42,9 +42,9 @@ public class StartMenuController {
         Stage window = (Stage) instructionsButton.getScene().getWindow();
         window.setScene(scene);
 
-        // Load the new scene
-        /*Scene scene = instructionsButton.getScene();
-        scene.setRoot(Menu.INSTRUCTIONSMENU.loader().load());*/
+//        // Load the new scene
+//        Scene scene = instructionsButton.getScene();
+//        scene.setRoot(SetUp.Menu.INSTRUCTIONSMENU.loader().load();
     }
 
 

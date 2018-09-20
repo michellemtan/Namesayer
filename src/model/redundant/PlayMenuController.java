@@ -1,4 +1,4 @@
-package model.resources;
+package model.redundant;
 
 import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
@@ -14,6 +14,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.resources.SetUp;
 
 import java.io.*;
 

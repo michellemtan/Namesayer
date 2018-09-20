@@ -1,5 +1,4 @@
-/*
-package model.resources;
+package model.redundant;
 import javafx.fxml.FXMLLoader;
 
 import java.net.URL;
@@ -18,7 +17,6 @@ public enum Menu {
     INSTRUCTIONSMENU("model/resources/InstructionsMenu.fxml"),
     MICROPHONECHECKMENU("model/resources/MicrophoneCheckMenu.fxml"),
     NAMEDETAILSMENU("model/resources/NameDetailsMenu.fxml"),
-    PLAYMENU("model/resources/PlayMenu.fxml"),
     PRACTICEMENU("model/resources/PracticeMenu.fxml"),
     RECORDMENU("model/resources/RecordMenu.fxml"),
     STARTMENU("model/resources/StartMenu.fxml");
@@ -34,4 +32,3 @@ public enum Menu {
         return new FXMLLoader(url);
     }
 }
-*/

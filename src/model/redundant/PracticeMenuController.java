@@ -38,7 +38,7 @@ public class PracticeMenuController {
 
     @FXML
     void startButtonClicked() throws IOException {
-        Scene scene = SetUp.getInstance().playMenu;
+        Scene scene = SetUp.getInstance().practiceMenu;
         Stage window = (Stage) startButton.getScene().getWindow();
         window.setScene(scene);
     }

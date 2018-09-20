@@ -1,5 +1,8 @@
 package model.resources;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -108,16 +111,25 @@ public class PracticeMenuController {
         audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
         audioPlayer.play();
 
-        audioPlayer.currentTimeProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
-            Duration newDuration = (Duration) newValue;
-            progressBar.setProgress(newDuration.toSeconds()/5);
-
-        });
+//        audioPlayer.currentTimeProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
+//            Duration newDuration = (Duration) newValue;
+//            progressBar.setProgress(newDuration.toSeconds()/5);
+//
+//        });
         audioPlayer.setOnReady(new Runnable() {
             public void run() {
-                progressBar.setProgress(0.0);
+                progressBar();
             }
         });
+    }
+
+    private void progressBar() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
+                new KeyFrame(audioPlayer.getTotalDuration(), new KeyValue(progressBar.progressProperty(), 1))
+        );
+        timeline.setCycleCount(1);
+        timeline.play();
     }
 
     private void setUpTitle(){

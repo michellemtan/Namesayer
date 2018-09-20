@@ -54,7 +54,7 @@ public class NameDetailsController {
         //Clear list view
         nameListView.getItems().clear();
 
-        Scene scene = SetUp.getInstance().databaseMenu;
+        Scene scene = SetUp.getInstance().practiceMenu;
         Stage window = (Stage) backBtn.getScene().getWindow();
         window.setScene(scene);
     }

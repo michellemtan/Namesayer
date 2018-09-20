@@ -14,6 +14,7 @@ import model.DatabaseProcessor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class RecordCreationMenuController {
 
@@ -86,24 +87,59 @@ public class RecordCreationMenuController {
         window.setScene(scene);
     }
 
-    @FXML
     //Process audio and add to new folder & add to list
+    //TODO: make menu say name if newCreation = false
+    @FXML
     void continueButtonClicked() throws IOException {
         //Processor object to remove silence
         DatabaseProcessor dbProcessor = new DatabaseProcessor("");
         String pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
         File audioFile = new File(System.getProperty("user.dir") + "/" + "audio.wav");
-        new File(pathToDB + "/" + creationName).mkdir();
-        String command = "ffmpeg -y -i " + audioFile.getPath() + " -af silenceremove=1:0:-35dB " + pathToDB + "/" + creationName + "/" + creationName + ".wav";
-        dbProcessor.trimAudio(command);
 
-        //Add newly created files to listview
-        SetUp.getInstance().dbMenuController.addItem(creationName);
+        //This is for NEW creation if newCreation = true)
+        if(newCreation) {
+            new File(pathToDB + "/" + creationName).mkdir();
+            String command = "ffmpeg -y -i " + audioFile.getPath() + " -af silenceremove=1:0:-35dB " + pathToDB + "/" + bashify(creationName) + "/" + bashify(creationName) + ".wav";
+            dbProcessor.trimAudio(command);
+            //Add newly created files to listview
+            SetUp.getInstance().dbMenuController.addItem(creationName);
+        //Code here for adding to EXISTING creation (newCreation = false)
+        } else {
+            File dir = new File(pathToDB + "/" + creationName);
+            int count = Objects.requireNonNull(dir.listFiles()).length;
+            String command = "ffmpeg -y -i " + audioFile.getPath() + " -af silenceremove=1:0:-35dB " + pathToDB + "/" + bashify(creationName) + "/" + bashify(creationName) + "\\(" + String.valueOf(count) + "\\)" + ".wav";
+            dbProcessor.trimAudio(command);
+        }
 
+        audioFile.delete();
         //Switch scenes
         Scene scene = SetUp.getInstance().databaseMenu;
         Stage window = (Stage) continueButton.getScene().getWindow();
         window.setScene(scene);
+    }
+
+    //Changes these commands to have backslash before so bash works
+    public String bashify(String name) {
+        //Characters that break the bash command TODO: test if these are all of them
+        char invalids[] = "$/%:\\ .,-".toCharArray();
+        boolean found = false;
+        String bashed = "";
+        char[] chars = name.toCharArray();
+        for(char cha : chars) {
+            for(char invalid : invalids) {
+                if(cha == invalid) {
+                    bashed += "\\" + cha;
+                    found = true;
+                    break;
+                } else {
+                    found = false;
+                }
+            }
+            if(!found) {
+                bashed += cha;
+            }
+        }
+        return bashed;
     }
 
     @FXML

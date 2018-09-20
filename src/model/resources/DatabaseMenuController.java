@@ -185,6 +185,11 @@ public class DatabaseMenuController {
     public void practiceButtonClicked() throws IOException {
         //Only change scenes if they've actually selected something
         if(dbListView.getSelectionModel().getSelectedItems().size() > 0) {
+            //Populate list in next scene with selected items
+            List<String> toDelete = new ArrayList<>(dbListView.getSelectionModel().getSelectedItems());
+            SetUp.getInstance().practiceMenuController.setUpList(toDelete);
+
+
             Scene scene = SetUp.getInstance().practiceMenu;
             Stage window = (Stage) practiceButton.getScene().getWindow();
             window.setScene(scene);
@@ -206,6 +211,7 @@ public class DatabaseMenuController {
         }
     }
 
+    //TODO: if 1 item selected and create is pressed auto-fill text field in next window
     public void createButtonClicked() throws IOException {
         Scene scene = SetUp.getInstance().createMenu;
         Stage window = (Stage) createButton.getScene().getWindow();

@@ -44,6 +44,12 @@ public class PracticeMenuController {
     @FXML
     private Button backButton;
 
+
+    //Fill list with selected items
+    public void setUpList(List<String> list) {
+        creationsListView.getItems().addAll(list);
+    }
+
     @FXML
     void backButtonClicked(MouseEvent event) throws IOException {
 //        // Load the new scene

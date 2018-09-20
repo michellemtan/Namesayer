@@ -21,6 +21,8 @@ public class DeleteMenuController {
     private List<String> toDelete;
     private boolean fromDetails;
 
+    //TODO: Delete name? Contains x subrecordings
+
     public void backBtnPressed() throws IOException {
         //Clear list view
         deleteListView.getItems().clear();

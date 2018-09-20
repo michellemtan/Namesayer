@@ -41,29 +41,41 @@
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="355.0" minHeight="0.0" prefHeight="322.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="77.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="77.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="77.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ListView fx:id="recordingsList" maxHeight="273.0" maxWidth="274.0" minHeight="100.0" minWidth="100.0" prefHeight="273.0" prefWidth="274.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label text="Existing Recordings" translateY="20.0" GridPane.halignment="CENTER" />
-                  <Label text="Your Recording" translateY="40.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                  <Button fx:id="playPauseButton" mnemonicParsing="false" onMouseClicked="#playPauseButtonClicked" text="▶ ▍▍" translateY="50.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <ListView fx:id="recordingsList" maxHeight="273.0" maxWidth="274.0" minHeight="100.0" minWidth="100.0" prefHeight="273.0" prefWidth="274.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                  <Label text="Existing Recordings" translateY="10.0" GridPane.halignment="CENTER" />
+                  <Label text="Your Recording" translateY="40.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                  <Button fx:id="playPauseButton" mnemonicParsing="false" onMouseClicked="#playPauseButtonClicked" text="▶ ▍▍" translateY="50.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="☺" translateX="-100.0" translateY="50.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button mnemonicParsing="false" text="☺" translateX="-100.0" translateY="50.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="sadFaceButton" mnemonicParsing="false" onMouseClicked="#sadFaceButtonClicked" text="☹" translateX="100.0" translateY="50.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="sadFaceButton" mnemonicParsing="false" onMouseClicked="#sadFaceButtonClicked" text="☹" translateX="100.0" translateY="50.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <ProgressBar fx:id="progressBar" prefHeight="56.0" prefWidth="329.0" progress="0.33" translateY="-50.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <ProgressBar fx:id="progressBar" prefHeight="56.0" prefWidth="329.0" progress="0.33" translateY="-50.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <Button fx:id="playPauseExistingButton" mnemonicParsing="false" onMouseClicked="#playPauseButtonClicked" prefHeight="32.0" prefWidth="277.0" text="▶ ▍▍" translateY="-20.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="saveAudioButton" mnemonicParsing="false" onMouseClicked="#playPauseButtonClicked" prefHeight="32.0" prefWidth="277.0" text="Save Audio →" translateY="-20.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
                </children>
             </GridPane>
          </children>

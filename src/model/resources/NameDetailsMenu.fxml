@@ -27,8 +27,6 @@
          <buttons>
             <Button fx:id="setDefaultBtn" alignment="CENTER" mnemonicParsing="false" text="Set Default" translateX="-280.0" />
             <Button mnemonicParsing="false" onAction="#deleteBtnPressed" text="Delete" translateX="-230.0" />
-            <Button mnemonicParsing="false" onAction="#selectAllButtonClicked" text="Select All" translateX="-180.0" />
-            <Button mnemonicParsing="false" onAction="#backBtnPressed" text="Cancel" translateX="-130.0" />
          </buttons>
          <BorderPane.margin>
             <Insets />

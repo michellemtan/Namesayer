@@ -30,6 +30,11 @@ public class DatabaseMenuController {
         return pathToDB;
     }
 
+    public void addItem(String name) {
+        dbListView.getItems().add(name);
+        dbListView.getItems().sort(String.CASE_INSENSITIVE_ORDER);
+    }
+
     //TODO: refactor controllers and fxml files into different packages
     //TODO: should jonothan and Jonothan be the same name!?
     void initialize(String path) {
@@ -82,8 +87,8 @@ public class DatabaseMenuController {
         });*/
 
         //Sort name and add to list view
-        names.sort(String.CASE_INSENSITIVE_ORDER);
         dbListView.getItems().addAll(names);
+        dbListView.getItems().sort(String.CASE_INSENSITIVE_ORDER);
         dbListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
     }

@@ -66,6 +66,7 @@ public class RecordCreationMenuController {
         window.setScene(scene);
     }
 
+    //Set initial button positions and set fields
     public void setUp(String name) throws IOException {
         newCreation = false;
         creationName = name;
@@ -74,7 +75,6 @@ public class RecordCreationMenuController {
         continueButton.setDisable(true);
         playbackButton.setDisable(true);
         ListView<String> listView = SetUp.getInstance().dbMenuController.getDbListView();
-        System.out.println(creationName);
         if(!listView.getItems().contains(name)) {
             newCreation = true;
         }
@@ -87,9 +87,9 @@ public class RecordCreationMenuController {
         window.setScene(scene);
     }
 
-    @FXML
+    //Process audio and add to new folder & add to list
     void continueButtonClicked() throws IOException {
-
+        //Processor object to remove silence
         DatabaseProcessor dbProcessor = new DatabaseProcessor("");
         String pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
         File audioFile = new File(System.getProperty("user.dir") + "/" + "audio.wav");
@@ -97,6 +97,10 @@ public class RecordCreationMenuController {
         String command = "ffmpeg -y -i " + audioFile.getPath() + " -af silenceremove=1:0:-35dB " + pathToDB + "/" + creationName + "/" + creationName + ".wav";
         dbProcessor.trimAudio(command);
 
+        //Add newly created files to listview
+        SetUp.getInstance().dbMenuController.addItem(creationName);
+
+        //Switch scenes
         Scene scene = SetUp.getInstance().databaseMenu;
         Stage window = (Stage) continueButton.getScene().getWindow();
         window.setScene(scene);

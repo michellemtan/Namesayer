@@ -27,6 +27,7 @@ public class SetUp {
     public CreateMenuController createMenuController;
     public RecordCreationMenuController recordCreationMenuController;
     //public FinishedMenuController finishedMenuController;
+    public OverwriteRecordingMenuController overwriteRecordingMenuController;
 
     public Scene compareMenu;
     public Scene createMenu;
@@ -44,6 +45,7 @@ public class SetUp {
     public Scene microphoneCheckMenu;
     public Scene exitPracticeMenu;
     public Scene recordCreationMenu;
+    public Scene overwriteRecordingMenu;
 
     private SetUp() throws IOException {
 
@@ -64,6 +66,7 @@ public class SetUp {
         microphoneCheckMenu = new Scene(FXMLLoader.load(getClass().getResource("MicrophoneCheckMenu.fxml")));
         exitPracticeMenu = new Scene(FXMLLoader.load(getClass().getResource("ExitPracticeMenu.fxml")));
         recordCreationMenu = new Scene(FXMLLoader.load(getClass().getResource("RecordCreationMenu.fxml")));
+        overwriteRecordingMenu = new Scene(FXMLLoader.load(getClass().getResource("OverwriteRecordingMenu.fxml")));
 
 
         //Load load menu
@@ -82,6 +85,7 @@ public class SetUp {
         //compareMenuLoader();
         createMenuLoader();
         recordCreationMenuLoader();
+        overwriteRecordingMenuLoader();
         //finishedMenuLoader();
 
     }
@@ -180,6 +184,12 @@ public class SetUp {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("RecordCreationMenu.fxml"));
         recordCreationMenu = new Scene(loader.load());
         recordCreationMenuController = loader.getController();
+    }
+
+    private void overwriteRecordingMenuLoader() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("OverwriteRecordingMenu.fxml"));
+        overwriteRecordingMenu = new Scene(loader.load());
+        overwriteRecordingMenuController = loader.getController();
     }
 
     /*private void compareMenuLoader() throws IOException {

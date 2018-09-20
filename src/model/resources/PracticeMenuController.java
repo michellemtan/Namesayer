@@ -1,14 +1,11 @@
 package model.resources;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -17,6 +14,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class PracticeMenuController {
 
@@ -38,10 +36,7 @@ public class PracticeMenuController {
     private MediaPlayer audioPlayer;
 
     @FXML
-    private ListView<?> creationsListView;
-
-    @FXML
-    private ContextMenu contextMenu;
+    private ListView<String> creationsListView;
 
     @FXML
     private Label creationName;
@@ -93,7 +88,7 @@ public class PracticeMenuController {
     void recordButtonClicked(MouseEvent event) throws IOException {
 //        Scene scene = recordButton.getScene();
 //        scene.setRoot(Menu.RECORDMENU.loader().load());
-        Scene scene = SetUp.getInstance().practiceMenu;
+        Scene scene = SetUp.getInstance().recordMenu;
         Stage window = (Stage) recordButton.getScene().getWindow();
         window.setScene(scene);
     }
@@ -148,5 +143,25 @@ public class PracticeMenuController {
                 recordButton.setDisable(true);
             }
         }
+    }
+
+    public void setUpList(List<String> list) {
+        creationsListView.getItems().removeAll();
+        creationsListView.getItems().addAll(list);
+        creationsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        setUpTitle();
+    }
+
+    private void setUpTitle(){
+        if (!creationsListView.getItems().isEmpty()){
+            creationsListView.getSelectionModel().select(0);
+            creationName.textProperty().bind( Bindings.selectString(creationsListView.getSelectionModel().selectedItemProperty()));
+        }
+    }
+
+    @FXML
+    void initialize (){
+        creationsListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        setUpTitle();
     }
 }

@@ -1,5 +1,7 @@
 package model.resources;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -90,7 +92,18 @@ public class DatabaseMenuController {
         dbListView.getItems().addAll(names);
         dbListView.getItems().sort(String.CASE_INSENSITIVE_ORDER);
         dbListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
+        dbListView.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                //Add to practice menu
+                try {
+                    SetUp.getInstance().practiceMenuController.setUpList(
+                            dbListView.getSelectionModel().getSelectedItems());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private List<String> getChildrenFromParent(String name) {

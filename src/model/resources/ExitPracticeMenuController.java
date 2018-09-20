@@ -25,7 +25,7 @@ public class ExitPracticeMenuController {
 
     @FXML
     void confirmButtonClicked(MouseEvent event) throws IOException {
-        Scene scene = SetUp.getInstance().practiceMenu;
+        Scene scene = SetUp.getInstance().databaseMenu;
         Stage window = (Stage) confirmButton.getScene().getWindow();
         window.setScene(scene);
     }

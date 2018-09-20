@@ -32,7 +32,7 @@ public class MicrophoneCheckMenuController {
 
     private RecordAudioService service;
 
-    private MediaPlayer audioPlayer;
+    private MediaPlayer videoPlayer;
 
     @FXML
     void backButtonClicked(MouseEvent event) throws IOException {
@@ -43,10 +43,21 @@ public class MicrophoneCheckMenuController {
 
     @FXML
     void playButtonClicked(MouseEvent event) {
+        if (videoPlayer==null){
+            videoPlayerCreator();
+        } else if (videoPlayer != null && videoPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            videoPlayer.stop();
+            videoPlayerCreator();
+        }
+
+
+    }
+
+    private void videoPlayerCreator(){
         Media mediaPick = new Media(new File(System.getProperty("user.dir") + "/sample").toURI().toString() + ".mp4");
-        audioPlayer = new MediaPlayer(mediaPick);
-        mediaView.setMediaPlayer(audioPlayer);
-        audioPlayer.play();
+        videoPlayer = new MediaPlayer(mediaPick);
+        mediaView.setMediaPlayer(videoPlayer);
+        videoPlayer.play();
     }
 
     @FXML

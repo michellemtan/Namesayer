@@ -87,6 +87,7 @@ public class RecordCreationMenuController {
         window.setScene(scene);
     }
 
+    @FXML
     //Process audio and add to new folder & add to list
     void continueButtonClicked() throws IOException {
         //Processor object to remove silence

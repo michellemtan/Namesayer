@@ -3,7 +3,6 @@ package model;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.resources.Menu;
 import model.resources.SetUp;
 
 import java.io.IOException;

@@ -17,7 +17,6 @@ public enum Menu {
     INSTRUCTIONSMENU("model/resources/InstructionsMenu.fxml"),
     MICROPHONECHECKMENU("model/resources/MicrophoneCheckMenu.fxml"),
     NAMEDETAILSMENU("model/resources/NameDetailsMenu.fxml"),
-    PLAYMENU("model/resources/PlayMenu.fxml"),
     PRACTICEMENU("model/resources/PracticeMenu.fxml"),
     RECORDMENU("model/resources/RecordMenu.fxml"),
     STARTMENU("model/resources/StartMenu.fxml");

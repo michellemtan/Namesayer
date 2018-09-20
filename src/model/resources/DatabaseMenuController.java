@@ -193,6 +193,7 @@ public class DatabaseMenuController {
         }
     }
 
+    //TODO: if 1 item selected and create is pressed auto-fill text field in next window
     public void createButtonClicked() throws IOException {
         Scene scene = SetUp.getInstance().createMenu;
         Stage window = (Stage) createButton.getScene().getWindow();

@@ -3,6 +3,8 @@ package model.resources;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,7 +16,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 public class PracticeMenuController {
 
@@ -44,10 +46,17 @@ public class PracticeMenuController {
     @FXML
     private Button backButton;
 
+    private ObservableList<String> creationList;
+
+    private String selectedName;
+
 
     //Fill list with selected items
-    public void setUpList(List<String> list) {
-        creationsListView.getItems().addAll(list);
+    public void setUpList(ObservableList<String> list) {
+        //An observable list ensures the list is always correctly updated (no duplicates)
+        creationList = list;
+        creationsListView.setItems(creationList);
+        setUpTitle();
     }
 
     @FXML
@@ -74,20 +83,15 @@ public class PracticeMenuController {
     }
 
     @FXML
-    void playButtonClicked(MouseEvent event) {
+    void playButtonClicked(MouseEvent event) throws IOException {
         if (audioPlayer == null){
             //Start playing audio
             mediaPlayerCreator();
         }//If an audio file is already playing, stop
         else if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-            audioPlayer.pause();
-            //If audio is already stopped, play from where it was paused
-        } else if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
-            audioPlayer.play();
-        } else if (audioPlayer.getStatus() == MediaPlayer.Status.STOPPED){
+            audioPlayer.stop();
             mediaPlayerCreator();
         }
-
     }
 
     @FXML
@@ -101,12 +105,19 @@ public class PracticeMenuController {
 
     @FXML
     void shuffleButtonClicked(MouseEvent event) {
-
+        if (creationList.size()>1){
+            ArrayList<String> shuffleList = new ArrayList<String>(creationList.subList(0, creationList.size()-1));
+            Collections.shuffle(shuffleList);
+            creationList = FXCollections.observableArrayList(shuffleList);
+            creationsListView.setItems(creationList);
+            setUpTitle();
+        }
     }
 
-    private void mediaPlayerCreator(){
+    private void mediaPlayerCreator() throws IOException {
 
-        Media media = new Media(new File("audio.wav").toURI().toString());
+        String databasePath = SetUp.getInstance().databaseSelectMenuController.returnPath();
+        Media media = new Media(new File(databasePath+"/"+selectedName+"/"+selectedName).toURI().toString());
         audioPlayer = new MediaPlayer(media);
         audioPlayer.setOnPlaying(new AudioRunnable(false));
         audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
@@ -151,23 +162,23 @@ public class PracticeMenuController {
         }
     }
 
-    public void setUpList(List<String> list) {
-        creationsListView.getItems().removeAll();
-        creationsListView.getItems().addAll(list);
-        creationsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        setUpTitle();
-    }
-
     private void setUpTitle(){
-        if (!creationsListView.getItems().isEmpty()){
+        if (creationList!=null){
             creationsListView.getSelectionModel().select(0);
-            creationName.textProperty().bind( Bindings.selectString(creationsListView.getSelectionModel().selectedItemProperty()));
+            creationName.setText(creationList.get(0));
         }
     }
 
     @FXML
     void initialize (){
         creationsListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        setUpTitle();
+        creationsListView.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                selectedName = creationList.get(creationsListView.getSelectionModel().getSelectedIndex());
+                creationName.setText(selectedName);
+
+            }
+        });
     }
 }

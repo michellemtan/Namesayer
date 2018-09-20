@@ -28,6 +28,7 @@ public class DatabaseSelectMenuController {
     private TaskService service;
     private Stage window; //Main window which all scenes are in
     private Scene scene; //The database menu scene which is next scene
+    private String selectedDir;
 
     //TODO: instead of directory path make directory name displayed, and implement numbers for matching name dirs. Possibly
     //store keys in hash map in initialise to do this?
@@ -42,6 +43,8 @@ public class DatabaseSelectMenuController {
             //Add selected file to preferences to be saved
             dbListview.getItems().add(selectedDirectory.getPath());
             addPref.put(selectedDirectory.getPath(), selectedDirectory.getPath());
+
+            selectedDir = selectedDirectory.getPath();
         }
     }
 
@@ -146,7 +149,7 @@ public class DatabaseSelectMenuController {
     }
 
     //This method determines if the buttons are disabled or not, depending on the state of the database list view
-    public void checkButtonBehaviour(){
+    private void checkButtonBehaviour(){
         //If the database list is empty, disable the Continue and Delete buttons so user must add a directory
         if (dbListview.getItems().isEmpty()) {
             continueBtn.setDisable(true);
@@ -160,5 +163,9 @@ public class DatabaseSelectMenuController {
             deleteBtn.setDisable(false);
             continueBtn.setDisable(false);
         }
+    }
+
+    public String returnPath(){
+        return selectedDir;
     }
 }

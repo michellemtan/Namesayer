@@ -92,18 +92,18 @@ public class DatabaseMenuController {
         dbListView.getItems().addAll(names);
         dbListView.getItems().sort(String.CASE_INSENSITIVE_ORDER);
         dbListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        dbListView.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                //Add to practice menu
-                try {
-                    SetUp.getInstance().practiceMenuController.setUpList(
-                            dbListView.getSelectionModel().getSelectedItems());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        dbListView.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//                //Add to practice menu
+//                try {
+//                    SetUp.getInstance().practiceMenuController.setUpList(
+//                            dbListView.getSelectionModel().getSelectedItems());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
     }
 
     private List<String> getChildrenFromParent(String name) {
@@ -186,10 +186,10 @@ public class DatabaseMenuController {
         //Only change scenes if they've actually selected something
         if(dbListView.getSelectionModel().getSelectedItems().size() > 0) {
             //Populate list in next scene with selected items
-            List<String> toDelete = new ArrayList<>(dbListView.getSelectionModel().getSelectedItems());
-            SetUp.getInstance().practiceMenuController.setUpList(toDelete);
+//            List<String> toDelete = new ArrayList<>(dbListView.getSelectionModel().getSelectedItems());
+//            SetUp.getInstance().practiceMenuController.setUpList(toDelete);
 
-
+            SetUp.getInstance().practiceMenuController.setUpList(dbListView.getSelectionModel().getSelectedItems());
             Scene scene = SetUp.getInstance().practiceMenu;
             Stage window = (Stage) practiceButton.getScene().getWindow();
             window.setScene(scene);

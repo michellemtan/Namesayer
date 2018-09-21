@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.DatabaseProcessor;
@@ -25,6 +26,7 @@ public class RecordCreationMenuController {
     @FXML private Button continueButton;
     @FXML private ProgressBar progressBar;
     @FXML private Button micButton;
+    @FXML private Text recordLabel;
     private String creationName;
     private MediaPlayer audioPlayer;
     private int audioRecorded;
@@ -78,6 +80,8 @@ public class RecordCreationMenuController {
         if(!listView.getItems().contains(name)) {
             newCreation = true;
         }
+
+        recordLabel.setText("Record Audio for " + creationName);
     }
 
     @FXML
@@ -88,7 +92,6 @@ public class RecordCreationMenuController {
     }
 
     //Process audio and add to new folder & add to list
-    //TODO: make menu say name if newCreation = false
     @FXML
     void continueButtonClicked() throws IOException {
         //Processor object to remove silence
@@ -121,7 +124,7 @@ public class RecordCreationMenuController {
     //Changes these commands to have backslash before so bash works
     public String bashify(String name) {
         //Characters that break the bash command TODO: test if these are all of them
-        char invalids[] = "$/%:\\ .,-".toCharArray();
+        char invalids[] = "$/%:\\ .,-()@".toCharArray();
         boolean found = false;
         String bashed = "";
         char[] chars = name.toCharArray();
@@ -160,44 +163,9 @@ public class RecordCreationMenuController {
     }
 
     @FXML
-    void recordButtonClicked() throws IOException {
-        if (audioRecorded==0) {
-            record();
-        } else {
-//            //Confirm if the user wants to overwrite existing recording
-//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to overwrite your recording?", ButtonType.NO, ButtonType.YES);
-//            alert.setHeaderText(null);
-//            alert.setGraphic(null);
-//            alert.setTitle("Overwrite Recording?");
-//            alert.showAndWait();
-//
-//            if (alert.getResult() == ButtonType.YES) {
-//                record();
-//            } else {
-//                alert.close();
-//            }
-
-            //Switch scenes
-            Scene scene = SetUp.getInstance().overwriteRecordingMenu;
-            Stage window = (Stage) recordButton.getScene().getWindow();
-            window.setScene(scene);
-
-            if (SetUp.getInstance().overwriteRecordingMenuController.isOverwriteRecording()){
-                record();
-            }
-        }
-    }
-
-    private void record() {
+    void recordButtonClicked() {
         backBtn.setDisable(true);
         RecordAudioService service = new RecordAudioService();
-        service.setOnSucceeded(e -> {
-            audioRecorded++;
-        });
-
-        //TODO: Make the progress bar change so it slowly loads when 5 seconds is reached
-        //progressBar.progressProperty().bind(service.progressProperty());
-
         service.start();
     }
 
@@ -232,6 +200,7 @@ public class RecordCreationMenuController {
                     playbackButton.setDisable(true);
                     compareButton.setDisable(true);
                     continueButton.setDisable(true);
+                    micButton.setDisable(true);
 
                     try {
                         ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -f alsa -i default -t 5 ./audio.wav");
@@ -248,6 +217,8 @@ public class RecordCreationMenuController {
                             }
                             continueButton.setDisable(false);
                             recordButton.setDisable(false);
+                            backBtn.setDisable(false);
+                            micButton.setDisable(false);
                         });
 
 

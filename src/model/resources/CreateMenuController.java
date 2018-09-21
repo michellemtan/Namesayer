@@ -1,5 +1,6 @@
 package model.resources;
 
+import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,9 +27,27 @@ public class CreateMenuController {
         name = textInput.getText();
         SetUp.getInstance().recordCreationMenuController.setUp(name);
 
+
         Scene scene = SetUp.getInstance().recordCreationMenu;
         Stage window = (Stage) createBtn.getScene().getWindow();
         window.setScene(scene);
+    }
+
+    //Create binding to create button is disabled if no input yet
+    public void setUpButton() {
+        BooleanBinding bb = new BooleanBinding() {
+            {
+                super.bind(textInput.textProperty());
+            }
+            protected boolean computeValue() {
+                if(textInput.getText().isEmpty() || textInput.getText() == null) {
+                    return true;
+                }
+                return false;
+            }
+        };
+        //Bind disable property to ok button so it will be disabled if invalid input
+        createBtn.disableProperty().bind(bb);
     }
 
     public String getName() {

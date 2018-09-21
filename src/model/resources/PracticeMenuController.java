@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.Delayed;
+import java.util.stream.Collectors;
 
 public class PracticeMenuController {
 
@@ -141,15 +143,9 @@ public class PracticeMenuController {
     void playButtonClicked() throws IOException {
         selectedName = creationsListView.getSelectionModel().getSelectedItem();
         creationName.setText(selectedName);
-        if (audioPlayer == null){
-            //Start playing audio
-            mediaPlayerCreator();
-        }//If an audio file is already playing, stop
-        else if (audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-            audioPlayer.stop();
-            mediaPlayerCreator();
-        }
+        mediaPlayerCreator();
     }
+
 
     @FXML
     void recordButtonClicked() throws IOException {
@@ -166,23 +162,36 @@ public class PracticeMenuController {
 
     private void mediaPlayerCreator() throws IOException {
 
+        List<String> audioList = new ArrayList<String>();
+        audioList.addAll(creationsListView.getItems().stream().collect(Collectors.toList()));
+
         ObservableList<Media> mediaList = FXCollections.observableArrayList();
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 
-        for (String creation : creationList) {
+        System.out.println("Creation list size: " + audioList.size());
+
+        for (String creation : audioList) {
             //Set up the file to be played
             selectedName = creation;
             Media media = new Media(new File(databasePath + "/" + selectedName + "/" + selectedName).toURI().toString() + ".wav");
             mediaList.add(media);
          }
+
          playMediaTracks(mediaList);
     }
 
 
     private void playMediaTracks(ObservableList<Media> mediaList) {
+
+        System.out.println("playMediaTracks");
+        System.out.println("Media size: " +mediaList.size());
         if (mediaList.size() == 0) {
             return;
         }
+
+        List<String> nameList = new ArrayList<String>(creationList);
+        creationName.setText(nameList.get(0));
+        nameList.remove(0);
         audioPlayer = new MediaPlayer(mediaList.remove(0));
         audioPlayer.play();
 
@@ -194,6 +203,11 @@ public class PracticeMenuController {
         audioPlayer.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 playMediaTracks(mediaList);
             }
         });
@@ -203,7 +217,7 @@ public class PracticeMenuController {
     private void progressBar() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
-                new KeyFrame(audioPlayer.getTotalDuration(), new KeyValue(progressBar.progressProperty(), 1))
+                new KeyFrame((audioPlayer.getTotalDuration().add(Duration.millis(1000))), new KeyValue(progressBar.progressProperty(), 1))
         );
         timeline.setCycleCount(1);
         timeline.play();

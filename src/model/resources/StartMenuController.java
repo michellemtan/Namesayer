@@ -60,6 +60,7 @@ public class StartMenuController {
     @FXML
     void sadFaceButtonClicked(MouseEvent event) throws IOException {
         Scene scene = SetUp.getInstance().badRecordingsMenu;
+        SetUp.getInstance().badRecordingsMenuController.updateTextLog();
         Stage window = (Stage) sadFaceButton.getScene().getWindow();
         window.setScene(scene);
 

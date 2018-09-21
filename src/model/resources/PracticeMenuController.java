@@ -12,13 +12,18 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
 public class PracticeMenuController {
 
     @FXML private Button playPauseButton;
+
+    @FXML private Button sadFaceButton;
     @FXML private Button detailsButton;
     @FXML private Button shuffleButton;
     @FXML private Button recordButton;
@@ -50,6 +55,13 @@ public class PracticeMenuController {
         setUpTitle();
     }
 
+    private void setUpTitle(){
+        if (creationList!=null){
+            creationsListView.getSelectionModel().select(0);
+            creationName.setText(creationList.get(0));
+        }
+    }
+
     @FXML
     void backButtonClicked() throws IOException {
        // Load the new scene
@@ -68,15 +80,19 @@ public class PracticeMenuController {
         //Scene scene = detailsButton.getScene();
         //scene.setRoot(Menu.NAMEDETAILSMENU.loader().load());
 
+        selectedName = creationsListView.getSelectionModel().getSelectedItem();
+
         Scene scene = SetUp.getInstance().nameDetailsMenu;
         Stage window = (Stage) detailsButton.getScene().getWindow();
+        SetUp.getInstance().nameDetailsController.setName(selectedName);
+        SetUp.getInstance().nameDetailsController.setUpList(SetUp.getInstance().dbMenuController.getChildrenFromParent(selectedName),selectedName);
         window.setScene(scene);
     }
 
     @FXML
     void playButtonClicked() throws IOException {
         selectedName = creationsListView.getSelectionModel().getSelectedItem();
-        creationName.setText(creationsListView.getSelectionModel().getSelectedItem());
+        creationName.setText(selectedName);
         if (audioPlayer == null){
             //Start playing audio
             mediaPlayerCreator();
@@ -105,7 +121,7 @@ public class PracticeMenuController {
     private void mediaPlayerCreator() throws IOException {
 
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
-        Media media = new Media(new File(databasePath+"/"+selectedName+"/"+selectedName).toURI().toString());
+        Media media = new Media(new File(databasePath+"/"+selectedName+"/"+selectedName+"_d").toURI().toString());
         audioPlayer = new MediaPlayer(media);
         audioPlayer.setOnPlaying(new AudioRunnable(false));
         audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
@@ -132,12 +148,7 @@ public class PracticeMenuController {
         timeline.play();
     }
 
-    private void setUpTitle(){
-        if (creationList!=null){
-            creationsListView.getSelectionModel().select(0);
-            creationName.setText(creationList.get(0));
-        }
-    }
+
 
     /*@FXML
     void initialize (){
@@ -168,6 +179,22 @@ public class PracticeMenuController {
                 backButton.setDisable(true);
                 recordButton.setDisable(true);
             }
+        }
+    }
+
+    @FXML
+    public void sadFaceButtonClicked() {
+        try {
+
+            String selectedName = creationsListView.getSelectionModel().getSelectedItem();
+            File f = new File("BadRecordings.txt");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
+            bw.append(selectedName+"\n");
+            bw.flush();
+            bw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

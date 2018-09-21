@@ -107,7 +107,7 @@ public class DatabaseMenuController {
 //        });
     }
 
-    private List<String> getChildrenFromParent(String name) {
+    public List<String> getChildrenFromParent(String name) {
         //Create list
         List<String> children = new ArrayList<>();
         File dir = new File(pathToDB + "/" + name);

@@ -14,6 +14,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Set;
 
 public class CompareMenuController {
 
@@ -83,9 +84,10 @@ public class CompareMenuController {
     @FXML
     void sadFaceButtonClicked(MouseEvent event) {
         try {
+            String selectedName = SetUp.getInstance().createMenuController.getName();
             File f = new File("BadRecordings.txt");
             BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
-            bw.append("Creation");
+            bw.append(selectedName+"\n");
             bw.flush();
             bw.close();
 

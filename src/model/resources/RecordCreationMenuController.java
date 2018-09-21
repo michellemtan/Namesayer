@@ -152,9 +152,9 @@ public class RecordCreationMenuController {
         //Create a new media player instance and set the event handlers to create a thread that listens for when the audio is playing
         Media media = new Media(new File("audio.wav").toURI().toString());
         audioPlayer = new MediaPlayer(media);
+        progressBar();
         audioPlayer.setOnPlaying(new RecordCreationMenuController.AudioRunnable(false));
         audioPlayer.setOnEndOfMedia(new RecordCreationMenuController.AudioRunnable(true));
-        progressBar();
         audioPlayer.play();
 
     }

@@ -18,6 +18,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.DatabaseProcessor;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -140,7 +141,7 @@ public class RecordMenuController {
         return bashed;
     }
 
-   @FXML
+    @FXML
     void backButtonClicked(MouseEvent event) throws IOException {
         Scene scene = SetUp.getInstance().practiceMenu;
         Stage window = (Stage) continueButton.getScene().getWindow();
@@ -235,7 +236,7 @@ public class RecordMenuController {
                             playbackButton.setDisable(false);
                             compareButton.setDisable(false);
                             continueButton.setDisable(false);
-                           recordButton.setDisable(false);
+                            recordButton.setDisable(false);
                         });
 
 

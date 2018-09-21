@@ -1,11 +1,16 @@
 package model.resources;
 
-import javafx.animation.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
@@ -106,7 +111,7 @@ public class RecordCreationMenuController {
             dbProcessor.trimAudio(command);
             //Add newly created files to listview
             SetUp.getInstance().dbMenuController.addItem(creationName);
-        //Code here for adding to EXISTING creation (newCreation = false)
+            //Code here for adding to EXISTING creation (newCreation = false)
         } else {
             File dir = new File(pathToDB + "/" + creationName);
             int count = Objects.requireNonNull(dir.listFiles()).length;

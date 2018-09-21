@@ -101,38 +101,38 @@ public class MicrophoneCheckMenuController {
     }
 
     //Class that creates/runs the task to create the video in the background
-        private class CreateVideoService extends Service<Void> {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() {
-                        //Create a process calling BASH commands to create a video of the recording's volume levels
-                        ProcessBuilder videoBuilder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -i sampleaudio.wav -filter_complex \"[0:a]showvolume=f=0.5:c=VOLUME:b=4:w=1000:h=320,format=yuv420p[v]\" -map \"[v]\" -map 0:a samplevideo.mp4");
-                        try {
-                            Process video = videoBuilder.start();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        //Allow for some processing time
-                        PauseTransition delay = new PauseTransition(Duration.seconds(3));
-                        delay.play();
-
-                        //Video has been created, let the user have control of buttons again
-                        playButton.setDisable(false);
-                        backButton.setDisable(false);
-                        recordButton.setDisable(false);
-
-                        return null;
+    private class CreateVideoService extends Service<Void> {
+        @Override
+        protected Task<Void> createTask() {
+            return new Task<Void>() {
+                @Override
+                protected Void call() {
+                    //Create a process calling BASH commands to create a video of the recording's volume levels
+                    ProcessBuilder videoBuilder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -i sampleaudio.wav -filter_complex \"[0:a]showvolume=f=0.5:c=VOLUME:b=4:w=1000:h=320,format=yuv420p[v]\" -map \"[v]\" -map 0:a samplevideo.mp4");
+                    try {
+                        Process video = videoBuilder.start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                };
-            }
-        }
 
-        @FXML
-        void initialize(){
-            //This ensures that the user records a sample audio file before they can press play
-            playButton.setDisable(true);
+                    //Allow for some processing time
+                    PauseTransition delay = new PauseTransition(Duration.seconds(3));
+                    delay.play();
+
+                    //Video has been created, let the user have control of buttons again
+                    playButton.setDisable(false);
+                    backButton.setDisable(false);
+                    recordButton.setDisable(false);
+
+                    return null;
+                }
+            };
         }
+    }
+
+    @FXML
+    void initialize(){
+        //This ensures that the user records a sample audio file before they can press play
+        playButton.setDisable(true);
+    }
 }

@@ -87,9 +87,9 @@ public class SetUp {
 
     //Constructor implementing Singleton pattern to create one instance of SetUp class where different scenes are created
     public static SetUp getInstance() throws IOException {
-            if (setUp == null){
-                setUp = new SetUp();
-            }
+        if (setUp == null){
+            setUp = new SetUp();
+        }
 
         return setUp;
     }

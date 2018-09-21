@@ -3,7 +3,6 @@ package model.resources;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,13 +13,14 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.Delayed;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PracticeMenuController {
@@ -78,7 +78,7 @@ public class PracticeMenuController {
 
     @FXML
     void backButtonClicked() throws IOException {
-       // Load the new scene
+        // Load the new scene
         //Scene scene = backButton.getScene();
         //scene.setRoot(Menu.EXITPRACTICEMENU.loader().load());
 
@@ -180,9 +180,9 @@ public class PracticeMenuController {
             selectedName = creation;
             Media media = new Media(new File(databasePath + "/" + selectedName + "/" + selectedName).toURI().toString() + ".wav");
             mediaList.add(media);
-         }
+        }
 
-         playMediaTracks(mediaList);
+        playMediaTracks(mediaList);
     }
 
 

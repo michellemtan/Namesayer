@@ -27,36 +27,23 @@ import model.DatabaseProcessor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class RecordMenuController {
 
-    @FXML
-    private Button playbackButton;
-
-    @FXML
-    private Button recordButton;
-
-    @FXML
-    private Button compareButton;
-
-    @FXML
-    private Button continueButton;
-
-    @FXML
-    private ProgressBar progressBar;
-
-    @FXML
-    private Button micButton;
-
+    @FXML private Button playbackButton;
+    @FXML private Button recordButton;
+    @FXML private Button compareButton;
+    @FXML private Button continueButton;
+    @FXML private ProgressBar progressBar;
+    @FXML private Button micButton;
     @FXML private Button backButton;
-
-    private RecordAudioService service;
-
     private MediaPlayer audioPlayer;
-
     private int audioRecorded;
+
+    //TODO: recording something then pushing the back button breaks the code as replay is still enabled. Should disable buttons on pressing back
 
     void initialize (){
         //Disable buttons when scene is initialised
@@ -95,14 +82,28 @@ public class RecordMenuController {
     }
 
     @FXML
-    void compareButtonClicked(MouseEvent event) throws IOException {
+    void compareButtonClicked() throws IOException {
+        String pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
+        String name = SetUp.getInstance().practiceMenuController.returnSelectedName();
+
+        //Create list of audio files
+        List<String> list = new ArrayList<>();
+        File dir = new File(pathToDB + "/" + name);
+        File[] files = dir.listFiles();
+        for(File file : files) {
+            list.add(file.getName());
+        }
+
+        //Pass list through to compare menu
+        SetUp.getInstance().compareMenuController.setUpList(list, false);
+
         Scene scene = SetUp.getInstance().compareMenu;
         Stage window = (Stage) compareButton.getScene().getWindow();
         window.setScene(scene);
     }
 
     @FXML
-    void continueButtonClicked(MouseEvent event) throws IOException {
+    void continueButtonClicked() throws IOException {
 
 
         //Processor object to remove silence
@@ -192,7 +193,7 @@ public class RecordMenuController {
 
     private void record() {
 
-        service = new RecordAudioService();
+        RecordAudioService service = new RecordAudioService();
         service.setOnSucceeded(e -> {
             audioRecorded++;
         });

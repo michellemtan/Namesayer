@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -14,32 +15,35 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Set;
+import java.util.List;
 
 public class CompareMenuController {
 
-    @FXML
-    private Button backButton;
-
-    @FXML
-    private ListView<?> recordingsList;
-
-    @FXML
-    private Button playPauseButton;
-
-    @FXML
-    private Button sadFaceButton;
-
-    @FXML
-    private ProgressBar progressBar;
-
+    @FXML private Button backButton;
+    @FXML private ListView<String> recordingsList;
+    @FXML private Button playPauseButton;
+    @FXML private Button sadFaceButton;
+    @FXML private ProgressBar progressBar;
     private MediaPlayer audioPlayer;
+    private boolean fromCreate;
 
     @FXML
-    void backButtonClicked(MouseEvent event) throws IOException {
-        Scene scene = SetUp.getInstance().recordMenu;
-        Stage window = (Stage) backButton.getScene().getWindow();
-        window.setScene(scene);
+    void backButtonClicked() throws IOException {
+        if(fromCreate) {
+            Scene scene = SetUp.getInstance().recordCreationMenu;
+            Stage window = (Stage) backButton.getScene().getWindow();
+            window.setScene(scene);
+        } else {
+            Scene scene = SetUp.getInstance().recordMenu;
+            Stage window = (Stage) backButton.getScene().getWindow();
+            window.setScene(scene);
+        }
+    }
+
+    public void setUpList(List<String> list, boolean create) {
+        fromCreate = create;
+        recordingsList.getItems().setAll(list);
+        recordingsList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     //TODO: Make this a public class?
@@ -65,7 +69,7 @@ public class CompareMenuController {
     }
 
     @FXML
-    void playPauseButtonClicked(MouseEvent event) {
+    void playPauseButtonClicked() {
 
         //If an audio file is already playing, stop and play the audio from the start
         if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
@@ -82,7 +86,7 @@ public class CompareMenuController {
     }
 
     @FXML
-    void sadFaceButtonClicked(MouseEvent event) {
+    void sadFaceButtonClicked() {
         try {
             String selectedName = SetUp.getInstance().createMenuController.getName();
             File f = new File("BadRecordings.txt");

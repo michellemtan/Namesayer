@@ -15,6 +15,8 @@ import model.DatabaseProcessor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class RecordCreationMenuController {
@@ -28,6 +30,7 @@ public class RecordCreationMenuController {
     @FXML private Button micButton;
     @FXML private Text recordLabel;
     private String creationName;
+    private  String pathToDB;
     private MediaPlayer audioPlayer;
     private int audioRecorded;
     private boolean newCreation;
@@ -70,12 +73,14 @@ public class RecordCreationMenuController {
 
     //Set initial button positions and set fields
     public void setUp(String name) throws IOException {
+        //Initialise all buttons and strings required
         newCreation = false;
         creationName = name;
         compareButton.setDisable(true);
         recordButton.setDisable(false);
         continueButton.setDisable(true);
         playbackButton.setDisable(true);
+        pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
         ListView<String> listView = SetUp.getInstance().dbMenuController.getDbListView();
         if(!listView.getItems().contains(name)) {
             newCreation = true;
@@ -86,6 +91,18 @@ public class RecordCreationMenuController {
 
     @FXML
     void compareButtonClicked() throws IOException {
+        //Create list of audio files
+        List<String> list = new ArrayList<>();
+        File dir = new File(pathToDB + "/" + creationName);
+        File[] files = dir.listFiles();
+        for(File file : files) {
+            list.add(file.getName());
+        }
+
+        //Pass list through to compare menu
+        SetUp.getInstance().compareMenuController.setUpList(list, true);
+
+        //Switch to compare scene
         Scene scene = SetUp.getInstance().compareMenu;
         Stage window = (Stage) compareButton.getScene().getWindow();
         window.setScene(scene);
@@ -96,7 +113,6 @@ public class RecordCreationMenuController {
     void continueButtonClicked() throws IOException {
         //Processor object to remove silence
         DatabaseProcessor dbProcessor = new DatabaseProcessor("");
-        String pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
         File audioFile = new File(System.getProperty("user.dir") + "/" + "audio.wav");
 
         //This is for NEW creation if newCreation = true)

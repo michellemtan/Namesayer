@@ -23,7 +23,7 @@ public class SetUp {
     public NameDetailsController nameDetailsController;
     public MicrophoneCheckMenuController microphoneCheckMenuController;
     public ExitPracticeMenuController exitPracticeMenuController;
-    //public CompareMenuController compareMenuController;
+    public CompareMenuController compareMenuController;
     public CreateMenuController createMenuController;
     public RecordCreationMenuController recordCreationMenuController;
     //public FinishedMenuController finishedMenuController;
@@ -79,7 +79,7 @@ public class SetUp {
         nameDetailsMenuLoader();
         microphoneCheckMenuLoader();
         exitPracticeMenuLoader();
-        //compareMenuLoader();
+        compareMenuLoader();
         createMenuLoader();
         recordCreationMenuLoader();
         //finishedMenuLoader();
@@ -182,11 +182,11 @@ public class SetUp {
         recordCreationMenuController = loader.getController();
     }
 
-    /*private void compareMenuLoader() throws IOException {
+    private void compareMenuLoader() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("CompareMenu.fxml"));
         compareMenu = new Scene(loader.load());
         compareMenuController = loader.getController();
-    }*/
+    }
 
     /*private void finishedMenuLoader() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FinishedMenu.fxml"));

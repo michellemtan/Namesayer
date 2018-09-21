@@ -155,6 +155,7 @@ public class DatabaseMenuController {
     }
 
     public void backBtnPressed() throws IOException {
+        dbListView.getItems().clear();
         Scene scene = SetUp.getInstance().databaseSelectMenu;
         Stage window = (Stage) backBtn.getScene().getWindow();
         window.setScene(scene);
@@ -193,6 +194,11 @@ public class DatabaseMenuController {
 
     //TODO: if 1 item selected and create is pressed auto-fill text field in next window
     public void createButtonClicked() throws IOException {
+        //If user selects one name a presses create, fill create textfield with name they selected
+        if(dbListView.getSelectionModel().getSelectedItems().size() == 1) {
+            SetUp.getInstance().createMenuController.setCreatePrompt(dbListView.getSelectionModel().getSelectedItem());
+        }
+
         SetUp.getInstance().createMenuController.setUpButton();
         Scene scene = SetUp.getInstance().createMenu;
         Stage window = (Stage) createButton.getScene().getWindow();

@@ -35,11 +35,11 @@ public class PracticeMenuController {
     @FXML private ListView<String> creationsListView;
     @FXML private Label creationName;
     @FXML private Button backButton;
+    @FXML private Button playSingleButton;
     private MediaPlayer audioPlayer;
     private List<String> creationList;
     private String selectedName;
     private String pathToDB;
-    private Iterator<String> playerIterator;
 
     //TODO: Dear Michelle,
     //TODO: Some fixes that must now be made to this class are:
@@ -56,6 +56,10 @@ public class PracticeMenuController {
     //Fill list with selected items
     public void setUpList(List<String> list) throws IOException {
         creationList = list;
+        if (creationList.size()<=1){
+            playPauseButton.setDisable(true);
+            shuffleButton.setDisable(true);
+        }
         creationsListView.getItems().setAll(creationList);
         creationsListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
@@ -141,8 +145,6 @@ public class PracticeMenuController {
 
     @FXML
     void playButtonClicked() throws IOException {
-        selectedName = creationsListView.getSelectionModel().getSelectedItem();
-        creationName.setText(selectedName);
         mediaPlayerCreator();
     }
 
@@ -186,17 +188,28 @@ public class PracticeMenuController {
         System.out.println("playMediaTracks");
         System.out.println("Media size: " +mediaList.size());
         if (mediaList.size() == 0) {
+            detailsButton.setDisable(false);
+            playPauseButton.setDisable(false);
+            shuffleButton.setDisable(false);
+            backButton.setDisable(false);
+            recordButton.setDisable(false);
+            playSingleButton.setDisable(false);
             return;
+        } else {
+            backButton.setDisable(true);
+            recordButton.setDisable(true);
+            detailsButton.setDisable(true);
+            playPauseButton.setDisable(true);
+            shuffleButton.setDisable(true);
+            playSingleButton.setDisable(true);
         }
 
         List<String> nameList = new ArrayList<String>(creationList);
         creationName.setText(nameList.get(0));
         nameList.remove(0);
+
         audioPlayer = new MediaPlayer(mediaList.remove(0));
         audioPlayer.play();
-
-        audioPlayer.setOnPlaying(new AudioRunnable(false));
-        audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
         audioPlayer.setOnReady(() -> progressBar.setProgress(0.0));
         audioPlayer.setOnReady(this::progressBar);
 
@@ -223,6 +236,23 @@ public class PracticeMenuController {
         timeline.play();
     }
 
+
+    @FXML
+    public void playSingleButtonClicked() throws IOException {
+
+        selectedName = creationsListView.getSelectionModel().getSelectedItem();
+        String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
+
+        Media media = new Media(new File(databasePath+"/"+selectedName+"/"+selectedName).toURI().toString() + ".wav");
+        audioPlayer = new MediaPlayer(media);
+        audioPlayer.setOnPlaying(new AudioRunnable(false));
+        audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
+        audioPlayer.play();
+        audioPlayer.setOnReady(() -> progressBar.setProgress(0.0));
+        audioPlayer.setOnReady(this::progressBar);
+
+    }
+
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
     private class AudioRunnable implements Runnable {
 
@@ -236,13 +266,18 @@ public class PracticeMenuController {
         public void run() {
             //When the media player has finished, the buttons will be enabled
             if (isFinished) {
-                selectedName = playerIterator.next();
                 backButton.setDisable(false);
                 recordButton.setDisable(false);
+                playPauseButton.setDisable(false);
+                detailsButton.setDisable(false);
+                shuffleButton.setDisable(false);
                 //When the media player is playing the audio file, the buttons will be disabled to prevent the user from navigating away
             } else {;
                 backButton.setDisable(true);
                 recordButton.setDisable(true);
+                playPauseButton.setDisable(true);
+                detailsButton.setDisable(true);
+                shuffleButton.setDisable(true);
             }
         }
     }

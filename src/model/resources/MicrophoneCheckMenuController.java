@@ -49,8 +49,6 @@ public class MicrophoneCheckMenuController {
             videoPlayer.stop();
             videoPlayerCreator();
         }
-
-
     }
 
     private void videoPlayerCreator(){

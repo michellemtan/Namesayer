@@ -41,20 +41,13 @@ public class StartMenuController {
         Scene scene = SetUp.getInstance().instructionsMenu;
         Stage window = (Stage) instructionsButton.getScene().getWindow();
         window.setScene(scene);
-
-//        // Load the new scene
-//        Scene scene = instructionsButton.getScene();
-//        scene.setRoot(SetUp.Menu.INSTRUCTIONSMENU.loader().load();
     }
 
-
-    //TO DO:
     @FXML
     void micButtonClicked(MouseEvent event) throws IOException {
         Scene scene = SetUp.getInstance().microphoneCheckMenu;
         Stage window = (Stage) micButton.getScene().getWindow();
         window.setScene(scene);
-
     }
 
     @FXML
@@ -63,8 +56,12 @@ public class StartMenuController {
         SetUp.getInstance().badRecordingsMenuController.updateTextLog();
         Stage window = (Stage) sadFaceButton.getScene().getWindow();
         window.setScene(scene);
-
     }
+
+//   Code for later?
+//        Load the new scene
+//        Scene scene = instructionsButton.getScene();
+//        scene.setRoot(SetUp.Menu.INSTRUCTIONSMENU.loader().load();
 
 
 }

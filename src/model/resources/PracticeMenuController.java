@@ -101,6 +101,8 @@ public class PracticeMenuController {
         if(dir.delete()) {
             //Remove name from list if directory now empty
             creationsListView.getItems().remove(dirName);
+            //Remove from dbListView also
+            SetUp.getInstance().dbMenuController.removeListItem(dirName);
         }
     }
 

@@ -1,7 +1,6 @@
 package model.resources;
 
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,7 +29,6 @@ public class DeleteMenuController {
         if(fromDetails) {
             Scene scene = SetUp.getInstance().nameDetailsMenu;
             Stage window = (Stage) backBtn.getScene().getWindow();
-            window.setScene(scene);
         } else {
             Scene scene = SetUp.getInstance().databaseMenu;
             Stage window = (Stage) backBtn.getScene().getWindow();
@@ -62,14 +60,18 @@ public class DeleteMenuController {
         if(fromDetails) {
             SetUp.getInstance().nameDetailsController.clearListView();
             SetUp.getInstance().practiceMenuController.deleteAudioFiles(toDelete);
+            //Switch scenes back
+            Scene scene = SetUp.getInstance().databaseMenu;
+            Stage window = (Stage) backBtn.getScene().getWindow();
+            window.setScene(scene);
         } else {
             SetUp.getInstance().dbMenuController.deleteFiles(toDelete);
+            //Switch scenes back
+            Scene scene = SetUp.getInstance().practiceMenu;
+            Stage window = (Stage) backBtn.getScene().getWindow();
+            window.setScene(scene);
         }
         //Clear list view
         deleteListView.getItems().clear();
-        //Switch scenes back
-        Scene scene = SetUp.getInstance().databaseMenu;
-        Stage window = (Stage) backBtn.getScene().getWindow();
-        window.setScene(scene);
     }
 }

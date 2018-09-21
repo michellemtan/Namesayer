@@ -35,8 +35,6 @@ public class NameDetailsController {
         return dirName;
     }
 
-
-    //TODO: BUILD LIST WITHOUT UGLY PREFIXES
     //Builds list of audio files within 'name' folder
     public void setUpList(List<String> list, String name) {
         dirName = name;
@@ -69,13 +67,11 @@ public class NameDetailsController {
         window.setScene(scene);
     }
 
-    //TODO: MAKE IT SO DELETE BUTTON GOES BACK TO PRACTICE, NOT MAIN MENU
     public void deleteBtnPressed() throws IOException {
         if(nameListView.getSelectionModel().getSelectedIndex() != -1) {
             List<String> toDelete = new ArrayList<>(nameListView.getSelectionModel().getSelectedItems());
             //Pass list of files to delete through to delete menu
             SetUp.getInstance().deleteMenuController.setUpList(toDelete, true);
-
 
             //Switch scenes
             Scene scene = SetUp.getInstance().deleteMenu;
@@ -141,7 +137,4 @@ public class NameDetailsController {
         nameListView.getItems().clear();
     }
 
-    public void setDefaultBtnPressed() {
-
-    }
 }

@@ -71,7 +71,7 @@ public class MicrophoneCheckMenuController {
         protected Task<Void> createTask() {
             return new Task<Void>() {
                 @Override
-                protected Void call() throws IOException {
+                protected Void call() {
                     //Disable buttons to prevent user from leaving menu while recording
                     recordButton.setDisable(true);
                     playButton.setDisable(true);
@@ -106,7 +106,7 @@ public class MicrophoneCheckMenuController {
             protected Task<Void> createTask() {
                 return new Task<Void>() {
                     @Override
-                    protected Void call() throws IOException {
+                    protected Void call() {
                         //Create a process calling BASH commands to create a video of the recording's volume levels
                         ProcessBuilder videoBuilder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -i sampleaudio.wav -filter_complex \"[0:a]showvolume=f=0.5:c=VOLUME:b=4:w=1000:h=320,format=yuv420p[v]\" -map \"[v]\" -map 0:a samplevideo.mp4");
                         try {

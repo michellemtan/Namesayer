@@ -4,15 +4,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -24,11 +18,9 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.DatabaseProcessor;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Set;
 
 public class RecordMenuController {
 
@@ -58,6 +50,7 @@ public class RecordMenuController {
 
     private int audioRecorded;
 
+    @FXML
     void initialize (){
         //Disable buttons when scene is initialised
         playbackButton.setDisable(true);
@@ -197,9 +190,6 @@ public class RecordMenuController {
             audioRecorded++;
         });
 
-        //TODO: Make the progress bar change so it slowly loads when 5 seconds is reached
-        //progressBar.progressProperty().bind(service.progressProperty());
-
         service.start();
     }
 
@@ -212,21 +202,6 @@ public class RecordMenuController {
         timeline.play();
     }
 
-
-    //This method asks the user if they want to record their audio again
-    private void askRerecord() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like to record your audio again?", ButtonType.YES, ButtonType.NO);
-        alert.setHeaderText(null);
-        alert.setGraphic(null);
-        alert.setTitle("Re-record Audio?");
-        alert.showAndWait();
-
-        if (alert.getResult() == ButtonType.YES) {
-            record();
-        }
-    }
-
-    //TODO: FIX BACK BUTTON SO IT GOES BACK TO RECORD, NOT MAIN MENU
     @FXML
     void micButtonClicked(MouseEvent event) throws IOException {
         Scene scene = SetUp.getInstance().microphoneCheckMenu;
@@ -261,8 +236,6 @@ public class RecordMenuController {
                             compareButton.setDisable(false);
                             continueButton.setDisable(false);
                            recordButton.setDisable(false);
-//                            progressBar.progressProperty().unbind();
-//                            progressBar.progressProperty().set(1.0);
                         });
 
 

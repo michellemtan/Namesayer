@@ -169,7 +169,6 @@ public class RecordCreationMenuController {
         service.start();
     }
 
-    //TODO: FIX BACK BUTTON SO IT GOES BACK TO RECORD, NOT MAIN MENU
     void micButtonClicked() throws IOException {
         Scene scene = SetUp.getInstance().microphoneCheckMenu;
         Stage window = (Stage) micButton.getScene().getWindow();

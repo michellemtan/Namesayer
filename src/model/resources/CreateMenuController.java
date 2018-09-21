@@ -44,10 +44,7 @@ public class CreateMenuController {
                 super.bind(textInput.textProperty());
             }
             protected boolean computeValue() {
-                if(textInput.getText().isEmpty() || textInput.getText() == null) {
-                    return true;
-                }
-                return false;
+                return textInput.getText().isEmpty() || textInput.getText() == null;
             }
         };
         //Bind disable property to ok button so it will be disabled if invalid input

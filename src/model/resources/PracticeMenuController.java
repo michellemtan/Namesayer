@@ -43,11 +43,14 @@ public class PracticeMenuController {
 
     //TODO: Dear Michelle,
     //TODO: Some fixes that must now be made to this class are:
-    //TODO: Make the thumbs up/down buttons,
-    //TODO: Make a practice all button (or some way of playing through all items in creationsListView,
-    //TODO: Pushing the pause button while media is playing just restarts it rather than pausing,
-    //TODO: Maybe make details menu work if you want (or I can I don't mind),
-    //TODO: If you select an audio file that is empty (really quiet/bad quality ones get wiped during silenceremove) e.g Li, then play it, playing others doesn't work.
+    //TODO: Pushing the pause button while media is playing just restarts it rather than pausing
+
+    //TODO: Dear Rowan,
+    //TODO: I have added the bad recordings button, sorry but it will have to be a sad face
+    //TODO: I have tried making the list of recordings to be pausable?, however it is very difficult
+    //TODO: If you really want it though, feel free to give it a go but I wouldn't be bothered
+    //TODO: I was thinking there should be a way for them to escape the play list in case they select all of them
+    //TODO: I added a single play button in case the user wants to play just one of those names again
 
     public void clearListView() {
         creationsListView.getItems().clear();
@@ -272,7 +275,7 @@ public class PracticeMenuController {
                 detailsButton.setDisable(false);
                 shuffleButton.setDisable(false);
                 //When the media player is playing the audio file, the buttons will be disabled to prevent the user from navigating away
-            } else {;
+            } else {
                 backButton.setDisable(true);
                 recordButton.setDisable(true);
                 playPauseButton.setDisable(true);

@@ -52,17 +52,20 @@ public class MicrophoneCheckMenuController {
     }
 
     private void videoPlayerCreator(){
-        Media mediaPick = new Media(new File(System.getProperty("user.dir") + "/sample").toURI().toString() + ".mp4");
+        Media mediaPick = new Media(new File(System.getProperty("user.dir") + "/samplevideo.mp4").toURI().toString());
         videoPlayer = new MediaPlayer(mediaPick);
         mediaView.setMediaPlayer(videoPlayer);
         videoPlayer.play();
     }
 
     @FXML
-    void recordButtonClicked(MouseEvent event) {
-        service = new RecordAudioService();
-        service.start();
+    void recordButtonClicked(MouseEvent event) throws IOException {
+        //service = new RecordAudioService();
+        //service.start();
 
+        //TODO: GET THIS WORKING INSTEAD?
+        ProcessBuilder audioBuilder = new ProcessBuilder("/bin/bash", "-c", "bash myscript.sh");
+        audioBuilder.start();
     }
 
     //Class that creates/runs the task to record the audio in the background
@@ -79,7 +82,7 @@ public class MicrophoneCheckMenuController {
 
                     try {
                         //Create a BASH process to record the sample audio
-                        ProcessBuilder audioBuilder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -f alsa -i default -t 5 ./sampleaudio.wav");
+                        ProcessBuilder audioBuilder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -f alsa -i default -vf transpose=1 -t 5 ./sampleaudio.wav");
                         Process audio = audioBuilder.start();
 
                         PauseTransition delay = new PauseTransition(Duration.seconds(5));

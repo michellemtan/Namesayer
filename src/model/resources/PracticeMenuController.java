@@ -26,6 +26,7 @@ public class PracticeMenuController {
     private MediaPlayer audioPlayer;
     private List<String> creationList;
     private String selectedName;
+    private String pathToDB;
 
     //TODO: Dear Michelle,
     //TODO: Some fixes that must now be made to this class are:
@@ -40,10 +41,11 @@ public class PracticeMenuController {
     }
 
     //Fill list with selected items
-    public void setUpList(List<String> list) {
+    public void setUpList(List<String> list) throws IOException {
         creationList = list;
         creationsListView.getItems().setAll(creationList);
         creationsListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
         setUpTitle();
     }
 
@@ -65,9 +67,41 @@ public class PracticeMenuController {
         //Scene scene = detailsButton.getScene();
         //scene.setRoot(Menu.NAMEDETAILSMENU.loader().load());
 
+        //Set selected name
+        selectedName = creationsListView.getSelectionModel().getSelectedItem();
+        //Initialise list of name to
+        List<String> list = new ArrayList<>();
+        //Add all files in directory to list
+        File dir = new File(pathToDB + "/" + selectedName);
+        File[] files = dir.listFiles();
+        for(File file : files) {
+            list.add(file.getName());
+        }
+
+        //Add list to name details menu
+        SetUp.getInstance().nameDetailsController.setUpList(list, selectedName);
+
+        //Switch scene
         Scene scene = SetUp.getInstance().nameDetailsMenu;
         Stage window = (Stage) detailsButton.getScene().getWindow();
         window.setScene(scene);
+    }
+
+
+    //Method to delete files if coming from the NameDetails menu
+    public void deleteAudioFiles(List<String> list) throws IOException {
+        String dirName = SetUp.getInstance().nameDetailsController.getName();
+        File dir = new File(pathToDB + "/" + dirName);
+        for(String name : list) {
+            File file = new File(pathToDB + "/" + dirName + "/" + name);
+            file.delete();
+
+        }
+        //Try to delete directory, will only work if non-empty - correct behaviour
+        if(dir.delete()) {
+            //Remove name from list if directory now empty
+            creationsListView.getItems().remove(dirName);
+        }
     }
 
     @FXML
@@ -102,7 +136,7 @@ public class PracticeMenuController {
     private void mediaPlayerCreator() throws IOException {
 
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
-        Media media = new Media(new File(databasePath+"/"+selectedName+"/"+selectedName).toURI().toString());
+        Media media = new Media(new File(databasePath+"/"+selectedName+"/"+selectedName).toURI().toString() + ".wav");
         audioPlayer = new MediaPlayer(media);
         audioPlayer.setOnPlaying(new AudioRunnable(false));
         audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
@@ -113,11 +147,7 @@ public class PracticeMenuController {
             progressBar.setProgress(newDuration.toSeconds()/5);
 
         });
-        audioPlayer.setOnReady(new Runnable() {
-            public void run() {
-                progressBar.setProgress(0.0);
-            }
-        });
+        audioPlayer.setOnReady(() -> progressBar.setProgress(0.0));
     }
 
     private void setUpTitle(){
@@ -126,14 +156,6 @@ public class PracticeMenuController {
             creationName.setText(creationList.get(0));
         }
     }
-
-    /*@FXML
-    void initialize (){
-        creationsListView.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            selectedName = creationsListView.getSelectionModel().getSelectedItem();
-            creationName.setText(selectedName);
-        });
-    }*/
 
     //TODO: Make this a public class?
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly

@@ -40,9 +40,9 @@ public class DatabaseProcessor {
                     File parentDir = new File(file.getParent() + "/" + finalName);
                     //Move trimmed audio file into it's directory, rename to correct file if there is more than 1 of them
                     if(parentDir.isDirectory() && Objects.requireNonNull(parentDir.list()).length == 0) {
-                        boolean resultMove = trimFile.renameTo(new File(pathToDB + "/" + finalName + "/" + finalName));
+                        boolean resultMove = trimFile.renameTo(new File(pathToDB + "/" + finalName + "/" + finalName + ".wav"));
                     } else {
-                        boolean resultMove = trimFile.renameTo(new File(pathToDB + "/" + finalName + "/" + finalName + "(" + Objects.requireNonNull(parentDir.list()).length + ")"));
+                        boolean resultMove = trimFile.renameTo(new File(pathToDB + "/" + finalName + "/" + finalName + "(" + Objects.requireNonNull(parentDir.list()).length + ")" + ".wav"));
                     }
 
                     //Save uncut files into uncut_files folder

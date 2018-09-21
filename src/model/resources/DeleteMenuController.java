@@ -27,9 +27,15 @@ public class DeleteMenuController {
         //Clear list view
         deleteListView.getItems().clear();
 
-        Scene scene = SetUp.getInstance().databaseMenu;
-        Stage window = (Stage) backBtn.getScene().getWindow();
-        window.setScene(scene);
+        if(fromDetails) {
+            Scene scene = SetUp.getInstance().nameDetailsMenu;
+            Stage window = (Stage) backBtn.getScene().getWindow();
+            window.setScene(scene);
+        } else {
+            Scene scene = SetUp.getInstance().databaseMenu;
+            Stage window = (Stage) backBtn.getScene().getWindow();
+            window.setScene(scene);
+        }
     }
 
     public void setUpList(List<String> list, boolean details) {
@@ -40,6 +46,11 @@ public class DeleteMenuController {
         } else {
             deleteLabel.setText("Delete Names?");
         }
+
+        if(details) {
+            deleteLabel.setText("Delete files?");
+        }
+
         toDelete = list;
         deleteListView.getItems().addAll(list);
         //Consume event of selecting a name so as to make the names non-selectable
@@ -48,10 +59,11 @@ public class DeleteMenuController {
 
     public void confirmBtnPressed() throws IOException {
         //If come from details menu call different delete method
-        if(!fromDetails) {
-            SetUp.getInstance().dbMenuController.deleteFiles(toDelete);
+        if(fromDetails) {
+            SetUp.getInstance().nameDetailsController.clearListView();
+            SetUp.getInstance().practiceMenuController.deleteAudioFiles(toDelete);
         } else {
-            SetUp.getInstance().dbMenuController.deleteAudioFiles(toDelete);
+            SetUp.getInstance().dbMenuController.deleteFiles(toDelete);
         }
         //Clear list view
         deleteListView.getItems().clear();

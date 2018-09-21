@@ -161,22 +161,6 @@ public class DatabaseMenuController {
         dbListView.getItems().removeAll(list);
     }
 
-    //Method to delete files if coming from the NameDetails menu
-    public void deleteAudioFiles(List<String> list) throws IOException {
-        String dirName = SetUp.getInstance().nameDetailsController.getName();
-        File dir = new File(pathToDB + "/" + dirName);
-        for(String name : list) {
-            File file = new File(pathToDB + "/" + dirName + "/" + name);
-            file.delete();
-
-        }
-        //Try to delete directory, will only work if non-empty - correct behaviour
-        if(dir.delete()) {
-            //Remove name from list if directory now empty
-            dbListView.getItems().remove(dirName);
-        }
-    }
-
     public void backBtnPressed() throws IOException {
         Scene scene = SetUp.getInstance().databaseSelectMenu;
         Stage window = (Stage) backBtn.getScene().getWindow();

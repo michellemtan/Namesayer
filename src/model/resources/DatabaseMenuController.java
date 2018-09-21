@@ -50,7 +50,9 @@ public class DatabaseMenuController {
         File[] directoryListing = dir.listFiles();
         if (directoryListing != null) {
             for (File child : directoryListing) {
-                names.add(child.getName());
+                if(!child.getName().equals("uncut_files")){
+                    names.add(child.getName());
+                }
             }
         }
 
@@ -107,20 +109,6 @@ public class DatabaseMenuController {
 //        });
     }
 
-    private List<String> getChildrenFromParent(String name) {
-        //Create list
-        List<String> children = new ArrayList<>();
-        File dir = new File(pathToDB + "/" + name);
-        File[] directoryListing = dir.listFiles();
-        if(directoryListing != null) {
-            for(File file : directoryListing) {
-                children.add(file.getName());
-            }
-        }
-        children.sort(String.CASE_INSENSITIVE_ORDER);
-        return children;
-    }
-
    public void removeListItem(String name) {
        dbListView.getItems().remove(name);
    }
@@ -134,6 +122,7 @@ public class DatabaseMenuController {
     public void deleteBtnPressed() throws IOException {
         if (dbListView.getSelectionModel().getSelectedIndex() != -1) {
             //TODO: Look into directing with tool tip
+            SetUp.getInstance().deleteMenuController.setFromDetails(false);
             List<String> toDelete = new ArrayList<>(dbListView.getSelectionModel().getSelectedItems());
             //Pass list into deleteMenuController
             SetUp.getInstance().deleteMenuController.setUpList(toDelete, false);

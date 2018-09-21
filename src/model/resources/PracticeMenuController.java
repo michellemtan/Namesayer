@@ -101,8 +101,6 @@ public class PracticeMenuController {
 
         Scene scene = SetUp.getInstance().nameDetailsMenu;
         Stage window = (Stage) detailsButton.getScene().getWindow();
-        SetUp.getInstance().nameDetailsController.setName(selectedName);
-        SetUp.getInstance().nameDetailsController.setUpList(SetUp.getInstance().dbMenuController.getChildrenFromParent(selectedName),selectedName);
         window.setScene(scene);
     }
 
@@ -116,6 +114,17 @@ public class PracticeMenuController {
             file.delete();
 
         }
+
+        //If there's only one file left, rename it so it's now the default
+        if(Objects.requireNonNull(dir.listFiles()).length >= 1 && list.contains(dirName + ".wav")) {
+            File[] fileNames = dir.listFiles();
+            for(int i=1; i<=fileNames.length; i++) {
+                File fileName = new File(fileNames[i].getPath());
+                fileName.renameTo(new File(pathToDB + "/" + dirName + "/" + dirName + ".wav"));
+                break;
+            }
+        }
+
         //Try to delete directory, will only work if non-empty - correct behaviour
         if(dir.delete()) {
             //Remove name from list if directory now empty
@@ -141,8 +150,6 @@ public class PracticeMenuController {
 
     @FXML
     void recordButtonClicked() throws IOException {
-        //Scene scene = recordButton.getScene();
-        //scene.setRoot(Menu.RECORDMENU.loader().load());
         Scene scene = SetUp.getInstance().recordMenu;
         Stage window = (Stage) recordButton.getScene().getWindow();
         window.setScene(scene);
@@ -169,16 +176,12 @@ public class PracticeMenuController {
 
         });
         audioPlayer.setOnReady(() -> progressBar.setProgress(0.0));
-//        audioPlayer.currentTimeProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
-//            Duration newDuration = (Duration) newValue;
-//            progressBar.setProgress(newDuration.toSeconds()/5);
-//
-//        });
-        audioPlayer.setOnReady(new Runnable() {
-            public void run() {
-                progressBar();
-            }
-        });
+        /*audioPlayer.currentTimeProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
+            Duration newDuration = (Duration) newValue;
+            progressBar.setProgress(newDuration.toSeconds()/5);
+
+        });*/
+        audioPlayer.setOnReady(this::progressBar);
     }
 
     private void progressBar() {

@@ -36,6 +36,10 @@ public class DeleteMenuController {
         }
     }
 
+    public void setFromDetails(boolean detail) {
+        fromDetails = detail;
+    }
+
     public void setUpList(List<String> list, boolean details) {
         fromDetails = details;
         //Change label if only 1 to delete selected
@@ -61,13 +65,13 @@ public class DeleteMenuController {
             SetUp.getInstance().nameDetailsController.clearListView();
             SetUp.getInstance().practiceMenuController.deleteAudioFiles(toDelete);
             //Switch scenes back
-            Scene scene = SetUp.getInstance().databaseMenu;
+            Scene scene = SetUp.getInstance().practiceMenu;
             Stage window = (Stage) backBtn.getScene().getWindow();
             window.setScene(scene);
         } else {
             SetUp.getInstance().dbMenuController.deleteFiles(toDelete);
             //Switch scenes back
-            Scene scene = SetUp.getInstance().practiceMenu;
+            Scene scene = SetUp.getInstance().databaseMenu;
             Stage window = (Stage) backBtn.getScene().getWindow();
             window.setScene(scene);
         }

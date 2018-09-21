@@ -21,6 +21,7 @@ public class CreateMenuController {
         window.setScene(scene);
     }
 
+    //TODO: if a user calls their name 'uncut_files' could cause a bug
     public void createBtnPressed() throws IOException {
         name = textInput.getText();
         SetUp.getInstance().recordCreationMenuController.setUp(name);

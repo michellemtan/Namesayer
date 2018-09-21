@@ -107,7 +107,7 @@ public class DatabaseMenuController {
 //        });
     }
 
-   /* private List<String> getChildrenFromParent(String name) {
+    private List<String> getChildrenFromParent(String name) {
         //Create list
         List<String> children = new ArrayList<>();
         File dir = new File(pathToDB + "/" + name);
@@ -119,7 +119,7 @@ public class DatabaseMenuController {
         }
         children.sort(String.CASE_INSENSITIVE_ORDER);
         return children;
-    }*/
+    }
 
    public void removeListItem(String name) {
        dbListView.getItems().remove(name);

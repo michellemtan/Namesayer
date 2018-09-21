@@ -1,5 +1,8 @@
 package model.resources;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -9,13 +12,18 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
 public class PracticeMenuController {
 
     @FXML private Button playPauseButton;
+
+    @FXML private Button sadFaceButton;
     @FXML private Button detailsButton;
     @FXML private Button shuffleButton;
     @FXML private Button recordButton;
@@ -47,6 +55,13 @@ public class PracticeMenuController {
         creationsListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
         setUpTitle();
+    }
+
+    private void setUpTitle(){
+        if (creationList!=null){
+            creationsListView.getSelectionModel().select(0);
+            creationName.setText(creationList.get(0));
+        }
     }
 
     @FXML
@@ -82,8 +97,12 @@ public class PracticeMenuController {
         SetUp.getInstance().nameDetailsController.setUpList(list, selectedName);
 
         //Switch scene
+        selectedName = creationsListView.getSelectionModel().getSelectedItem();
+
         Scene scene = SetUp.getInstance().nameDetailsMenu;
         Stage window = (Stage) detailsButton.getScene().getWindow();
+        SetUp.getInstance().nameDetailsController.setName(selectedName);
+        SetUp.getInstance().nameDetailsController.setUpList(SetUp.getInstance().dbMenuController.getChildrenFromParent(selectedName),selectedName);
         window.setScene(scene);
     }
 
@@ -109,7 +128,7 @@ public class PracticeMenuController {
     @FXML
     void playButtonClicked() throws IOException {
         selectedName = creationsListView.getSelectionModel().getSelectedItem();
-        creationName.setText(creationsListView.getSelectionModel().getSelectedItem());
+        creationName.setText(selectedName);
         if (audioPlayer == null){
             //Start playing audio
             mediaPlayerCreator();
@@ -150,14 +169,28 @@ public class PracticeMenuController {
 
         });
         audioPlayer.setOnReady(() -> progressBar.setProgress(0.0));
+//        audioPlayer.currentTimeProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
+//            Duration newDuration = (Duration) newValue;
+//            progressBar.setProgress(newDuration.toSeconds()/5);
+//
+//        });
+        audioPlayer.setOnReady(new Runnable() {
+            public void run() {
+                progressBar();
+            }
+        });
     }
 
-    private void setUpTitle(){
-        if (creationList!=null){
-            creationsListView.getSelectionModel().select(0);
-            creationName.setText(creationList.get(0));
-        }
+    private void progressBar() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
+                new KeyFrame(audioPlayer.getTotalDuration(), new KeyValue(progressBar.progressProperty(), 1))
+        );
+        timeline.setCycleCount(1);
+        timeline.play();
     }
+
+
 
     //TODO: Make this a public class?
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
@@ -181,5 +214,26 @@ public class PracticeMenuController {
                 recordButton.setDisable(true);
             }
         }
+    }
+
+    @FXML
+    public void sadFaceButtonClicked() {
+        try {
+
+            String selectedName = creationsListView.getSelectionModel().getSelectedItem();
+            File f = new File("BadRecordings.txt");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
+            bw.append(selectedName+"\n");
+            bw.flush();
+            bw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String returnSelectedName(){
+        String selectedName = creationsListView.getSelectionModel().getSelectedItem();
+        return selectedName;
     }
 }

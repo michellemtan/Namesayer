@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.HashSet;
 
 public class BadRecordingsMenuController {
 
@@ -31,15 +32,24 @@ public class BadRecordingsMenuController {
     //TODO: MAKE IT BIND SO IF USER DELETES THE FILE, IT WILL CREATE ITSELF AGAIN
     //This method displays the contents of the text file containing a list of bad recordings
     void initialize() throws IOException {
+            updateTextLog();
+    }
 
-        //Read in the file containing the list of bad quality recordings
+    public void updateTextLog() throws IOException {
+
+        //Set storing unique values of creations
+        HashSet<String> hs = new HashSet<String>();
+
+            //Read in the file containing the list of bad quality recordings
         try (BufferedReader reader = new BufferedReader(new FileReader(new File("BadRecordings.txt")))) {
             String line;
             StringBuilder fieldContent = new StringBuilder("");
 
             while ((line = reader.readLine()) != null) {
                 //Concatenate each line of the file to the StringBuilder
-                fieldContent.append(line + "\n");
+                if(hs.add(line)) {
+                    fieldContent.append(line + "\n");
+                }
             }
 
             //Ensure the textArea is not editable by the user

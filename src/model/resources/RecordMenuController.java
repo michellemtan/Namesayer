@@ -23,9 +23,12 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.DatabaseProcessor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
+import java.util.Set;
 
 public class RecordMenuController {
 
@@ -100,12 +103,51 @@ public class RecordMenuController {
 
     @FXML
     void continueButtonClicked(MouseEvent event) throws IOException {
+
+
+        //Processor object to remove silence
+        DatabaseProcessor dbProcessor = new DatabaseProcessor("");
+        String pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
+        File audioFile = new File(System.getProperty("user.dir") + "/" + "audio.wav");
+
+        String creationName = SetUp.getInstance().practiceMenuController.returnSelectedName();
+
+        File dir = new File(pathToDB + "/" + creationName);
+        int count = Objects.requireNonNull(dir.listFiles()).length;
+        String command = "ffmpeg -y -i " + audioFile.getPath() + " -af silenceremove=1:0:-35dB " + pathToDB + "/" + bashify(creationName) + "/" + bashify(creationName) + "\\(" + String.valueOf(count) + "\\)" + ".wav";
+        dbProcessor.trimAudio(command);
+
+        audioFile.delete();
+
         Scene scene = SetUp.getInstance().practiceMenu;
         Stage window = (Stage) continueButton.getScene().getWindow();
         window.setScene(scene);
     }
 
-    @FXML
+    public String bashify(String name) {
+        //Characters that break the bash command TODO: test if these are all of them
+        char invalids[] = "$/%:\\ .,-".toCharArray();
+        boolean found = false;
+        String bashed = "";
+        char[] chars = name.toCharArray();
+        for(char cha : chars) {
+            for(char invalid : invalids) {
+                if(cha == invalid) {
+                    bashed += "\\" + cha;
+                    found = true;
+                    break;
+                } else {
+                    found = false;
+                }
+            }
+            if(!found) {
+                bashed += cha;
+            }
+        }
+        return bashed;
+    }
+
+   @FXML
     void backButtonClicked(MouseEvent event) throws IOException {
         Scene scene = SetUp.getInstance().practiceMenu;
         Stage window = (Stage) continueButton.getScene().getWindow();

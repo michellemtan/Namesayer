@@ -121,7 +121,7 @@ public class PracticeMenuController {
     private void mediaPlayerCreator() throws IOException {
 
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
-        Media media = new Media(new File(databasePath+"/"+selectedName+"/"+selectedName+"_d").toURI().toString());
+        Media media = new Media(new File(databasePath+"/"+selectedName+"/"+selectedName).toURI().toString());
         audioPlayer = new MediaPlayer(media);
         audioPlayer.setOnPlaying(new AudioRunnable(false));
         audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
@@ -196,5 +196,10 @@ public class PracticeMenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String returnSelectedName(){
+        String selectedName = creationsListView.getSelectionModel().getSelectedItem();
+        return selectedName;
     }
 }

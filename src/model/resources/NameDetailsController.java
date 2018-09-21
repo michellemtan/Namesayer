@@ -78,31 +78,50 @@ public class NameDetailsController {
         }
     }
 
+    //Changes these commands to have backslash before so bash works
+    public String bashify(String name) {
+        //Characters that break the bash command TODO: test if these are all of them
+
+
+
+        char invalids[] = "$/%:\\ .,-()".toCharArray();
+        boolean found = false;
+        String bashed = "";
+        char[] chars = name.toCharArray();
+        for(char cha : chars) {
+            for(char invalid : invalids) {
+                if(cha == invalid) {
+                    bashed += "\\" + cha;
+                    found = true;
+                    break;
+                } else {
+                    found = false;
+                }
+            }
+            if(!found) {
+                bashed += cha;
+            }
+        }
+        return bashed;
+    }
+
     public void setDefaultClicked() throws IOException {
         String titleName = nameName.getText();
         String selectedName = nameListView.getSelectionModel().getSelectedItem();
 
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 
-        String startName = databasePath + "/" + titleName+ "/" + selectedName;
-        String defaultName = databasePath + "/" + titleName+ "/" + titleName;
-        String defaultNameTemp = databasePath + "/" + titleName+ "/" + titleName+"_t";
+
+        String startName = bashify(databasePath + "/" + titleName+ "/" + selectedName);
+        String defaultName = bashify(databasePath + "/" + titleName+ "/" + titleName);
+        String defaultNameTemp = bashify(databasePath + "/" + titleName+ "/" + titleName+"_t");
+
 
         try {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "mv " + defaultName + " " + defaultNameTemp);
+            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "mv " + defaultName + " " + defaultNameTemp + "; mv " + startName + " " + defaultName + "; mv " + defaultNameTemp + " " + startName);
             Process renameTemp = builder.start();
             renameTemp.waitFor();
 
-            ProcessBuilder builder1 = new ProcessBuilder("/bin/bash", "-c", "mv " + startName + " " + defaultName);
-            Process renameToDefault = builder1.start();
-            renameToDefault.waitFor();
-
-            ProcessBuilder builder2 = new ProcessBuilder("/bin/bash", "-c", "mv " + defaultNameTemp + " " + startName);
-            Process renameToTemp = builder2.start();
-            renameTemp.waitFor();
-
-
-            //TODO: UPDATE LIST
             nameListView.refresh();
 
         } catch (IOException e) {

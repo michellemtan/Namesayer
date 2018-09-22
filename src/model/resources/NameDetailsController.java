@@ -29,9 +29,7 @@ public class NameDetailsController {
     @FXML private Button playButton;
     @FXML private Button deleteBtn;
     @FXML private ProgressBar progressBar;
-    @FXML private Button sadFaceButton;
-    @FXML
-    private Label defaultLabel;
+    @FXML private Label defaultLabel;
     private boolean fromPractice;
     private String dirName;
     private MediaPlayer audioPlayer;
@@ -44,11 +42,15 @@ public class NameDetailsController {
 
     //Builds list of audio files within 'name' folder
     public void setUpList(List<String> list, String name, boolean source) {
+
+
+
         //Clear list view
         nameListView.getItems().clear();
         dirName = name;
         fromPractice = source;
-        defaultLabel.setText("Default: " + dirName + ".wav");
+        //Set default label to represent default
+        defaultLabel.setText("Default: " + returnDefault(dirName) + ".wav");
         nameName.setText(dirName);
         nameListView.getItems().addAll(list);
         nameListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -181,20 +183,9 @@ public class NameDetailsController {
         }
     }
 
-    public void setDefaultClicked() throws IOException {
+    public void setDefaultClicked() {
         String titleName = nameName.getText();
         String selectedName = nameListView.getSelectionModel().getSelectedItem().replaceAll(".wav", "");
-
-        String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
-
-//        String startName = bashify(databasePath + "/" + titleName+ "/" + selectedName);
-//        String defaultName = bashify(databasePath + "/" + titleName + "/" + titleName + ".wav");
-//        String defaultNameTemp = bashify(databasePath + "/" + titleName+ "/" + titleName+"_t");
-//
-//        try {
-//            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "mv " + defaultName + " " + defaultNameTemp + "; mv " + startName + " " + defaultName + "; mv " + defaultNameTemp + " " + startName);
-//            Process renameTemp = builder.start();
-//            renameTemp.waitFor();
 
         if (defaultNames == null) {
             defaultNames = new HashMap<>();
@@ -202,9 +193,6 @@ public class NameDetailsController {
 
         defaultNames.put(titleName, selectedName);
         defaultLabel.setText("Default: " + selectedName + ".wav");
-        System.out.println("KEY: " + titleName);
-        System.out.println("KEY: " + selectedName);
-
     }
 
     public void clearListView() {

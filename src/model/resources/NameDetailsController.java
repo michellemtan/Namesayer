@@ -17,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class NameDetailsController {
@@ -28,9 +29,14 @@ public class NameDetailsController {
     @FXML private Button playButton;
     @FXML private Button deleteBtn;
     @FXML private ProgressBar progressBar;
+    @FXML private Button sadFaceButton;
+    @FXML
+    private Label defaultLabel;
     private boolean fromPractice;
     private String dirName;
     private MediaPlayer audioPlayer;
+    private HashMap<String, String> defaultNames;
+
 
     public String getName() {
         return dirName;
@@ -42,6 +48,7 @@ public class NameDetailsController {
         nameListView.getItems().clear();
         dirName = name;
         fromPractice = source;
+        defaultLabel.setText("Default: " + dirName + ".wav");
         nameName.setText(dirName);
         nameListView.getItems().addAll(list);
         nameListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -51,9 +58,14 @@ public class NameDetailsController {
         deleteBtn.setDisable(true);
         playButton.setDisable(true);
 
-        //Only can set default if default is not selected
+        //Only can set default if there is just 1 name selected
         nameListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            setDefaultBtn.setDisable(false);
+            if(nameListView.getSelectionModel().getSelectedItems().size() == 1 && nameListView.getItems().size() != 1) {
+                setDefaultBtn.setDisable(false);
+            } else {
+                setDefaultBtn.setDisable(true);
+
+            }
             deleteBtn.setDisable(false);
             playButton.setDisable(false);
         });
@@ -170,15 +182,29 @@ public class NameDetailsController {
     }
 
     public void setDefaultClicked() throws IOException {
-        //Create files to be moved + temp file
-        File originalDefault = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + nameName.getText() + "/" + nameName.getText() + ".wav");
-        File newDefault = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + nameName.getText() + "/" + nameListView.getSelectionModel().getSelectedItem());
-        File tempFile = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + nameName.getText() + "/tempfile.wav");
+        String titleName = nameName.getText();
+        String selectedName = nameListView.getSelectionModel().getSelectedItem().replaceAll(".wav", "");
 
-        //Rename files
-        originalDefault.renameTo(tempFile);
-        newDefault.renameTo(originalDefault);
-        tempFile.renameTo(newDefault);
+        String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
+
+//        String startName = bashify(databasePath + "/" + titleName+ "/" + selectedName);
+//        String defaultName = bashify(databasePath + "/" + titleName + "/" + titleName + ".wav");
+//        String defaultNameTemp = bashify(databasePath + "/" + titleName+ "/" + titleName+"_t");
+//
+//        try {
+//            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "mv " + defaultName + " " + defaultNameTemp + "; mv " + startName + " " + defaultName + "; mv " + defaultNameTemp + " " + startName);
+//            Process renameTemp = builder.start();
+//            renameTemp.waitFor();
+
+        if (defaultNames == null) {
+            defaultNames = new HashMap<>();
+        }
+
+        defaultNames.put(titleName, selectedName);
+        defaultLabel.setText("Default: " + selectedName + ".wav");
+        System.out.println("KEY: " + titleName);
+        System.out.println("KEY: " + selectedName);
+
     }
 
     public void clearListView() {
@@ -187,6 +213,14 @@ public class NameDetailsController {
     }
 
     public String returnDefault(String title) {
-        return dirName;
+
+        if (defaultNames == null) {
+            return title;
+        } else if (defaultNames.containsKey(title)) {
+            defaultLabel.setText("Default: " + defaultNames.get(title) + ".wav");
+            return defaultNames.get(title);
+        } else {
+            return title;
+        }
     }
 }

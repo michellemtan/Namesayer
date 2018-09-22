@@ -13,6 +13,7 @@ public class BadRecordingsMenuController {
 
     @FXML private Button backButton;
     @FXML private TextArea textArea;
+    @FXML private Button clearTextButton;
     private String previousScene = "";
 
     //Return the user to the start menu when the back button is clicked
@@ -64,8 +65,7 @@ public class BadRecordingsMenuController {
             //Ensure the textArea is not editable by the user
             textArea.setText(fieldContent.toString());
             textArea.setEditable(false);
-            textArea.setDisable(true);
-            textArea.setMouseTransparent(true);
+            //textArea.setMouseTransparent(true);
 
         } catch (IOException e) {
             //If there are no bad recordings saved, create a new text file to store them
@@ -74,6 +74,13 @@ public class BadRecordingsMenuController {
             bw.flush();
             bw.close();
         }
+    }
+
+    @FXML
+    public void clearTextLog() throws IOException {
+        File file = new File("BadRecordings.txt");
+        PrintWriter writer = new PrintWriter(file);
+        updateTextLog();
     }
 }
 

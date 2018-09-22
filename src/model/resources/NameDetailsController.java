@@ -21,8 +21,6 @@ import java.util.List;
 
 public class NameDetailsController {
 
-    //TODO: Maybe add a .wav so the user knows that they're audio wav files
-
     @FXML private Label nameName;
     @FXML private ListView<String> nameListView;
     @FXML private Button backBtn;
@@ -186,11 +184,9 @@ public class NameDetailsController {
 
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 
-
         String startName = bashify(databasePath + "/" + titleName+ "/" + selectedName);
-        String defaultName = bashify(databasePath + "/" + titleName+ "/" + titleName);
+        String defaultName = bashify(databasePath + "/" + titleName + "/" + titleName + ".wav");
         String defaultNameTemp = bashify(databasePath + "/" + titleName+ "/" + titleName+"_t");
-
 
         try {
             ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "mv " + defaultName + " " + defaultNameTemp + "; mv " + startName + " " + defaultName + "; mv " + defaultNameTemp + " " + startName);
@@ -206,11 +202,8 @@ public class NameDetailsController {
         }
     }
 
-
-
     public void clearListView() {
         //Clear list view
         nameListView.getItems().clear();
     }
-
 }

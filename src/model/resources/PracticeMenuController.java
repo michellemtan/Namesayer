@@ -189,7 +189,6 @@ public class PracticeMenuController {
         playMediaTracks(mediaList);
     }
 
-
     private void playMediaTracks(ObservableList<Media> mediaList) {
 
         System.out.println("playMediaTracks");
@@ -243,7 +242,6 @@ public class PracticeMenuController {
         timeline.play();
     }
 
-
     @FXML
     public void playSingleButtonClicked() throws IOException {
 
@@ -261,7 +259,6 @@ public class PracticeMenuController {
         audioPlayer.play();
         audioPlayer.setOnReady(() -> progressBar.setProgress(0.0));
         audioPlayer.setOnReady(this::progressBar);
-
     }
 
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly

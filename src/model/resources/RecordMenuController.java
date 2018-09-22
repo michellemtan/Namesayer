@@ -208,10 +208,7 @@ public class RecordMenuController {
     }
 
     @FXML
-    void micButtonClicked(MouseEvent event) throws IOException {
-//        Scene scene = SetUp.getInstance().microphoneCheckMenu;
-//        Stage window = (Stage) micButton.getScene().getWindow();
-//        window.setScene(scene);
+    void micButtonClicked() throws IOException {
 
         ProcessBuilder audioBuilder = new ProcessBuilder("/bin/bash", "-c", "bash myscript.sh");
         audioBuilder.start();

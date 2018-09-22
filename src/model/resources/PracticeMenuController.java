@@ -180,8 +180,7 @@ public class PracticeMenuController {
 
     private void mediaPlayerCreator() throws IOException {
 
-        List<String> audioList = new ArrayList<String>();
-        audioList.addAll(creationsListView.getItems().stream().collect(Collectors.toList()));
+        List<String> audioList = new ArrayList<>(new ArrayList<>(creationsListView.getItems()));
 
         ObservableList<Media> mediaList = FXCollections.observableArrayList();
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
@@ -201,8 +200,6 @@ public class PracticeMenuController {
 
     private void playMediaTracks(ObservableList<Media> mediaList) {
 
-        System.out.println("playMediaTracks");
-        System.out.println("Media size: " +mediaList.size());
         if (mediaList.size() == 0) {
             detailsButton.setDisable(false);
             playPauseButton.setDisable(false);
@@ -232,11 +229,11 @@ public class PracticeMenuController {
         audioPlayer.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
-                try {
+                /*try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                }*/
                 playMediaTracks(mediaList);
             }
         });

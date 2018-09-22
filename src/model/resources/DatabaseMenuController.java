@@ -81,7 +81,7 @@ public class DatabaseMenuController {
                 try {
                     scene = SetUp.getInstance().nameDetailsMenu;
                     //SetUp.getInstance().nameDetailsController.setName(cell.itemProperty().get());
-                    SetUp.getInstance().nameDetailsController.setUpList(getChildrenFromParent(cell.itemProperty().get()), cell.itemProperty().get(), false);
+                    SetUp.getInstance().nameDetailsController.setUpList(getChildrenFromParent(cell.itemProperty().get()), cell.itemProperty().get(), "db");
                 } catch (IOException e) {
                 }
                 Stage window = (Stage) deleteBtn.getScene().getWindow();
@@ -143,10 +143,9 @@ public class DatabaseMenuController {
     public void deleteBtnPressed() throws IOException {
         if (dbListView.getSelectionModel().getSelectedIndex() != -1) {
             //TODO: Look into directing with tool tip
-            SetUp.getInstance().deleteMenuController.setFromDetails(false);
             List<String> toDelete = new ArrayList<>(dbListView.getSelectionModel().getSelectedItems());
             //Pass list into deleteMenuController
-            SetUp.getInstance().deleteMenuController.setUpList(toDelete, false);
+            SetUp.getInstance().deleteMenuController.setUpList(toDelete, "db");
 
             //Switch scenes
             Scene scene = SetUp.getInstance().deleteMenu;

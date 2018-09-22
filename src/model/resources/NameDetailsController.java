@@ -30,7 +30,7 @@ public class NameDetailsController {
     @FXML private Button deleteBtn;
     @FXML private ProgressBar progressBar;
     @FXML private Label defaultLabel;
-    private boolean fromPractice;
+    private String previousScene;
     private String dirName;
     private MediaPlayer audioPlayer;
     private HashMap<String, String> defaultNames;
@@ -41,14 +41,12 @@ public class NameDetailsController {
     }
 
     //Builds list of audio files within 'name' folder
-    public void setUpList(List<String> list, String name, boolean source) {
-
-
+    public void setUpList(List<String> list, String name, String source) {
 
         //Clear list view
         nameListView.getItems().clear();
         dirName = name;
-        fromPractice = source;
+        previousScene = source;
         //Set default label to represent default
         defaultLabel.setText("Default: " + returnDefault(dirName) + ".wav");
         nameName.setText(dirName);
@@ -86,7 +84,7 @@ public class NameDetailsController {
         //Clear list view
         nameListView.getItems().clear();
         //Go to right scene depending where previous scene was
-        if(fromPractice) {
+        if(previousScene.equals("practice")) {
             Scene scene = SetUp.getInstance().practiceMenu;
             Stage window = (Stage) backBtn.getScene().getWindow();
             window.setScene(scene);
@@ -102,7 +100,11 @@ public class NameDetailsController {
         if(nameListView.getSelectionModel().getSelectedIndex() != -1) {
             List<String> toDelete = new ArrayList<>(nameListView.getSelectionModel().getSelectedItems());
             //Pass list of files to delete through to delete menu
-            SetUp.getInstance().deleteMenuController.setUpList(toDelete, true);
+            if(previousScene.equals("practice")) {
+                SetUp.getInstance().deleteMenuController.setUpList(toDelete, "practiceDetails");
+            } else {
+                SetUp.getInstance().deleteMenuController.setUpList(toDelete, "dbDetails");
+            }
 
             //Switch scenes
             Scene scene = SetUp.getInstance().deleteMenu;

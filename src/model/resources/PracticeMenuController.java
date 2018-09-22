@@ -118,7 +118,7 @@ public class PracticeMenuController {
         }
 
         //Add list to name details menu
-        SetUp.getInstance().nameDetailsController.setUpList(list, selectedName, true);
+        SetUp.getInstance().nameDetailsController.setUpList(list, selectedName, "practice");
 
         String defaultName = SetUp.getInstance().nameDetailsController.returnDefault(selectedName);
 
@@ -129,24 +129,15 @@ public class PracticeMenuController {
 
 
     //Method to delete files if coming from the NameDetails menu
-    public void deleteAudioFiles(List<String> list) throws IOException {
+    public void deleteAudioFiles(String toDelete) throws IOException {
         String dirName = SetUp.getInstance().nameDetailsController.getName();
         File dir = new File(pathToDB + "/" + dirName);
-        for(String name : list) {
-            File file = new File(pathToDB + "/" + dirName + "/" + name);
-            file.delete();
 
+        //If deleting the default file, must set another to be default
+        if(toDelete.equals(SetUp.getInstance().nameDetailsController.returnDefault(toDelete))) {
+            System.out.println("deleting default");
         }
 
-        //If there's only one file left, rename it so it's now the default
-        if(Objects.requireNonNull(dir.listFiles()).length >= 1 && list.contains(dirName + ".wav")) {
-            File[] fileNames = dir.listFiles();
-            for(int i=1; i<=fileNames.length; i++) {
-                File fileName = new File(fileNames[i].getPath());
-                fileName.renameTo(new File(pathToDB + "/" + dirName + "/" + dirName + ".wav"));
-                break;
-            }
-        }
 
         //Try to delete directory, will only work if non-empty - correct behaviour
         if(dir.delete()) {

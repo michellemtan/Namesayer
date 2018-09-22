@@ -18,7 +18,7 @@ public class DeleteMenuController {
     @FXML private ListView<String> deleteListView;
     @FXML private Label deleteLabel;
     private List<String> toDelete;
-    private boolean fromDetails;
+    private String previousScenes;
 
     //TODO: Delete name? Contains x subrecordings
 
@@ -26,9 +26,10 @@ public class DeleteMenuController {
         //Clear list view
         deleteListView.getItems().clear();
 
-        if(fromDetails) {
+        if(previousScenes.equals("practiceDetails") || previousScenes.equals("dbDetails")) {
             Scene scene = SetUp.getInstance().nameDetailsMenu;
             Stage window = (Stage) backBtn.getScene().getWindow();
+            window.setScene(scene);
         } else {
             Scene scene = SetUp.getInstance().databaseMenu;
             Stage window = (Stage) backBtn.getScene().getWindow();
@@ -36,12 +37,8 @@ public class DeleteMenuController {
         }
     }
 
-    public void setFromDetails(boolean detail) {
-        fromDetails = detail;
-    }
-
-    public void setUpList(List<String> list, boolean details) {
-        fromDetails = details;
+    public void setUpList(List<String> list, String source) {
+        previousScenes = source;
         //Change label if only 1 to delete selected
         if(list.size() == 1) {
             deleteLabel.setText("Delete Name?");
@@ -49,7 +46,7 @@ public class DeleteMenuController {
             deleteLabel.setText("Delete Names?");
         }
 
-        if(details) {
+        if(previousScenes.equals("practiceDetails") || previousScenes.equals("dbDetails")) {
             deleteLabel.setText("Delete files?");
         }
 
@@ -61,11 +58,18 @@ public class DeleteMenuController {
 
     public void confirmBtnPressed() throws IOException {
         //If come from details menu call different delete method
-        if(fromDetails) {
+        if(previousScenes.equals("practiceDetails")) {
             SetUp.getInstance().nameDetailsController.clearListView();
-            SetUp.getInstance().practiceMenuController.deleteAudioFiles(toDelete);
+            SetUp.getInstance().practiceMenuController.deleteAudioFiles(toDelete.get(0));
             //Switch scenes back
             Scene scene = SetUp.getInstance().practiceMenu;
+            Stage window = (Stage) backBtn.getScene().getWindow();
+            window.setScene(scene);
+        } else if(previousScenes.equals("dbDetails")) {
+            SetUp.getInstance().nameDetailsController.clearListView();
+            SetUp.getInstance().practiceMenuController.deleteAudioFiles(toDelete.get(0));
+            //Switch scenes back
+            Scene scene = SetUp.getInstance().databaseMenu;
             Stage window = (Stage) backBtn.getScene().getWindow();
             window.setScene(scene);
         } else {

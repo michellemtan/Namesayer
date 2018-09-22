@@ -160,14 +160,14 @@ public class RecordMenuController {
     }
 
     @FXML
-    void backButtonClicked(MouseEvent event) throws IOException {
+    void backButtonClicked() throws IOException {
         Scene scene = SetUp.getInstance().practiceMenu;
         Stage window = (Stage) continueButton.getScene().getWindow();
         window.setScene(scene);
     }
 
     @FXML
-    void playbackButtonClicked(MouseEvent event) {
+    void playbackButtonClicked() {
         //If an audio file is already playing, stop and play the audio from the start
         if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
             audioPlayer.stop();
@@ -178,12 +178,13 @@ public class RecordMenuController {
         audioPlayer = new MediaPlayer(media);
         audioPlayer.setOnPlaying(new AudioRunnable(false));
         audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
+        progressBar();
         audioPlayer.play();
 
     }
 
     @FXML
-    void recordButtonClicked(MouseEvent event) {
+    void recordButtonClicked() {
         if (audioRecorded==0) {
             record();
         } else {
@@ -245,6 +246,7 @@ public class RecordMenuController {
                     compareButton.setDisable(true);
                     continueButton.setDisable(true);
                     micButton.setDisable(true);
+                    backButton.setDisable(true);
 
                     try {
                         ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -f alsa -i default -t 5 ./audio.wav");
@@ -258,6 +260,7 @@ public class RecordMenuController {
                             continueButton.setDisable(false);
                             recordButton.setDisable(false);
                             micButton.setDisable(false);
+                            backButton.setDisable(false);
                         });
 
 

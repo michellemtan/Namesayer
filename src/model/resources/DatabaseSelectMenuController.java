@@ -117,7 +117,7 @@ public class DatabaseSelectMenuController {
         progressStage.setAlwaysOnTop(true);
 
         //Code to clear preferences
-        /*try {
+/*        try {
             addPref.clear();
         } catch (BackingStoreException e) {
             e.printStackTrace();

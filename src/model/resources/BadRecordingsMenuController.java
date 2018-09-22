@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -12,6 +11,11 @@ import java.util.HashSet;
 
 public class BadRecordingsMenuController {
 
+    @FXML
+    private Button backButton;
+    @FXML
+    private TextArea textArea;
+    private String previousScene;
     @FXML private Button backButton;
     @FXML private TextArea textArea;
     private String previousScene = "";
@@ -19,11 +23,11 @@ public class BadRecordingsMenuController {
     //Return the user to the start menu when the back button is clicked
     @FXML
     void backButtonClicked() throws IOException {
-        if(previousScene.equals("practiceMenu")) {
+        if (previousScene.equals("practiceMenu")) {
             Scene scene = SetUp.getInstance().practiceMenu;
             Stage window = (Stage) backButton.getScene().getWindow();
             window.setScene(scene);
-        } else if(previousScene.equals("nameDetailsMenu")) {
+        } else if (previousScene.equals("nameDetailsMenu")) {
             Scene scene = SetUp.getInstance().nameDetailsMenu;
             Stage window = (Stage) backButton.getScene().getWindow();
             window.setScene(scene);

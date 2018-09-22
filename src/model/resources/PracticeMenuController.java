@@ -40,7 +40,8 @@ public class PracticeMenuController {
     @FXML private Label creationName;
     @FXML private Button backButton;
     @FXML private Button playSingleButton;
-    @FXML private ContextMenu sadContext;
+    @FXML
+    private ContextMenu sadContext;
     private MediaPlayer audioPlayer;
     private List<String> creationList;
     private String selectedName;
@@ -273,7 +274,6 @@ public class PracticeMenuController {
         timeline.play();
     }
 
-
     @FXML
     public void playSingleButtonClicked() throws IOException {
 
@@ -282,16 +282,16 @@ public class PracticeMenuController {
         }
 
         selectedName = creationsListView.getSelectionModel().getSelectedItem();
+        String defaultName = SetUp.getInstance().nameDetailsController.returnDefault(selectedName);
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 
-        Media media = new Media(new File(databasePath+"/"+selectedName+"/"+selectedName).toURI().toString() + ".wav");
+        Media media = new Media(new File(databasePath + "/" + selectedName + "/" + defaultName).toURI().toString() + ".wav");
         audioPlayer = new MediaPlayer(media);
         audioPlayer.setOnPlaying(new AudioRunnable(false));
         audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
         audioPlayer.play();
         audioPlayer.setOnReady(() -> progressBar.setProgress(0.0));
         audioPlayer.setOnReady(this::progressBar);
-
     }
 
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
@@ -324,7 +324,7 @@ public class PracticeMenuController {
     }
 
     @FXML
-    public void sadFaceButtonClicked() {
+    public void sadFaceButtonClicked() throws IOException {
         try {
 
             String selectedName = creationsListView.getSelectionModel().getSelectedItem() + ".wav";
@@ -337,6 +337,7 @@ public class PracticeMenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        SetUp.getInstance().badRecordingsMenuController.updateTextLog();
     }
 
     public String returnSelectedName(){

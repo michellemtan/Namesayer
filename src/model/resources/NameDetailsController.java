@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -21,8 +20,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class NameDetailsController {
-
-    //TODO: Maybe add a .wav so the user knows that they're audio wav files
 
     @FXML private Label nameName;
     @FXML private ListView<String> nameListView;
@@ -72,6 +69,7 @@ public class NameDetailsController {
     }
 
     public void backBtnPressed() throws IOException {
+        //Clear list view
         nameListView.getItems().clear();
         //Go to right scene depending where previous scene was
         if(fromPractice) {
@@ -128,7 +126,7 @@ public class NameDetailsController {
     }
 
     @FXML
-    public void sadFaceButtonClicked() {
+    public void sadFaceButtonClicked() throws IOException {
         try {
             String selectedName = nameListView.getSelectionModel().getSelectedItem();
             File f = new File("BadRecordings.txt");
@@ -140,6 +138,8 @@ public class NameDetailsController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        SetUp.getInstance().badRecordingsMenuController.updateTextLog();
     }
 
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
@@ -181,11 +181,19 @@ public class NameDetailsController {
         tempFile.renameTo(newDefault);
     }
 
-
-
     public void clearListView() {
         //Clear list view
         nameListView.getItems().clear();
     }
 
+    public String returnDefault(String title) {
+
+        if (defaultNames == null) {
+            return title;
+        } else if (defaultNames.containsKey(title)) {
+            return defaultNames.get(title);
+        } else {
+            return title;
+        }
+    }
 }

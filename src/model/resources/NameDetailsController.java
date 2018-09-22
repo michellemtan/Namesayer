@@ -15,10 +15,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class NameDetailsController {
 
@@ -131,7 +128,6 @@ public class NameDetailsController {
 
     @FXML
     public void playButtonClicked() throws IOException {
-        System.out.println(defaultNames);
         if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING){
             audioPlayer.stop();
         }
@@ -228,6 +224,15 @@ public class NameDetailsController {
     public String getNewDefault(String directoryName) throws IOException {
         File dir = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + directoryName);
         File[] files = dir.listFiles();
+        //if name.wav is a file, set that as default. Else, just first file in list
+        List<String> fileNames = new ArrayList<>();
+        List<File> fileList = Arrays.asList(files);
+        for(File file : fileList) {
+            fileNames.add(file.getName());
+        }
+        if(fileNames.contains(directoryName + ".wav")) {
+            return directoryName + ".wav";
+        }
         return files[0].getName();
     }
 

@@ -43,7 +43,6 @@ public class PracticeMenuController {
     private ObservableList<Media> mediaList;
     private boolean isFinished;
 
-    //TODO: HEY ROWAN I FIXED UP THE PLAY LIST SO YOU CAN STOP IT ETC.
     //TODO: ISSUE WITH DELETE: IF YOU HAVE MICHELLE.WAV, MICHELLE(1).WAV, MICHELLE(2).WAV AND DELETE MICHELLE(1).WAV,
     //TODO: WHEN YOU RECORD, IT DOESN'T WORK ANYMORE
 
@@ -159,6 +158,8 @@ public class PracticeMenuController {
             }
         }
 
+        File fileToDelete = new File(dir.getPath() + "/" + toDelete);
+        fileToDelete.delete();
 
         //Try to delete directory, will only work if non-empty - correct behaviour
         if(dir.delete()) {

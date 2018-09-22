@@ -27,23 +27,19 @@ public class BadRecordingsMenuController {
             Scene scene = SetUp.getInstance().nameDetailsMenu;
             Stage window = (Stage) backButton.getScene().getWindow();
             window.setScene(scene);
+        } else if(previousScene.equals("startMenu")) {
+            Scene scene = SetUp.getInstance().startMenu;
+            Stage window = (Stage) backButton.getScene().getWindow();
+            window.setScene(scene);
         }
-
-        Scene scene = SetUp.getInstance().startMenu;
-        Stage window = (Stage) backButton.getScene().getWindow();
-        window.setScene(scene);
     }
 
-    public void setPreviousScene(String name) {
+    public void setPreviousScene(String name) throws IOException {
         previousScene = name;
+        updateTextLog();
     }
 
     //This method displays the contents of the text file containing a list of bad recordings
-
-    @FXML
-    void initialize() throws IOException {
-            updateTextLog();
-    }
 
     public void updateTextLog() throws IOException {
 

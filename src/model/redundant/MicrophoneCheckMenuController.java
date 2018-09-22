@@ -1,4 +1,4 @@
-package model.resources;
+package model.redundant;
 
 import javafx.animation.PauseTransition;
 import javafx.concurrent.Service;
@@ -12,6 +12,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.resources.SetUp;
 
 import java.io.File;
 import java.io.IOException;

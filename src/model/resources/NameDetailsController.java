@@ -1,13 +1,17 @@
 package model.resources;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,9 +25,11 @@ public class NameDetailsController {
     @FXML private ListView<String> nameListView;
     @FXML private Button backBtn;
     @FXML private Button setDefaultBtn;
-
+    @FXML private Button playButton;
     @FXML private Button deleteBtn;
+    @FXML private ProgressBar progressBar;
     private String dirName;
+    private MediaPlayer audioPlayer;
 
     public String getName() {
         return dirName;
@@ -39,16 +45,18 @@ public class NameDetailsController {
 
         setDefaultBtn.setDisable(true);
         deleteBtn.setDisable(true);
+        playButton.setDisable(true);
 
         //Only can set default if there is just 1 name selected
         nameListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(nameListView.getSelectionModel().getSelectedItems().size() == 1 && nameListView.getItems().size() != 1) {
                 setDefaultBtn.setDisable(false);
-                deleteBtn.setDisable(false);
             } else {
                 setDefaultBtn.setDisable(true);
-                deleteBtn.setDisable(false);
+
             }
+            deleteBtn.setDisable(false);
+            playButton.setDisable(false);
         });
     }
 
@@ -71,6 +79,55 @@ public class NameDetailsController {
             Scene scene = SetUp.getInstance().deleteMenu;
             Stage window = (Stage) backBtn.getScene().getWindow();
             window.setScene(scene);
+        }
+    }
+
+    @FXML
+    public void playButtonClicked() throws IOException {
+
+        String selectedName = dirName;
+        String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
+
+        Media media = new Media(new File(databasePath+"/"+selectedName+"/"+selectedName).toURI().toString() + ".wav");
+        audioPlayer = new MediaPlayer(media);
+        audioPlayer.setOnPlaying(new AudioRunnable(false));
+        audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
+        audioPlayer.play();
+        audioPlayer.setOnReady(() -> progressBar.setProgress(0.0));
+        audioPlayer.setOnReady(this::progressBar);
+    }
+
+    private void progressBar() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
+                new KeyFrame((audioPlayer.getTotalDuration().add(Duration.millis(1000))), new KeyValue(progressBar.progressProperty(), 1))
+        );
+        timeline.setCycleCount(1);
+        timeline.play();
+    }
+
+    //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
+    private class AudioRunnable implements Runnable {
+
+        private boolean isFinished;
+
+        private AudioRunnable(boolean status){
+            isFinished = status;
+        }
+        @Override
+        public void run() {
+            //When the media player has finished, the buttons will be enabled
+            if (isFinished) {
+                deleteBtn.setDisable(false);
+                setDefaultBtn.setDisable(false);
+                backBtn.setDisable(false);
+                //When the media player is playing the audio file, the buttons will be disabled to prevent the user from navigating away
+            } else {
+
+                deleteBtn.setDisable(true);
+                setDefaultBtn.setDisable(true);
+                backBtn.setDisable(true);
+            }
         }
     }
 

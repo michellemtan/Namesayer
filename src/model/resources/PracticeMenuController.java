@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class PracticeMenuController {
 
@@ -36,7 +35,8 @@ public class PracticeMenuController {
     @FXML private Label creationName;
     @FXML private Button backButton;
     @FXML private Button playSingleButton;
-    @FXML private ContextMenu sadContext;
+    @FXML
+    private ContextMenu sadContext;
     private MediaPlayer audioPlayer;
     private List<String> creationList;
     private String selectedName;
@@ -255,9 +255,10 @@ public class PracticeMenuController {
         }
 
         selectedName = creationsListView.getSelectionModel().getSelectedItem();
+        String defaultName = SetUp.getInstance().nameDetailsController.returnDefault(selectedName);
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 
-        Media media = new Media(new File(databasePath+"/"+selectedName+"/"+selectedName).toURI().toString() + ".wav");
+        Media media = new Media(new File(databasePath + "/" + selectedName + "/" + defaultName).toURI().toString() + ".wav");
         audioPlayer = new MediaPlayer(media);
         audioPlayer.setOnPlaying(new AudioRunnable(false));
         audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
@@ -296,7 +297,7 @@ public class PracticeMenuController {
     }
 
     @FXML
-    public void sadFaceButtonClicked() {
+    public void sadFaceButtonClicked() throws IOException {
         try {
 
             String selectedName = creationsListView.getSelectionModel().getSelectedItem() + ".wav";
@@ -309,6 +310,7 @@ public class PracticeMenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        SetUp.getInstance().badRecordingsMenuController.updateTextLog();
     }
 
     public String returnSelectedName(){

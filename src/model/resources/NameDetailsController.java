@@ -17,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class NameDetailsController {
@@ -32,6 +33,8 @@ public class NameDetailsController {
     private Button sadFaceButton;
     private String dirName;
     private MediaPlayer audioPlayer;
+    private HashMap<String, String> defaultNames;
+
 
     public String getName() {
         return dirName;
@@ -122,7 +125,7 @@ public class NameDetailsController {
     }
 
     @FXML
-    public void sadFaceButtonClicked() {
+    public void sadFaceButtonClicked() throws IOException {
         try {
             String selectedName = nameListView.getSelectionModel().getSelectedItem();
             File f = new File("BadRecordings.txt");
@@ -134,6 +137,8 @@ public class NameDetailsController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        SetUp.getInstance().badRecordingsMenuController.updateTextLog();
     }
 
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
@@ -189,30 +194,42 @@ public class NameDetailsController {
 
     public void setDefaultClicked() throws IOException {
         String titleName = nameName.getText();
-        String selectedName = nameListView.getSelectionModel().getSelectedItem();
+        String selectedName = nameListView.getSelectionModel().getSelectedItem().replaceAll(".wav", "");
 
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 
-        String startName = bashify(databasePath + "/" + titleName+ "/" + selectedName);
-        String defaultName = bashify(databasePath + "/" + titleName + "/" + titleName + ".wav");
-        String defaultNameTemp = bashify(databasePath + "/" + titleName+ "/" + titleName+"_t");
+//        String startName = bashify(databasePath + "/" + titleName+ "/" + selectedName);
+//        String defaultName = bashify(databasePath + "/" + titleName + "/" + titleName + ".wav");
+//        String defaultNameTemp = bashify(databasePath + "/" + titleName+ "/" + titleName+"_t");
+//
+//        try {
+//            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "mv " + defaultName + " " + defaultNameTemp + "; mv " + startName + " " + defaultName + "; mv " + defaultNameTemp + " " + startName);
+//            Process renameTemp = builder.start();
+//            renameTemp.waitFor();
 
-        try {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "mv " + defaultName + " " + defaultNameTemp + "; mv " + startName + " " + defaultName + "; mv " + defaultNameTemp + " " + startName);
-            Process renameTemp = builder.start();
-            renameTemp.waitFor();
-
-            nameListView.refresh();
-
-        } catch (IOException e) {
-            System.out.println("ERROR");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (defaultNames == null) {
+            defaultNames = new HashMap<>();
         }
+
+        defaultNames.put(titleName, selectedName.replaceAll(".wav", ""));
+        System.out.println("KEY: " + titleName);
+        System.out.println("KEY: " + selectedName);
+
     }
 
     public void clearListView() {
         //Clear list view
         nameListView.getItems().clear();
+    }
+
+    public String returnDefault(String title) {
+
+        if (defaultNames == null) {
+            return title;
+        } else if (defaultNames.containsKey(title)) {
+            return defaultNames.get(title);
+        } else {
+            return title;
+        }
     }
 }

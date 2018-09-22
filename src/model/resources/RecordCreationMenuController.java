@@ -191,6 +191,7 @@ public class RecordCreationMenuController {
         service.start();
     }
 
+    @FXML
     void micButtonClicked() throws IOException {
 //        Scene scene = SetUp.getInstance().microphoneCheckMenu;
 //        Stage window = (Stage) micButton.getScene().getWindow();

@@ -36,6 +36,7 @@ public class PracticeMenuController {
     @FXML private Label creationName;
     @FXML private Button backButton;
     @FXML private Button playSingleButton;
+    @FXML private ContextMenu sadContext;
     private MediaPlayer audioPlayer;
     private List<String> creationList;
     private String selectedName;
@@ -69,6 +70,15 @@ public class PracticeMenuController {
         });
 
         setUpTitle();
+    }
+
+    @FXML
+    public void badRecordingsPressed() throws IOException {
+        //Pass current class through to bad recordings
+        SetUp.getInstance().badRecordingsMenuController.setPreviousScene("practiceMenu");
+        Scene scene = SetUp.getInstance().badRecordingsMenu;
+        Stage window = (Stage) backButton.getScene().getWindow();
+        window.setScene(scene);
     }
 
     private void setUpTitle(){
@@ -171,13 +181,12 @@ public class PracticeMenuController {
 
     private void mediaPlayerCreator() throws IOException {
 
-        List<String> audioList = new ArrayList<String>();
-        audioList.addAll(creationsListView.getItems().stream().collect(Collectors.toList()));
+        List<String> audioList = new ArrayList<>(new ArrayList<>(creationsListView.getItems()));
 
         ObservableList<Media> mediaList = FXCollections.observableArrayList();
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 
-        System.out.println("Creation list size: " + audioList.size());
+        //System.out.println("Creation list size: " + audioList.size());
 
         for (String creation : audioList) {
             //Set up the file to be played
@@ -189,10 +198,9 @@ public class PracticeMenuController {
         playMediaTracks(mediaList);
     }
 
-    private void playMediaTracks(ObservableList<Media> mediaList) {
 
-        System.out.println("playMediaTracks");
-        System.out.println("Media size: " +mediaList.size());
+    private void playMediaTracks(List<Media> mediaList) {
+
         if (mediaList.size() == 0) {
             detailsButton.setDisable(false);
             playPauseButton.setDisable(false);
@@ -210,7 +218,7 @@ public class PracticeMenuController {
             playSingleButton.setDisable(true);
         }
 
-        List<String> nameList = new ArrayList<String>(creationList);
+        List<String> nameList = new ArrayList<>(creationList);
         creationName.setText(nameList.get(0));
         nameList.remove(0);
 
@@ -219,16 +227,13 @@ public class PracticeMenuController {
         audioPlayer.setOnReady(() -> progressBar.setProgress(0.0));
         audioPlayer.setOnReady(this::progressBar);
 
-        audioPlayer.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                playMediaTracks(mediaList);
-            }
+        audioPlayer.setOnEndOfMedia(() -> {
+            /*try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }*/
+            playMediaTracks(mediaList);
         });
 
     }

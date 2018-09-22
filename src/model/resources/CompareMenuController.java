@@ -19,6 +19,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 public class CompareMenuController {
@@ -50,10 +51,13 @@ public class CompareMenuController {
 
     public void setUpList(List<String> list, boolean create, String name) {
         fromCreate = create;
+        progressBar.setProgress(0.0);
+        existProgressBar.setProgress(0.0);
         dirName = name;
         recordingsList.getItems().setAll(list);
         recordingsList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         recordingsList.getSelectionModel().select(0);
+        Collections.sort(recordingsList.getItems());
     }
 
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly

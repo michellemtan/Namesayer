@@ -74,9 +74,9 @@
                   <Font size="18.0" />
                </font>
                <contextMenu>
-                  <ContextMenu>
+                  <ContextMenu fx:id="sadContext">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                      <MenuItem fx:id="badRecordings" mnemonicParsing="false" onAction="#badRecordingsPressed" text="Bad Recordings" />
                     </items>
                   </ContextMenu>
                </contextMenu>

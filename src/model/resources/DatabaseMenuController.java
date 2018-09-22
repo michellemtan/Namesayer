@@ -58,7 +58,6 @@ public class DatabaseMenuController {
         //disable delete & practice buttons if nothing selected
         deleteBtn.setDisable(true);
         practiceButton.setDisable(true);
-        selectAllButton.setDisable(true);
         dbListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(dbListView.getSelectionModel().getSelectedItems().size() > 0) {
                 deleteBtn.setDisable(false);

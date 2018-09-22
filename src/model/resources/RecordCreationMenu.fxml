@@ -32,7 +32,7 @@
                         <Font size="40.0" />
                      </font>
                   </Text>
-                  <Button fx:id="micButton" layoutX="544.0" layoutY="72.0" mnemonicParsing="false" text="Mic" translateX="-15.0" translateY="15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+                  <Button fx:id="micButton" layoutX="544.0" layoutY="72.0" mnemonicParsing="false" onAction="#micButtonClicked" text="Mic" translateX="-15.0" translateY="15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
                   <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backButtonClicked" text="←" translateX="15.0" translateY="15.0" />
                </children>
             </GridPane>

@@ -76,7 +76,7 @@
                <contextMenu>
                   <ContextMenu fx:id="sadContext">
                     <items>
-                      <MenuItem fx:id="badRecordings" mnemonicParsing="false" onAction="#badRecordingsPressed" text="Bad recordings" />
+                      <MenuItem fx:id="badRecordings" mnemonicParsing="false" onAction="#badRecordingsPressed" text="Bad Recordings" />
                     </items>
                   </ContextMenu>
                </contextMenu>

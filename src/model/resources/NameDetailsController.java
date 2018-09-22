@@ -64,6 +64,15 @@ public class NameDetailsController {
         });
     }
 
+    @FXML
+    public void badRecordingsPressed() throws IOException {
+        //Pass current class through to bad recordings
+        SetUp.getInstance().badRecordingsMenuController.setPreviousScene("nameDetailsMenu");
+        Scene scene = SetUp.getInstance().badRecordingsMenu;
+        Stage window = (Stage) backBtn.getScene().getWindow();
+        window.setScene(scene);
+    }
+
     public void backBtnPressed() throws IOException {
         //Clear list view
         nameListView.getItems().clear();

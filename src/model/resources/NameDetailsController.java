@@ -118,6 +118,7 @@ public class NameDetailsController {
                 window.setScene(scene);
             }
         }
+        //TODO: make alert saying cannot delete default
     }
 
     @FXML

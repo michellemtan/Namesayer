@@ -31,6 +31,10 @@ public class BadRecordingsMenuController {
             Scene scene = SetUp.getInstance().startMenu;
             Stage window = (Stage) backButton.getScene().getWindow();
             window.setScene(scene);
+        } else if(previousScene.equals("compareMenu")) {
+            Scene scene = SetUp.getInstance().compareMenu;
+            Stage window = (Stage) backButton.getScene().getWindow();
+            window.setScene(scene);
         }
     }
 

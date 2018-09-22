@@ -39,9 +39,12 @@ public class StartMenuController {
 
     @FXML
     void micButtonClicked(MouseEvent event) throws IOException {
-        Scene scene = SetUp.getInstance().microphoneCheckMenu;
-        Stage window = (Stage) micButton.getScene().getWindow();
-        window.setScene(scene);
+//        Scene scene = SetUp.getInstance().microphoneCheckMenu;
+//        Stage window = (Stage) micButton.getScene().getWindow();
+//        window.setScene(scene);
+
+        ProcessBuilder audioBuilder = new ProcessBuilder("/bin/bash", "-c", "bash myscript.sh");
+        audioBuilder.start();
     }
 
     @FXML

@@ -3,11 +3,17 @@ package model.resources;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.binding.IntegerBinding;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -25,7 +31,6 @@ import java.util.Objects;
 public class PracticeMenuController {
 
     @FXML private Button playPauseButton;
-
     @FXML private Button sadFaceButton;
     @FXML private Button detailsButton;
     @FXML private Button shuffleButton;
@@ -56,6 +61,7 @@ public class PracticeMenuController {
     //Fill list with selected items
     public void setUpList(List<String> list) throws IOException {
         creationList = list;
+        playPauseButton.setDisable(false);
         if (creationList.size()<=1){
             playPauseButton.setDisable(true);
             shuffleButton.setDisable(true);
@@ -118,7 +124,7 @@ public class PracticeMenuController {
         }
 
         //Add list to name details menu
-        SetUp.getInstance().nameDetailsController.setUpList(list, selectedName);
+        SetUp.getInstance().nameDetailsController.setUpList(list, selectedName, true);
 
         //Switch scene
         selectedName = creationsListView.getSelectionModel().getSelectedItem();
@@ -221,6 +227,27 @@ public class PracticeMenuController {
         List<String> nameList = new ArrayList<>(creationList);
         creationName.setText(nameList.get(0));
         nameList.remove(0);
+
+        /*ObservableList<String> obsList = FXCollections.observableArrayList(nameList);
+        obsList.remove(0);
+        System.out.println(obsList.size());
+        obsList.remove(0);
+        System.out.println(obsList.size());
+
+        IntegerBinding sizeProperty = Bindings.size(obsList);
+        BooleanBinding multipleElemsProperty = new BooleanBinding() {
+            @Override protected boolean computeValue() {
+                return nameList.size() > 1;
+            }
+        };
+
+        sizeProperty.addListener((obs, old, newI) -> {
+            creationsListView.getSelectionModel().select(nameList.get(0));
+        });*/
+
+        //Consume event of selecting a name so as to make the names non-selectable
+        //creationsListView.addEventFilter(MouseEvent.MOUSE_PRESSED, Event::consume);
+        //creationsListView.getSelectionModel().select(count);
 
         audioPlayer = new MediaPlayer(mediaList.remove(0));
         audioPlayer.play();

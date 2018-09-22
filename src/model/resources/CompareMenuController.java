@@ -95,6 +95,7 @@ public class CompareMenuController {
         );
         timeline.setCycleCount(1);
         timeline.play();
+        timeline.setOnFinished(e -> progressBar.setProgress(0.0));
 
         //Create a new media player instance and set the event handlers to create a thread that listens for when the audio is playing
         Media media = new Media(new File("audio.wav").toURI().toString());
@@ -126,7 +127,7 @@ public class CompareMenuController {
     @FXML
     void sadFaceButtonClicked() {
         try {
-            String selectedName = SetUp.getInstance().createMenuController.getName() + ".wav";
+            String selectedName = recordingsList.getSelectionModel().getSelectedItem();
             File f = new File("BadRecordings.txt");
             BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
             bw.append(selectedName+"\n");
@@ -137,6 +138,15 @@ public class CompareMenuController {
 
         }
 
+    }
+
+    @FXML
+    public void badRecordingsPressed() throws IOException {
+        //Pass current class through to bad recordings
+        SetUp.getInstance().badRecordingsMenuController.setPreviousScene("compareMenu");
+        Scene scene = SetUp.getInstance().badRecordingsMenu;
+        Stage window = (Stage) backButton.getScene().getWindow();
+        window.setScene(scene);
     }
 
     @FXML
@@ -176,5 +186,8 @@ public class CompareMenuController {
         );
         timeline.setCycleCount(1);
         timeline.play();
+        timeline.setOnFinished(e -> {
+            existProgressBar.setProgress(0.0);
+        });
     }
 }

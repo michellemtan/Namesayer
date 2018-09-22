@@ -16,6 +16,9 @@ public class BadRecordingsMenuController {
     @FXML
     private TextArea textArea;
     private String previousScene;
+    @FXML private Button backButton;
+    @FXML private TextArea textArea;
+    private String previousScene = "";
 
     //Return the user to the start menu when the back button is clicked
     @FXML
@@ -28,19 +31,23 @@ public class BadRecordingsMenuController {
             Scene scene = SetUp.getInstance().nameDetailsMenu;
             Stage window = (Stage) backButton.getScene().getWindow();
             window.setScene(scene);
+        } else if(previousScene.equals("startMenu")) {
+            Scene scene = SetUp.getInstance().startMenu;
+            Stage window = (Stage) backButton.getScene().getWindow();
+            window.setScene(scene);
+        } else if(previousScene.equals("compareMenu")) {
+            Scene scene = SetUp.getInstance().compareMenu;
+            Stage window = (Stage) backButton.getScene().getWindow();
+            window.setScene(scene);
         }
     }
 
-    public void setPreviousScene(String name) {
+    public void setPreviousScene(String name) throws IOException {
         previousScene = name;
+        updateTextLog();
     }
 
     //This method displays the contents of the text file containing a list of bad recordings
-
-    @FXML
-    void initialize() throws IOException {
-            updateTextLog();
-    }
 
     public void updateTextLog() throws IOException {
 

@@ -1,11 +1,11 @@
 package model.resources;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -67,7 +67,7 @@ public class DatabaseMenuController {
             }
         });
 
-        /*//Set up cell factory for right-click > details specific to each name
+        //Set up cell factory for right-click > details specific to each name
         dbListView.setCellFactory(lv -> {
             ListCell<String> cell = new ListCell<>();
             ContextMenu contextMenu = new ContextMenu();
@@ -81,7 +81,7 @@ public class DatabaseMenuController {
                 try {
                     scene = SetUp.getInstance().nameDetailsMenu;
                     SetUp.getInstance().nameDetailsController.setName(cell.itemProperty().get());
-                    SetUp.getInstance().nameDetailsController.setUpList(getChildrenFromParent(cell.itemProperty().get()), cell.itemProperty().get());
+                    SetUp.getInstance().nameDetailsController.setUpList(getChildrenFromParent(cell.itemProperty().get()), cell.itemProperty().get(), false);
                 } catch (IOException e) {
                 }
                 Stage window = (Stage) deleteBtn.getScene().getWindow();
@@ -100,7 +100,7 @@ public class DatabaseMenuController {
                 }
             });
             return cell ;
-        });*/
+        });
 
         //Sort name and add to list view
         dbListView.getItems().addAll(names);
@@ -118,6 +118,16 @@ public class DatabaseMenuController {
 //                }
 //            }
 //        });
+    }
+
+    public List<String> getChildrenFromParent(String parent) {
+        List<String> children = new ArrayList<>();
+        File dir = new File(pathToDB + "/" + parent);
+        File[] dirListing = dir.listFiles();
+        for(File file : dirListing) {
+            children.add(file.getName());
+        }
+        return children;
     }
 
    public void removeListItem(String name) {
@@ -176,10 +186,6 @@ public class DatabaseMenuController {
         //Only change scenes if they've actually selected something
         if(dbListView.getSelectionModel().getSelectedItems().size() > 0) {
             //Populate list in next scene with selected items
-//            List<String> toDelete = new ArrayList<>(dbListView.getSelectionModel().getSelectedItems());
-//            SetUp.getInstance().practiceMenuController.setUpList(toDelete);
-
-
             List<String> toDelete = new ArrayList<>(dbListView.getSelectionModel().getSelectedItems());
             SetUp.getInstance().practiceMenuController.setUpList(toDelete);
             Scene scene = SetUp.getInstance().practiceMenu;

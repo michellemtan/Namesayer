@@ -12,19 +12,22 @@ import java.util.HashSet;
 
 public class BadRecordingsMenuController {
 
-    @FXML
-    private Button backButton;
-
-    @FXML
-    private TextArea textArea;
+    @FXML private Button backButton;
+    @FXML private TextArea textArea;
+    private String previousScene;
 
     //Return the user to the start menu when the back button is clicked
     @FXML
-    void backButtonClicked(MouseEvent event) throws IOException {
-        Scene scene = SetUp.getInstance().startMenu;
-        Stage window = (Stage) backButton.getScene().getWindow();
-        window.setScene(scene);
+    void backButtonClicked() throws IOException {
+        if(previousScene.equals("practiceMenu")) {
+            Scene scene = SetUp.getInstance().practiceMenu;
+            Stage window = (Stage) backButton.getScene().getWindow();
+            window.setScene(scene);
+        }
+    }
 
+    public void setPreviousScene(String name) {
+        previousScene = name;
     }
 
     //This method displays the contents of the text file containing a list of bad recordings

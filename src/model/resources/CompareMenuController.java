@@ -52,6 +52,8 @@ public class CompareMenuController {
 
     public void setUpList(List<String> list, boolean create, String name) {
         fromCreate = create;
+        progressBar.setProgress(0.0);
+        existProgressBar.setProgress(0.0);
         dirName = name;
         recordingsList.getItems().setAll(list);
         recordingsList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);

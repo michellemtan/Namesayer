@@ -55,6 +55,7 @@ public class PracticeMenuController {
     //Fill list with selected items
     public void setUpList(List<String> list) throws IOException {
         creationList = list;
+        pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
         playPauseButton.setDisable(false);
         if (creationList.size()<=1){
             playPauseButton.setDisable(true);
@@ -131,11 +132,23 @@ public class PracticeMenuController {
     //Method to delete files if coming from the NameDetails menu
     public void deleteAudioFiles(String toDelete) throws IOException {
         String dirName = SetUp.getInstance().nameDetailsController.getName();
-        File dir = new File(pathToDB + "/" + dirName);
+        File dir = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + dirName);
 
         //If deleting the default file, must set another to be default
         if(toDelete.equals(SetUp.getInstance().nameDetailsController.returnDefault(toDelete))) {
-            System.out.println("deleting default");
+            System.out.println(dir.listFiles().length);
+            if(Objects.requireNonNull(dir.listFiles()).length <= 1) {
+                //If was the last file and deleting, no need to set default just delete the file
+                File fileToDelete = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + dirName + "/" + toDelete);
+                fileToDelete.delete();
+            } else {
+                //If not last file, a new default must be set
+                File fileToDelete = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + dirName + "/" + toDelete);
+                fileToDelete.delete();
+                File[] listFiles = dir.listFiles();
+                File newDefault = listFiles[0];
+                SetUp.getInstance().nameDetailsController.setDefaultOnDelete(newDefault.getName().substring(0, newDefault.getName().length() - 4));
+            }
         }
 
 

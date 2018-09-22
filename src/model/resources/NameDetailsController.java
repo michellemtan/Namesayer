@@ -40,6 +40,11 @@ public class NameDetailsController {
         return dirName;
     }
 
+    public int getSize() {
+        System.out.println(nameListView.getItems() + String.valueOf(nameListView.getItems().size()));
+        return nameListView.getItems().size();
+    }
+
     //Builds list of audio files within 'name' folder
     public void setUpList(List<String> list, String name, String source) {
 
@@ -115,7 +120,7 @@ public class NameDetailsController {
 
     @FXML
     public void playButtonClicked() throws IOException {
-
+        System.out.println(defaultNames);
         if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING){
             audioPlayer.stop();
         }
@@ -185,6 +190,13 @@ public class NameDetailsController {
         }
     }
 
+    public void setDefaultOnDelete(String newDefault) {
+        if (defaultNames == null) {
+            defaultNames = new HashMap<>();
+        }
+        defaultNames.put(nameName.getText(), newDefault);
+    }
+
     public void setDefaultClicked() {
         String titleName = nameName.getText();
         String selectedName = nameListView.getSelectionModel().getSelectedItem().replaceAll(".wav", "");
@@ -205,6 +217,7 @@ public class NameDetailsController {
     public String returnDefault(String title) {
 
         if (defaultNames == null) {
+            //TODO: instead of just returning title, return an actual file that exists e.g name(2).wav
             return title;
         } else if (defaultNames.containsKey(title)) {
             defaultLabel.setText("Default: " + defaultNames.get(title) + ".wav");

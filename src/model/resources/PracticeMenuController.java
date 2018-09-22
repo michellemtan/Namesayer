@@ -136,7 +136,6 @@ public class PracticeMenuController {
 
         //If deleting the default file, must set another to be default
         if(toDelete.equals(SetUp.getInstance().nameDetailsController.returnDefault(toDelete))) {
-            System.out.println(dir.listFiles().length);
             if(Objects.requireNonNull(dir.listFiles()).length <= 1) {
                 //If was the last file and deleting, no need to set default just delete the file
                 File fileToDelete = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + dirName + "/" + toDelete);

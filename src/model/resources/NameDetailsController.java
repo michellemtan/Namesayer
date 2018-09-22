@@ -104,17 +104,19 @@ public class NameDetailsController {
     public void deleteBtnPressed() throws IOException {
         if(nameListView.getSelectionModel().getSelectedIndex() != -1) {
             List<String> toDelete = new ArrayList<>(nameListView.getSelectionModel().getSelectedItems());
-            //Pass list of files to delete through to delete menu
-            if(previousScene.equals("practice")) {
-                SetUp.getInstance().deleteMenuController.setUpList(toDelete, "practiceDetails");
-            } else {
-                SetUp.getInstance().deleteMenuController.setUpList(toDelete, "dbDetails");
-            }
+            if(!toDelete.contains(returnDefault(nameName.getText() + ".wav"))) {
+                //Pass list of files to delete through to delete menu
+                if(previousScene.equals("practice")) {
+                    SetUp.getInstance().deleteMenuController.setUpList(toDelete, "practiceDetails");
+                } else {
+                    SetUp.getInstance().deleteMenuController.setUpList(toDelete, "dbDetails");
+                }
 
-            //Switch scenes
-            Scene scene = SetUp.getInstance().deleteMenu;
-            Stage window = (Stage) backBtn.getScene().getWindow();
-            window.setScene(scene);
+                //Switch scenes
+                Scene scene = SetUp.getInstance().deleteMenu;
+                Stage window = (Stage) backBtn.getScene().getWindow();
+                window.setScene(scene);
+            }
         }
     }
 
@@ -217,7 +219,6 @@ public class NameDetailsController {
     public String returnDefault(String title) {
 
         if (defaultNames == null) {
-            //TODO: instead of just returning title, return an actual file that exists e.g name(2).wav
             return title;
         } else if (defaultNames.containsKey(title)) {
             defaultLabel.setText("Default: " + defaultNames.get(title) + ".wav");

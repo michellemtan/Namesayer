@@ -303,18 +303,22 @@ public class PracticeMenuController {
         public void run() {
             //When the media player has finished, the buttons will be enabled
             if (isFinished) {
+
+                if (creationList.size() > 1) {
+                    shuffleButton.setDisable(false);
+                    playPauseButton.setDisable(false);
+                }
                 backButton.setDisable(false);
                 recordButton.setDisable(false);
-                playPauseButton.setDisable(false);
                 detailsButton.setDisable(false);
-                shuffleButton.setDisable(false);
                 //When the media player is playing the audio file, the buttons will be disabled to prevent the user from navigating away
             } else {
                 backButton.setDisable(true);
                 recordButton.setDisable(true);
-                playPauseButton.setDisable(true);
                 detailsButton.setDisable(true);
                 shuffleButton.setDisable(true);
+
+
             }
         }
     }

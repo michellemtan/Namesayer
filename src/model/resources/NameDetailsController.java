@@ -36,6 +36,16 @@ public class NameDetailsController {
     private HashMap<String, String> defaultNames;
 
 
+    //TODO: HI ROWAN
+    //TODO: PLEASE MOVE THIS THANK YOU!
+    private void toMoveIntoDelete() {
+        Alert error = new Alert(Alert.AlertType.ERROR, "Unable to delete default audio file. Please set another audio file to be the default first.", ButtonType.OK);
+        error.setHeaderText("ERROR: Invalid Deletion");
+        error.setTitle("Invalid Deletion");
+        error.showAndWait();
+    }
+
+
     public String getName() {
         return dirName;
     }

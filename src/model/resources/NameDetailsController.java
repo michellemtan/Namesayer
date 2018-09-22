@@ -187,13 +187,6 @@ public class NameDetailsController {
     }
 
     public String returnDefault(String title) {
-
-        if (defaultNames == null) {
-            return title;
-        } else if (defaultNames.containsKey(title)) {
-            return defaultNames.get(title);
-        } else {
-            return title;
-        }
+        return dirName;
     }
 }

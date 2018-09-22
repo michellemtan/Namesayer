@@ -282,10 +282,10 @@ public class PracticeMenuController {
         }
 
         selectedName = creationsListView.getSelectionModel().getSelectedItem();
-        String defaultName = SetUp.getInstance().nameDetailsController.returnDefault(selectedName);
+        //String defaultName = SetUp.getInstance().nameDetailsController.returnDefault(selectedName);
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 
-        Media media = new Media(new File(databasePath + "/" + selectedName + "/" + defaultName).toURI().toString() + ".wav");
+        Media media = new Media(new File(databasePath + "/" + selectedName + "/" + selectedName).toURI().toString() + ".wav");
         audioPlayer = new MediaPlayer(media);
         audioPlayer.setOnPlaying(new AudioRunnable(false));
         audioPlayer.setOnEndOfMedia(new AudioRunnable(true));

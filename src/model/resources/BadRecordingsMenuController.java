@@ -11,11 +11,6 @@ import java.util.HashSet;
 
 public class BadRecordingsMenuController {
 
-    @FXML
-    private Button backButton;
-    @FXML
-    private TextArea textArea;
-    private String previousScene;
     @FXML private Button backButton;
     @FXML private TextArea textArea;
     private String previousScene = "";

@@ -301,7 +301,7 @@ public class PracticeMenuController {
     public void sadFaceButtonClicked() {
         try {
 
-            String selectedName = creationsListView.getSelectionModel().getSelectedItem();
+            String selectedName = creationsListView.getSelectionModel().getSelectedItem() + ".wav";
             File f = new File("BadRecordings.txt");
             BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
             bw.append(selectedName+"\n");

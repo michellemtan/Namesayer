@@ -11,7 +11,9 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +30,8 @@ public class NameDetailsController {
     @FXML private Button playButton;
     @FXML private Button deleteBtn;
     @FXML private ProgressBar progressBar;
+    @FXML
+    private Button sadFaceButton;
     private String dirName;
     private MediaPlayer audioPlayer;
 
@@ -108,6 +112,21 @@ public class NameDetailsController {
         );
         timeline.setCycleCount(1);
         timeline.play();
+    }
+
+    @FXML
+    public void sadFaceButtonClicked() {
+        try {
+            String selectedName = nameListView.getSelectionModel().getSelectedItem();
+            File f = new File("BadRecordings.txt");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
+            bw.append(selectedName + "\n");
+            bw.flush();
+            bw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly

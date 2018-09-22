@@ -186,6 +186,7 @@ public class RecordMenuController {
                 alert.close();
             }
         }
+        backButton.setDisable(true);
     }
 
     private void record() {

@@ -2,11 +2,9 @@ package model.resources;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import model.redundant.MicrophoneCheckMenuController;
 
 import java.io.IOException;
-
-import static javafx.application.Application.STYLESHEET_CASPIAN;
-import static javafx.application.Application.setUserAgentStylesheet;
 
 public class SetUp {
 
@@ -64,7 +62,7 @@ public class SetUp {
         badRecordingsMenu = new Scene(FXMLLoader.load(getClass().getResource("BadRecordingsMenu.fxml")));
         instructionsMenu = new Scene(FXMLLoader.load(getClass().getResource("InstructionsMenu.fxml")));
         nameDetailsMenu = new Scene(FXMLLoader.load(getClass().getResource("NameDetailsMenu.fxml")));
-        microphoneCheckMenu = new Scene(FXMLLoader.load(getClass().getResource("MicrophoneCheckMenu.fxml")));
+        microphoneCheckMenu = new Scene(FXMLLoader.load(getClass().getResource("../redundant/MicrophoneCheckMenu.fxml")));
         exitPracticeMenu = new Scene(FXMLLoader.load(getClass().getResource("ExitPracticeMenu.fxml")));
         recordCreationMenu = new Scene(FXMLLoader.load(getClass().getResource("RecordCreationMenu.fxml")));
         //playMenu = new Scene(FXMLLoader.load(getClass().getResource("../redundant/PlayMenu.fxml")));
@@ -155,7 +153,7 @@ public class SetUp {
     }
 
     private void microphoneCheckMenuLoader() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MicrophoneCheckMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../redundant/MicrophoneCheckMenu.fxml"));
         microphoneCheckMenu = new Scene(loader.load());
         microphoneCheckMenuController = loader.getController();
     }

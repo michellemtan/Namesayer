@@ -15,7 +15,7 @@ public enum Menu {
     EXITPRACTICEMENU("model/resources/ExitPracticeMenu.fxml"),
     FINISHEDMENU("model/resources/FinishedMenu.fxml"),
     INSTRUCTIONSMENU("model/resources/InstructionsMenu.fxml"),
-    MICROPHONECHECKMENU("model/resources/MicrophoneCheckMenu.fxml"),
+    MICROPHONECHECKMENU("model/redundant/MicrophoneCheckMenu.fxml"),
     NAMEDETAILSMENU("model/resources/NameDetailsMenu.fxml"),
     PRACTICEMENU("model/resources/PracticeMenu.fxml"),
     RECORDMENU("model/resources/RecordMenu.fxml"),

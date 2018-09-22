@@ -42,18 +42,16 @@ public class NameDetailsController {
         return dirName;
     }
 
-    public void setName(String name) {
-
-    }
-
     //Builds list of audio files within 'name' folder
     public void setUpList(List<String> list, String name, boolean source) {
+        //Clear list view
+        nameListView.getItems().clear();
         dirName = name;
         fromPractice = source;
         defaultLabel.setText("Default: " + dirName + ".wav");
         nameName.setText(dirName);
         nameListView.getItems().addAll(list);
-        nameListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        nameListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         Collections.sort(nameListView.getItems());
 
         setDefaultBtn.setDisable(true);
@@ -85,7 +83,7 @@ public class NameDetailsController {
     public void backBtnPressed() throws IOException {
         //Clear list view
         nameListView.getItems().clear();
-
+        //Go to right scene depending where previous scene was
         if(fromPractice) {
             Scene scene = SetUp.getInstance().practiceMenu;
             Stage window = (Stage) backBtn.getScene().getWindow();

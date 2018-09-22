@@ -30,6 +30,8 @@ public class NameDetailsController {
     @FXML private Button deleteBtn;
     @FXML private ProgressBar progressBar;
     @FXML private Button sadFaceButton;
+    @FXML
+    private Label defaultLabel;
     private boolean fromPractice;
     private String dirName;
     private MediaPlayer audioPlayer;
@@ -48,6 +50,7 @@ public class NameDetailsController {
     public void setUpList(List<String> list, String name, boolean source) {
         dirName = name;
         fromPractice = source;
+        defaultLabel.setText("Default: " + dirName + ".wav");
         nameName.setText(dirName);
         nameListView.getItems().addAll(list);
         nameListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -180,30 +183,6 @@ public class NameDetailsController {
         }
     }
 
-    //Changes these commands to have backslash before so bash works
-    private String bashify(String name) {
-        //Characters that break the bash command
-        char invalids[] = "$/%:\\ .,-()@".toCharArray();
-        boolean found = false;
-        String bashed = "";
-        char[] chars = name.toCharArray();
-        for(char cha : chars) {
-            for(char invalid : invalids) {
-                if(cha == invalid) {
-                    bashed += "\\" + cha;
-                    found = true;
-                    break;
-                } else {
-                    found = false;
-                }
-            }
-            if(!found) {
-                bashed += cha;
-            }
-        }
-        return bashed;
-    }
-
     public void setDefaultClicked() throws IOException {
         String titleName = nameName.getText();
         String selectedName = nameListView.getSelectionModel().getSelectedItem().replaceAll(".wav", "");
@@ -223,7 +202,8 @@ public class NameDetailsController {
             defaultNames = new HashMap<>();
         }
 
-        defaultNames.put(titleName, selectedName.replaceAll(".wav", ""));
+        defaultNames.put(titleName, selectedName);
+        defaultLabel.setText("Default: " + selectedName + ".wav");
         System.out.println("KEY: " + titleName);
         System.out.println("KEY: " + selectedName);
 
@@ -239,6 +219,7 @@ public class NameDetailsController {
         if (defaultNames == null) {
             return title;
         } else if (defaultNames.containsKey(title)) {
+            defaultLabel.setText("Default: " + defaultNames.get(title) + ".wav");
             return defaultNames.get(title);
         } else {
             return title;

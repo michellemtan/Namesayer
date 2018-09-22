@@ -3,17 +3,11 @@ package model.resources;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.binding.IntegerBinding;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -126,8 +120,7 @@ public class PracticeMenuController {
         //Add list to name details menu
         SetUp.getInstance().nameDetailsController.setUpList(list, selectedName, true);
 
-        //Switch scene
-        selectedName = creationsListView.getSelectionModel().getSelectedItem();
+        String defaultName = SetUp.getInstance().nameDetailsController.returnDefault(selectedName);
 
         Scene scene = SetUp.getInstance().nameDetailsMenu;
         Stage window = (Stage) detailsButton.getScene().getWindow();

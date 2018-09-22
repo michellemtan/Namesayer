@@ -37,7 +37,7 @@ public class NameDetailsController {
 
 
     //TODO: HI ROWAN
-    //TODO: PLEASE MOVE THIS THANK YOU!
+    //TODO: PLEASE MOVE THIS THANK YOU! ok sure thing
     private void toMoveIntoDelete() {
         Alert error = new Alert(Alert.AlertType.ERROR, "The default audio file cannot be deleted.", ButtonType.OK);
         error.setGraphic(null);
@@ -57,14 +57,14 @@ public class NameDetailsController {
     }
 
     //Builds list of audio files within 'name' folder
-    public void setUpList(List<String> list, String name, String source) {
+    public void setUpList(List<String> list, String name, String source) throws IOException {
 
         //Clear list view
         nameListView.getItems().clear();
         dirName = name;
         previousScene = source;
         //Set default label to represent default
-        defaultLabel.setText("Default: " + returnDefault(dirName) + ".wav");
+        defaultLabel.setText("Default: " + returnDefault(dirName));
         nameName.setText(dirName);
         nameListView.getItems().addAll(list);
         nameListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -115,9 +115,7 @@ public class NameDetailsController {
     public void deleteBtnPressed() throws IOException {
 
         if(nameListView.getSelectionModel().getSelectedIndex() != -1) {
-            List<String> toDelete = new ArrayList<>(nameListView.getSelectionModel().getSelectedItems());
-            if(!toDelete.contains(returnDefault(nameName.getText() + ".wav"))) {
-                //Pass list of files to delete through to delete menu
+            List<String> toDelete = new ArrayList<>(nameListView.getSelectionModel().getSelectedItems());             //Pass list of files to delete through to delete menu
                 if(previousScene.equals("practice")) {
                     SetUp.getInstance().deleteMenuController.setUpList(toDelete, "practiceDetails");
                 } else {
@@ -129,8 +127,6 @@ public class NameDetailsController {
                 Stage window = (Stage) backBtn.getScene().getWindow();
                 window.setScene(scene);
             }
-        }
-        //TODO: make alert saying cannot delete default
     }
 
     @FXML
@@ -220,7 +216,7 @@ public class NameDetailsController {
             defaultNames = new HashMap<>();
         }
 
-        defaultNames.put(titleName, selectedName);
+        defaultNames.put(titleName, selectedName + ".wav");
         defaultLabel.setText("Default: " + selectedName + ".wav");
     }
 
@@ -229,14 +225,21 @@ public class NameDetailsController {
         nameListView.getItems().clear();
     }
 
-    public String returnDefault(String title) {
+    public String getNewDefault(String directoryName) throws IOException {
+        File dir = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + directoryName);
+        File[] files = dir.listFiles();
+        return files[0].getName();
+    }
+
+    public String returnDefault(String title) throws IOException {
 
         if (defaultNames == null) {
-            return title;
+            return getNewDefault(title);
         } else if (defaultNames.containsKey(title)) {
             defaultLabel.setText("Default: " + defaultNames.get(title) + ".wav");
             return defaultNames.get(title);
         } else {
+            System.out.println("this shouldn't print");
             return title;
         }
     }

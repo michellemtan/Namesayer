@@ -67,6 +67,17 @@ public class PracticeMenuController {
 
         creationsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             creationName.setText(creationsListView.getSelectionModel().getSelectedItem());
+            if(creationsListView.getSelectionModel().getSelectedItems().size() != 1) {
+                playSingleButton.setDisable(true);
+                detailsButton.setDisable(true);
+                recordButton.setDisable(true);
+                sadFaceButton.setDisable(true);
+            } else {
+                playSingleButton.setDisable(false);
+                detailsButton.setDisable(false);
+                recordButton.setDisable(false);
+                sadFaceButton.setDisable(false);
+            }
         });
 
         setUpTitle();
@@ -132,9 +143,8 @@ public class PracticeMenuController {
     public void deleteAudioFiles(String toDelete) throws IOException {
         String dirName = SetUp.getInstance().nameDetailsController.getName();
         File dir = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + dirName);
-
         //If deleting the default file, must set another to be default
-        if(toDelete.equals(SetUp.getInstance().nameDetailsController.returnDefault(toDelete))) {
+        if(toDelete.equals(SetUp.getInstance().nameDetailsController.returnDefault(dirName))) {
             if(Objects.requireNonNull(dir.listFiles()).length <= 1) {
                 //If was the last file and deleting, no need to set default just delete the file
                 File fileToDelete = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + dirName + "/" + toDelete);
@@ -145,7 +155,7 @@ public class PracticeMenuController {
                 fileToDelete.delete();
                 File[] listFiles = dir.listFiles();
                 File newDefault = listFiles[0];
-                SetUp.getInstance().nameDetailsController.setDefaultOnDelete(newDefault.getName().substring(0, newDefault.getName().length() - 4));
+                SetUp.getInstance().nameDetailsController.setDefaultOnDelete(newDefault.getName());
             }
         }
 
@@ -197,8 +207,6 @@ public class PracticeMenuController {
     }
 
     private void mediaPlayerCreator() throws IOException {
-
-        System.out.println("REACHED");
 
         List<String> audioList = new ArrayList<>(new ArrayList<>(creationsListView.getItems()));
         mediaList = FXCollections.observableArrayList();
@@ -269,7 +277,7 @@ public class PracticeMenuController {
         String defaultName = SetUp.getInstance().nameDetailsController.returnDefault(selectedName);
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 
-        Media media = new Media(new File(databasePath + "/" + selectedName + "/" + defaultName).toURI().toString() + ".wav");
+        Media media = new Media(new File(databasePath + "/" + selectedName + "/" + defaultName).toURI().toString());
         audioPlayer = new MediaPlayer(media);
         audioPlayer.setOnPlaying(new AudioRunnable(false));
         audioPlayer.setOnEndOfMedia(new AudioRunnable(true));

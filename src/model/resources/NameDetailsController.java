@@ -241,7 +241,7 @@ public class NameDetailsController {
         if (defaultNames == null) {
             return getNewDefault(title);
         } else if (defaultNames.containsKey(title)) {
-            defaultLabel.setText("Default: " + defaultNames.get(title) + ".wav");
+            defaultLabel.setText("Default: " + defaultNames.get(title));
             return defaultNames.get(title);
         } else {
             System.out.println("this shouldn't print");

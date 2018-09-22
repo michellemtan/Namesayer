@@ -40,13 +40,12 @@ public class PracticeMenuController {
     private List<String> creationList;
     private String selectedName;
     private String pathToDB;
+    private ObservableList<Media> mediaList;
+    private boolean isFinished;
 
-    //TODO: Dear Rowan,
-    //TODO: I have added the bad recordings button, sorry but it will have to be a sad face
-    //TODO: I have tried making the list of recordings to be pausable?, however it is very difficult
-    //TODO: If you really want it though, feel free to give it a go but I wouldn't be bothered
-    //TODO: I was thinking there should be a way for them to escape the play list in case they select all of them
-    //TODO: I added a single play button in case the user wants to play just one of those names again
+    //TODO: HEY ROWAN I FIXED UP THE PLAY LIST SO YOU CAN STOP IT ETC.
+    //TODO: ISSUE WITH DELETE: IF YOU HAVE MICHELLE.WAV, MICHELLE(1).WAV, MICHELLE(2).WAV AND DELETE MICHELLE(1).WAV,
+    //TODO: WHEN YOU RECORD, IT DOESN'T WORK ANYMORE
 
     public void clearListView() {
         creationsListView.getItems().clear();
@@ -162,7 +161,22 @@ public class PracticeMenuController {
 
     @FXML
     void playButtonClicked() throws IOException {
-        mediaPlayerCreator();
+
+        if (isFinished) {
+            mediaPlayerCreator();
+        } else if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            shuffleButton.setDisable(false);
+            playPauseButton.setDisable(false);
+            backButton.setDisable(false);
+            recordButton.setDisable(false);
+            detailsButton.setDisable(false);
+            playSingleButton.setDisable(false);
+            audioPlayer.pause();
+        } else if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
+            audioPlayer.play();
+        } else {
+            mediaPlayerCreator();
+        }
     }
 
 
@@ -179,13 +193,15 @@ public class PracticeMenuController {
     void shuffleButtonClicked() {
         //Shuffle list
         Collections.shuffle(creationsListView.getItems());
+        creationList = new ArrayList<>(new ArrayList<>(creationsListView.getItems()));
     }
 
     private void mediaPlayerCreator() throws IOException {
 
-        List<String> audioList = new ArrayList<>(new ArrayList<>(creationsListView.getItems()));
+        System.out.println("REACHED");
 
-        ObservableList<Media> mediaList = FXCollections.observableArrayList();
+        List<String> audioList = new ArrayList<>(new ArrayList<>(creationsListView.getItems()));
+        mediaList = FXCollections.observableArrayList();
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 
         //System.out.println("Creation list size: " + audioList.size());
@@ -197,74 +213,46 @@ public class PracticeMenuController {
             mediaList.add(media);
         }
 
-        playMediaTracks(mediaList);
+        playMediaTracks(mediaList, audioList);
     }
 
 
-    private void playMediaTracks(List<Media> mediaList) {
+    private void playMediaTracks(List<Media> mediaList, List<String> audioList) {
 
         if (mediaList.size() == 0) {
+            isFinished = true;
             detailsButton.setDisable(false);
-            playPauseButton.setDisable(false);
             shuffleButton.setDisable(false);
             backButton.setDisable(false);
             recordButton.setDisable(false);
             playSingleButton.setDisable(false);
             return;
         } else {
+            isFinished = false;
             backButton.setDisable(true);
             recordButton.setDisable(true);
             detailsButton.setDisable(true);
-            playPauseButton.setDisable(true);
             shuffleButton.setDisable(true);
             playSingleButton.setDisable(true);
         }
 
-        List<String> nameList = new ArrayList<>(creationList);
-        creationName.setText(nameList.get(0));
-        nameList.remove(0);
+        creationName.setText(audioList.get(0));
+        audioList.remove(0);
 
-        /*ObservableList<String> obsList = FXCollections.observableArrayList(nameList);
-        obsList.remove(0);
-        System.out.println(obsList.size());
-        obsList.remove(0);
-        System.out.println(obsList.size());
-
-        IntegerBinding sizeProperty = Bindings.size(obsList);
-        BooleanBinding multipleElemsProperty = new BooleanBinding() {
-            @Override protected boolean computeValue() {
-                return nameList.size() > 1;
-            }
-        };
-
-        sizeProperty.addListener((obs, old, newI) -> {
-            creationsListView.getSelectionModel().select(nameList.get(0));
-        });*/
-
-        //Consume event of selecting a name so as to make the names non-selectable
-        //creationsListView.addEventFilter(MouseEvent.MOUSE_PRESSED, Event::consume);
-        //creationsListView.getSelectionModel().select(count);
-
-        audioPlayer = new MediaPlayer(mediaList.remove(0));
+        Media playing = mediaList.remove(0);
+        audioPlayer = new MediaPlayer(playing);
         audioPlayer.play();
         audioPlayer.setOnReady(() -> progressBar.setProgress(0.0));
         audioPlayer.setOnReady(this::progressBar);
-
         audioPlayer.setOnEndOfMedia(() -> {
-            /*try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
-            playMediaTracks(mediaList);
+            playMediaTracks(mediaList, audioList);
         });
-
     }
 
     private void progressBar() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
-                new KeyFrame((audioPlayer.getTotalDuration().add(Duration.millis(1000))), new KeyValue(progressBar.progressProperty(), 1))
+                new KeyFrame((audioPlayer.getTotalDuration()), new KeyValue(progressBar.progressProperty(), 1))
         );
         timeline.setCycleCount(1);
         timeline.play();
@@ -303,16 +291,19 @@ public class PracticeMenuController {
         public void run() {
             //When the media player has finished, the buttons will be enabled
             if (isFinished) {
+
+                if (creationList.size() > 1) {
+                    shuffleButton.setDisable(false);
+                    playPauseButton.setDisable(false);
+                }
                 backButton.setDisable(false);
                 recordButton.setDisable(false);
-                playPauseButton.setDisable(false);
                 detailsButton.setDisable(false);
-                shuffleButton.setDisable(false);
+                audioPlayer.dispose();
                 //When the media player is playing the audio file, the buttons will be disabled to prevent the user from navigating away
             } else {
                 backButton.setDisable(true);
                 recordButton.setDisable(true);
-                playPauseButton.setDisable(true);
                 detailsButton.setDisable(true);
                 shuffleButton.setDisable(true);
             }

@@ -30,8 +30,8 @@ public class NameDetailsController {
     @FXML private Button playButton;
     @FXML private Button deleteBtn;
     @FXML private ProgressBar progressBar;
-    @FXML
-    private Button sadFaceButton;
+    @FXML private Button sadFaceButton;
+    private boolean fromPractice;
     private String dirName;
     private MediaPlayer audioPlayer;
 
@@ -39,9 +39,14 @@ public class NameDetailsController {
         return dirName;
     }
 
+    public void setName(String name) {
+
+    }
+
     //Builds list of audio files within 'name' folder
-    public void setUpList(List<String> list, String name) {
+    public void setUpList(List<String> list, String name, boolean source) {
         dirName = name;
+        fromPractice = source;
         nameName.setText(dirName);
         nameListView.getItems().addAll(list);
         nameListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -77,9 +82,16 @@ public class NameDetailsController {
         //Clear list view
         nameListView.getItems().clear();
 
-        Scene scene = SetUp.getInstance().practiceMenu;
-        Stage window = (Stage) backBtn.getScene().getWindow();
-        window.setScene(scene);
+        if(fromPractice) {
+            Scene scene = SetUp.getInstance().practiceMenu;
+            Stage window = (Stage) backBtn.getScene().getWindow();
+            window.setScene(scene);
+        } else {
+            Scene scene = SetUp.getInstance().databaseMenu;
+            Stage window = (Stage) backBtn.getScene().getWindow();
+            window.setScene(scene);
+        }
+
     }
 
     public void deleteBtnPressed() throws IOException {

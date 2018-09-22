@@ -123,7 +123,7 @@ public class PracticeMenuController {
         }
 
         //Add list to name details menu
-        SetUp.getInstance().nameDetailsController.setUpList(list, selectedName);
+        SetUp.getInstance().nameDetailsController.setUpList(list, selectedName, true);
 
         //Switch scene
         selectedName = creationsListView.getSelectionModel().getSelectedItem();

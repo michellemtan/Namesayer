@@ -36,8 +36,6 @@ public class PracticeMenuController {
     private String selectedName;
     private String pathToDB;
 
-    //TODO: Dear Michelle,
-    //TODO: Some fixes that must now be made to this class are:
     //TODO: Make the thumbs up/down buttons,
     //TODO: Make a practice all button (or some way of playing through all items in creationsListView,
     //TODO: Pushing the pause button while media is playing just restarts it rather than pausing,
@@ -54,6 +52,12 @@ public class PracticeMenuController {
         creationsListView.getItems().setAll(creationList);
         creationsListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
+
+        //Only can set default if there is just 1 name selected
+        creationsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            creationName.setText(creationsListView.getSelectionModel().getSelectedItem());
+        });
+
         setUpTitle();
     }
 
@@ -150,6 +154,8 @@ public class PracticeMenuController {
 
     @FXML
     void recordButtonClicked() throws IOException {
+        SetUp.getInstance().recordMenuController.setUpRecord(creationsListView.getSelectionModel().getSelectedItem());
+
         Scene scene = SetUp.getInstance().recordMenu;
         Stage window = (Stage) recordButton.getScene().getWindow();
         window.setScene(scene);
@@ -176,11 +182,6 @@ public class PracticeMenuController {
 
         });
         audioPlayer.setOnReady(() -> progressBar.setProgress(0.0));
-        /*audioPlayer.currentTimeProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
-            Duration newDuration = (Duration) newValue;
-            progressBar.setProgress(newDuration.toSeconds()/5);
-
-        });*/
         audioPlayer.setOnReady(this::progressBar);
     }
 
@@ -197,7 +198,7 @@ public class PracticeMenuController {
 
     //TODO: Make this a public class?
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
-    private class AudioRunnable implements Runnable {
+    public class AudioRunnable implements Runnable {
 
         private boolean isFinished;
 

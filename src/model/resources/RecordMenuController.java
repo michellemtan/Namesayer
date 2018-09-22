@@ -14,13 +14,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.DatabaseProcessor;
@@ -40,12 +38,14 @@ public class RecordMenuController {
     @FXML private ProgressBar progressBar;
     @FXML private Button micButton;
     @FXML private Button backButton;
+    @FXML private Text recordLabel;
     private MediaPlayer audioPlayer;
     private int audioRecorded;
 
     //TODO: recording something then pushing the back button breaks the code as replay is still enabled. Should disable buttons on pressing back
 
-    void initialize (){
+
+    public void setUpRecord(String name) {
         //Disable buttons when scene is initialised
         playbackButton.setDisable(true);
         compareButton.setDisable(true);
@@ -53,6 +53,9 @@ public class RecordMenuController {
 
         //Instantiate audioRecorded field to keep count of number of recordings
         audioRecorded=0;
+
+        //Set label to reflect name
+        recordLabel.setText("Record audio for " + name);
     }
 
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
@@ -95,7 +98,7 @@ public class RecordMenuController {
         }
 
         //Pass list through to compare menu
-        SetUp.getInstance().compareMenuController.setUpList(list, false);
+        SetUp.getInstance().compareMenuController.setUpList(list, false, SetUp.getInstance().practiceMenuController.returnSelectedName());
 
         Scene scene = SetUp.getInstance().compareMenu;
         Stage window = (Stage) compareButton.getScene().getWindow();
@@ -250,6 +253,7 @@ public class RecordMenuController {
                     playbackButton.setDisable(true);
                     compareButton.setDisable(true);
                     continueButton.setDisable(true);
+                    micButton.setDisable(true);
 
                     try {
                         ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -f alsa -i default -t 5 ./audio.wav");
@@ -261,7 +265,8 @@ public class RecordMenuController {
                             playbackButton.setDisable(false);
                             compareButton.setDisable(false);
                             continueButton.setDisable(false);
-                           recordButton.setDisable(false);
+                            recordButton.setDisable(false);
+                            micButton.setDisable(false);
 //                            progressBar.progressProperty().unbind();
 //                            progressBar.progressProperty().set(1.0);
                         });

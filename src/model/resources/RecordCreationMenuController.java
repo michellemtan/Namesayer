@@ -100,7 +100,8 @@ public class RecordCreationMenuController {
         }
 
         //Pass list through to compare menu
-        SetUp.getInstance().compareMenuController.setUpList(list, true);
+        SetUp.getInstance().compareMenuController.setUpList(list, true, creationName);
+
 
         //Switch to compare scene
         Scene scene = SetUp.getInstance().compareMenu;
@@ -193,7 +194,7 @@ public class RecordCreationMenuController {
 
     }
 
-    private void progressBar() {
+    public void progressBar() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
                 new KeyFrame(Duration.seconds(5), new KeyValue(progressBar.progressProperty(), 1))

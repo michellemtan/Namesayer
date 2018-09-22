@@ -27,7 +27,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Record Audio" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <Text fx:id="recordLabel" strokeType="OUTSIDE" strokeWidth="0.0" text="Record Audio" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font size="40.0" />
                      </font>
@@ -54,7 +54,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="playbackButton" mnemonicParsing="false" onMouseClicked="#playbackButtonClicked" text="↺ Replay" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="playbackButton" mnemonicParsing="false" onMouseClicked="#playbackButtonClicked" text="↺ Replay" translateX="-10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -64,12 +64,12 @@
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="compareButton" mnemonicParsing="false" onMouseClicked="#compareButtonClicked" text="Compare" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <Button fx:id="compareButton" mnemonicParsing="false" onMouseClicked="#compareButtonClicked" text="Compare" translateX="-15.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="continueButton" mnemonicParsing="false" onMouseClicked="#continueButtonClicked" text="→ Continue" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <Button fx:id="continueButton" mnemonicParsing="false" onMouseClicked="#continueButtonClicked" text="Save Audio →" translateX="-10.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <font>
                         <Font size="24.0" />
                      </font>

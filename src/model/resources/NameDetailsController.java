@@ -1,7 +1,5 @@
 package model.resources;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,10 +8,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
 
-import java.awt.event.MouseEvent;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,8 +29,6 @@ public class NameDetailsController {
         return dirName;
     }
 
-
-    //TODO: BUILD LIST WITHOUT UGLY PREFIXES
     //Builds list of audio files within 'name' folder
     public void setUpList(List<String> list, String name) {
         dirName = name;
@@ -69,13 +61,11 @@ public class NameDetailsController {
         window.setScene(scene);
     }
 
-    //TODO: MAKE IT SO DELETE BUTTON GOES BACK TO PRACTICE, NOT MAIN MENU
     public void deleteBtnPressed() throws IOException {
         if(nameListView.getSelectionModel().getSelectedIndex() != -1) {
             List<String> toDelete = new ArrayList<>(nameListView.getSelectionModel().getSelectedItems());
             //Pass list of files to delete through to delete menu
             SetUp.getInstance().deleteMenuController.setUpList(toDelete, true);
-
 
             //Switch scenes
             Scene scene = SetUp.getInstance().deleteMenu;
@@ -141,7 +131,4 @@ public class NameDetailsController {
         nameListView.getItems().clear();
     }
 
-    public void setDefaultBtnPressed() {
-
-    }
 }

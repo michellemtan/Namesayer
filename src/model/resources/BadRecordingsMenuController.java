@@ -27,10 +27,9 @@ public class BadRecordingsMenuController {
 
     }
 
-    //TODO: ENSURE THAT IF A RECORDING ALREADY EXISTS IN THE TEXT FILE, SKIP REPRINTING IT ONTO THE SCREEN
-    //TODO: DON'T PRINT WHITE SPACE
-    //TODO: MAKE IT BIND SO IF USER DELETES THE FILE, IT WILL CREATE ITSELF AGAIN
     //This method displays the contents of the text file containing a list of bad recordings
+
+    @FXML
     void initialize() throws IOException {
             updateTextLog();
     }
@@ -43,7 +42,7 @@ public class BadRecordingsMenuController {
             //Read in the file containing the list of bad quality recordings
         try (BufferedReader reader = new BufferedReader(new FileReader(new File("BadRecordings.txt")))) {
             String line;
-            StringBuilder fieldContent = new StringBuilder("");
+            StringBuilder fieldContent = new StringBuilder();
 
             while ((line = reader.readLine()) != null) {
                 //Concatenate each line of the file to the StringBuilder

@@ -13,8 +13,8 @@ public class DatabaseProcessor {
 
     //TODO: Possible functionality to add: if jonothan and Jonothan, ask user if they want to merge?
     /**Iterates through files in database directory and converts to readable name. Creates folders of said names, and places
-    audio files into corresponding folder. If 2 of same name found, they go into the same folder. Trims audio at same time,
-    overwriting, original file with trimmed one **/
+     audio files into corresponding folder. If 2 of same name found, they go into the same folder. Trims audio at same time,
+     overwriting, original file with trimmed one **/
     public void processDB() {
         File dir = new File(pathToDB);
         File[] directoryListing = dir.listFiles();

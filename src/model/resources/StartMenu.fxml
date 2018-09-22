@@ -43,12 +43,12 @@
                 <RowConstraints maxHeight="77.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="startButton" mnemonicParsing="false" onMouseClicked="#startButtonClicked" prefHeight="297.0" prefWidth="184.0" text="Start" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="startButton" mnemonicParsing="false" onMouseClicked="#startButtonClicked" prefHeight="297.0" prefWidth="250.0" text="Start" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="30.0" />
                      </font>
                   </Button>
-                  <Button fx:id="instructionsButton" mnemonicParsing="false" onMouseClicked="#instructionsButtonClicked" prefHeight="295.0" prefWidth="184.0" text="Instructions" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="instructionsButton" mnemonicParsing="false" onMouseClicked="#instructionsButtonClicked" prefHeight="295.0" prefWidth="250.0" text="Instructions" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="25.0" />
                      </font>

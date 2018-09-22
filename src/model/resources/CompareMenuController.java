@@ -57,7 +57,6 @@ public class CompareMenuController {
         recordingsList.getSelectionModel().select(0);
     }
 
-    //TODO: Make this a public class?
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
     private class AudioRunnable implements Runnable {
 

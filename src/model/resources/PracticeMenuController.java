@@ -244,17 +244,15 @@ public class PracticeMenuController {
         audioPlayer.play();
         audioPlayer.setOnReady(() -> progressBar.setProgress(0.0));
         audioPlayer.setOnReady(this::progressBar);
-
         audioPlayer.setOnEndOfMedia(() -> {
             playMediaTracks(mediaList, audioList);
         });
-
     }
 
     private void progressBar() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
-                new KeyFrame((audioPlayer.getTotalDuration().add(Duration.millis(1000))), new KeyValue(progressBar.progressProperty(), 1))
+                new KeyFrame((audioPlayer.getTotalDuration()), new KeyValue(progressBar.progressProperty(), 1))
         );
         timeline.setCycleCount(1);
         timeline.play();

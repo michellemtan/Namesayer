@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -30,7 +31,6 @@ public class NameDetailsController {
     @FXML private Button playButton;
     @FXML private Button deleteBtn;
     @FXML private ProgressBar progressBar;
-    @FXML private Button sadFaceButton;
     private boolean fromPractice;
     private String dirName;
     private MediaPlayer audioPlayer;
@@ -39,31 +39,24 @@ public class NameDetailsController {
         return dirName;
     }
 
-    public void setName(String name) {
-
-    }
-
     //Builds list of audio files within 'name' folder
     public void setUpList(List<String> list, String name, boolean source) {
+        //Clear list view
+        nameListView.getItems().clear();
         dirName = name;
         fromPractice = source;
         nameName.setText(dirName);
         nameListView.getItems().addAll(list);
-        nameListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        nameListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         Collections.sort(nameListView.getItems());
 
         setDefaultBtn.setDisable(true);
         deleteBtn.setDisable(true);
         playButton.setDisable(true);
 
-        //Only can set default if there is just 1 name selected
+        //Only can set default if default is not selected
         nameListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if(nameListView.getSelectionModel().getSelectedItems().size() == 1 && nameListView.getItems().size() != 1) {
-                setDefaultBtn.setDisable(false);
-            } else {
-                setDefaultBtn.setDisable(true);
-
-            }
+            setDefaultBtn.setDisable(false);
             deleteBtn.setDisable(false);
             playButton.setDisable(false);
         });
@@ -79,9 +72,8 @@ public class NameDetailsController {
     }
 
     public void backBtnPressed() throws IOException {
-        //Clear list view
         nameListView.getItems().clear();
-
+        //Go to right scene depending where previous scene was
         if(fromPractice) {
             Scene scene = SetUp.getInstance().practiceMenu;
             Stage window = (Stage) backBtn.getScene().getWindow();
@@ -177,54 +169,16 @@ public class NameDetailsController {
         }
     }
 
-    //Changes these commands to have backslash before so bash works
-    private String bashify(String name) {
-        //Characters that break the bash command
-        char invalids[] = "$/%:\\ .,-()@".toCharArray();
-        boolean found = false;
-        String bashed = "";
-        char[] chars = name.toCharArray();
-        for(char cha : chars) {
-            for(char invalid : invalids) {
-                if(cha == invalid) {
-                    bashed += "\\" + cha;
-                    found = true;
-                    break;
-                } else {
-                    found = false;
-                }
-            }
-            if(!found) {
-                bashed += cha;
-            }
-        }
-        return bashed;
-    }
-
     public void setDefaultClicked() throws IOException {
-        String titleName = nameName.getText();
-        String selectedName = nameListView.getSelectionModel().getSelectedItem();
+        //Create files to be moved + temp file
+        File originalDefault = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + nameName.getText() + "/" + nameName.getText() + ".wav");
+        File newDefault = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + nameName.getText() + "/" + nameListView.getSelectionModel().getSelectedItem());
+        File tempFile = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + nameName.getText() + "/tempfile.wav");
 
-        String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
-
-
-        String startName = bashify(databasePath + "/" + titleName+ "/" + selectedName);
-        String defaultName = bashify(databasePath + "/" + titleName+ "/" + titleName);
-        String defaultNameTemp = bashify(databasePath + "/" + titleName+ "/" + titleName+"_t");
-
-
-        try {
-            ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "mv " + defaultName + " " + defaultNameTemp + "; mv " + startName + " " + defaultName + "; mv " + defaultNameTemp + " " + startName);
-            Process renameTemp = builder.start();
-            renameTemp.waitFor();
-
-            nameListView.refresh();
-
-        } catch (IOException e) {
-            System.out.println("ERROR");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //Rename files
+        originalDefault.renameTo(tempFile);
+        newDefault.renameTo(originalDefault);
+        tempFile.renameTo(newDefault);
     }
 
 

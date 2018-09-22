@@ -80,7 +80,7 @@ public class DatabaseMenuController {
                 Scene scene = null;
                 try {
                     scene = SetUp.getInstance().nameDetailsMenu;
-                    SetUp.getInstance().nameDetailsController.setName(cell.itemProperty().get());
+                    //SetUp.getInstance().nameDetailsController.setName(cell.itemProperty().get());
                     SetUp.getInstance().nameDetailsController.setUpList(getChildrenFromParent(cell.itemProperty().get()), cell.itemProperty().get(), false);
                 } catch (IOException e) {
                 }

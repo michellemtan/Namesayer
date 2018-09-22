@@ -14,7 +14,7 @@ public class BadRecordingsMenuController {
 
     @FXML private Button backButton;
     @FXML private TextArea textArea;
-    private String previousScene;
+    private String previousScene = "";
 
     //Return the user to the start menu when the back button is clicked
     @FXML
@@ -28,6 +28,10 @@ public class BadRecordingsMenuController {
             Stage window = (Stage) backButton.getScene().getWindow();
             window.setScene(scene);
         }
+
+        Scene scene = SetUp.getInstance().startMenu;
+        Stage window = (Stage) backButton.getScene().getWindow();
+        window.setScene(scene);
     }
 
     public void setPreviousScene(String name) {

@@ -32,7 +32,7 @@
                         <Font size="40.0" />
                      </font>
                   </Text>
-                  <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backButtonClicked" text="←" translateX="10.0" translateY="15.0" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
+                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClicked" text="←" translateX="10.0" translateY="15.0" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
                </children>
             </GridPane>
             <HBox prefHeight="395.0" prefWidth="800.0">

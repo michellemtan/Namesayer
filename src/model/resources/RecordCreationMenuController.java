@@ -86,6 +86,7 @@ public class RecordCreationMenuController {
         continueButton.setDisable(true);
         playbackButton.setDisable(true);
         pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
+        progressBar.setProgress(0.0);
         ListView<String> listView = SetUp.getInstance().dbMenuController.getDbListView();
         if(!listView.getItems().contains(name)) {
             newCreation = true;

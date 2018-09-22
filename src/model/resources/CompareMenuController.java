@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -123,7 +122,7 @@ public class CompareMenuController {
     @FXML
     void sadFaceButtonClicked() {
         try {
-            String selectedName = SetUp.getInstance().createMenuController.getName();
+            String selectedName = SetUp.getInstance().createMenuController.getName() + ".wav";
             File f = new File("BadRecordings.txt");
             BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
             bw.append(selectedName+"\n");

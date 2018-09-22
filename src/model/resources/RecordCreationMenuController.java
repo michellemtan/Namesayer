@@ -21,6 +21,7 @@ import model.DatabaseProcessor;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -133,6 +134,15 @@ public class RecordCreationMenuController {
         } else {
             File dir = new File(pathToDB + "/" + creationName);
             int count = Objects.requireNonNull(dir.listFiles()).length;
+            //If would be overwriting a recording, increment counter
+            List<File> files = Arrays.asList(dir.listFiles());
+            List<String> stringFiles = new ArrayList<>();
+            for(File file : files) {
+                stringFiles.add(file.getName());
+            }
+            if(stringFiles.contains(bashify(creationName) + "(" + String.valueOf(count) + ").wav")) {
+                count++;
+            }
             String command = "ffmpeg -y -i " + audioFile.getPath() + " -af silenceremove=1:0:-35dB " + pathToDB + "/" + bashify(creationName) + "/" + bashify(creationName) + "\\(" + String.valueOf(count) + "\\)" + ".wav";
             dbProcessor.trimAudio(command);
         }

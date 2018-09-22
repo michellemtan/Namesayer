@@ -39,7 +39,8 @@ public class NameDetailsController {
     //TODO: HI ROWAN
     //TODO: PLEASE MOVE THIS THANK YOU!
     private void toMoveIntoDelete() {
-        Alert error = new Alert(Alert.AlertType.ERROR, "Unable to delete default audio file. Please set another audio file to be the default first.", ButtonType.OK);
+        Alert error = new Alert(Alert.AlertType.ERROR, "The default audio file cannot be deleted.", ButtonType.OK);
+        error.setGraphic(null);
         error.setHeaderText("ERROR: Invalid Deletion");
         error.setTitle("Invalid Deletion");
         error.showAndWait();
@@ -112,6 +113,7 @@ public class NameDetailsController {
     }
 
     public void deleteBtnPressed() throws IOException {
+
         if(nameListView.getSelectionModel().getSelectedIndex() != -1) {
             List<String> toDelete = new ArrayList<>(nameListView.getSelectionModel().getSelectedItems());
             if(!toDelete.contains(returnDefault(nameName.getText() + ".wav"))) {

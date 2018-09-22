@@ -14,7 +14,8 @@
    <bottom>
        <ButtonBar prefHeight="70.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <buttons>
-            <Button fx:id="playPauseButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#playButtonClicked" text="Play List  ►" translateX="-230.0" />
+             <Button fx:id="playPauseButton" alignment="CENTER" mnemonicParsing="false"
+                     onMouseClicked="#playButtonClicked" text="List  ▶ ▍▍" translateX="-230.0"/>
             <Button fx:id="playSingleButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#playSingleButtonClicked" text="Play  ►" translateX="-190.0" />
             <Button fx:id="detailsButton" mnemonicParsing="false" onMouseClicked="#detailsButtonClicked" text="Details" translateX="-150.0" />
             <Button fx:id="shuffleButton" mnemonicParsing="false" onMouseClicked="#shuffleButtonClicked" text="Shuffle" translateX="-110.0" />

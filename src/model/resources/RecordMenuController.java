@@ -49,7 +49,7 @@ public class RecordMenuController {
         audioRecorded=0;
 
         //Set label to reflect name
-        recordLabel.setText("Record audio for " + name);
+        recordLabel.setText("Record Audio for " + name);
     }
 
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly

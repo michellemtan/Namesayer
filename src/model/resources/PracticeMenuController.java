@@ -256,6 +256,10 @@ public class PracticeMenuController {
     @FXML
     public void playSingleButtonClicked() throws IOException {
 
+        if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING){
+            audioPlayer.stop();
+        }
+
         selectedName = creationsListView.getSelectionModel().getSelectedItem();
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 

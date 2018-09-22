@@ -85,10 +85,14 @@ public class NameDetailsController {
     @FXML
     public void playButtonClicked() throws IOException {
 
-        String selectedName = dirName;
+        if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING){
+            audioPlayer.stop();
+        }
+
+        String selectedName = nameListView.getSelectionModel().getSelectedItem().replaceAll(".wav","");
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 
-        Media media = new Media(new File(databasePath+"/"+selectedName+"/"+selectedName).toURI().toString() + ".wav");
+        Media media = new Media(new File(databasePath+"/"+dirName+"/"+selectedName).toURI().toString() + ".wav");
         audioPlayer = new MediaPlayer(media);
         audioPlayer.setOnPlaying(new AudioRunnable(false));
         audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
@@ -121,18 +125,20 @@ public class NameDetailsController {
                 deleteBtn.setDisable(false);
                 setDefaultBtn.setDisable(false);
                 backBtn.setDisable(false);
+                playButton.setDisable(false);
                 //When the media player is playing the audio file, the buttons will be disabled to prevent the user from navigating away
             } else {
 
                 deleteBtn.setDisable(true);
                 setDefaultBtn.setDisable(true);
                 backBtn.setDisable(true);
+                playButton.setDisable(true);
             }
         }
     }
 
     //Changes these commands to have backslash before so bash works
-    public String bashify(String name) {
+    private String bashify(String name) {
         //Characters that break the bash command
         char invalids[] = "$/%:\\ .,-()@".toCharArray();
         boolean found = false;

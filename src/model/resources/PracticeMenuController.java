@@ -41,15 +41,6 @@ public class PracticeMenuController {
     private String selectedName;
     private String pathToDB;
 
-    //TODO: Make the thumbs up/down buttons,
-    //TODO: Make a practice all button (or some way of playing through all items in creationsListView,
-    //TODO: Pushing the pause button while media is playing just restarts it rather than pausing,
-    //TODO: Maybe make details menu work if you want (or I can I don't mind),
-    //TODO: If you select an audio file that is empty (really quiet/bad quality ones get wiped during silenceremove) e.g Li, then play it, playing others doesn't work.
-    //TODO: Dear Michelle,
-    //TODO: Some fixes that must now be made to this class are:
-    //TODO: Pushing the pause button while media is playing just restarts it rather than pausing
-
     //TODO: Dear Rowan,
     //TODO: I have added the bad recordings button, sorry but it will have to be a sad face
     //TODO: I have tried making the list of recordings to be pausable?, however it is very difficult
@@ -252,6 +243,10 @@ public class PracticeMenuController {
 
     @FXML
     public void playSingleButtonClicked() throws IOException {
+
+        if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING){
+            audioPlayer.stop();
+        }
 
         selectedName = creationsListView.getSelectionModel().getSelectedItem();
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();

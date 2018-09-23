@@ -108,6 +108,10 @@ public class PracticeMenuController {
 
     @FXML
     void detailsButtonClicked() throws IOException {
+
+        if (audioPlayer != null) {
+            audioPlayer.stop();
+        }
         // Load the new scene
         //Scene scene = detailsButton.getScene();
         //scene.setRoot(Menu.NAMEDETAILSMENU.loader().load());
@@ -189,6 +193,11 @@ public class PracticeMenuController {
 
     @FXML
     void recordButtonClicked() throws IOException {
+
+        if (audioPlayer != null) {
+            audioPlayer.stop();
+        }
+
         SetUp.getInstance().recordMenuController.setUpRecord(creationsListView.getSelectionModel().getSelectedItem());
 
         Scene scene = SetUp.getInstance().recordMenu;
@@ -198,6 +207,10 @@ public class PracticeMenuController {
 
     @FXML
     void shuffleButtonClicked() {
+
+        if (audioPlayer != null) {
+            audioPlayer.stop();
+        }
         //Shuffle list
         Collections.shuffle(creationsListView.getItems());
         creationList = new ArrayList<>(new ArrayList<>(creationsListView.getItems()));
@@ -277,6 +290,8 @@ public class PracticeMenuController {
         String defaultName = SetUp.getInstance().nameDetailsController.returnDefault(selectedName);
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 
+        defaultName = defaultName.replace(".wav", "");
+        defaultName = defaultName.concat(".wav");
         Media media = new Media(new File(databasePath + "/" + selectedName + "/" + defaultName).toURI().toString());
         audioPlayer = new MediaPlayer(media);
         audioPlayer.setOnPlaying(new AudioRunnable(false));
@@ -307,6 +322,7 @@ public class PracticeMenuController {
                 backButton.setDisable(false);
                 recordButton.setDisable(false);
                 detailsButton.setDisable(false);
+                playPauseButton.setDisable(false);
                 audioPlayer.dispose();
                 //When the media player is playing the audio file, the buttons will be disabled to prevent the user from navigating away
             } else {
@@ -314,6 +330,7 @@ public class PracticeMenuController {
                 recordButton.setDisable(true);
                 detailsButton.setDisable(true);
                 shuffleButton.setDisable(true);
+                playPauseButton.setDisable(true);
             }
         }
     }

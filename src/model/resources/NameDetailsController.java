@@ -239,6 +239,8 @@ public class NameDetailsController {
 
         defaultNames.put(titleName, selectedName + ".wav");
         defaultLabel.setText("Default: " + selectedName + ".wav");
+
+        System.out.println(defaultNames);
     }
 
     public void clearListView() {

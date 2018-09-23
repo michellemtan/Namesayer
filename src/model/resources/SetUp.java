@@ -41,19 +41,31 @@ public class SetUp {
 
         //Load menus to be used throughout the program
         compareMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/CompareMenu.fxml")));
+        //compareMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/CompareMenu.fxml")));
         createMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/CreateMenu.fxml")));
+        //createMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/CreateMenu.fxml")));
         databaseMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/DatabaseMenu.fxml")));
+        //databaseMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/DatabaseMenu.fxml")));
         deleteMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/DeleteMenu.fxml")));
+        //deleteMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/DeleteMenu.fxml")));
         databaseSelectMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/DatabaseSelectMenu.fxml")));
+        //databaseSelectMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/DatabaseSelectMenu.fxml")));
         practiceMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/PracticeMenu.fxml")));
+        //practiceMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/PracticeMenu.fxml")));
         recordMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/RecordMenu.fxml")));
+        //recordMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/RecordMenu.fxml")));
         startMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/StartMenu.fxml")));
+        //startMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/StartMenu.fxml")));
         badRecordingsMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/BadRecordingsMenu.fxml")));
+        //badRecordingsMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/BadRecordingsMenu.fxml")));
         instructionsMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/InstructionsMenu.fxml")));
+        //instructionsMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/InstructionsMenu.fxml")));
         nameDetailsMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/NameDetailsMenu.fxml")));
+        //nameDetailsMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/NameDetailsMenu.fxml")));
         exitPracticeMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/ExitPracticeMenu.fxml")));
+        //exitPracticeMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/ExitPracticeMenu.fxml")));
         recordCreationMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/RecordCreationMenu.fxml")));
-        //playMenu = new Scene(FXMLLoader.load(getClass().getResource("../redundant/PlayMenu.fxml")));
+        //recordCreationMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/RecordCreationMenu.fxml")));
 
         //Load load menu
         databaseMenuLoader();

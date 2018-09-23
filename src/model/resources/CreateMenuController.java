@@ -28,7 +28,6 @@ public class CreateMenuController {
         textInput.setText(name);
     }
 
-    //TODO: if a user calls their name 'uncut_files' could cause a bug
     public void createBtnPressed() throws IOException {
 
         name = textInput.getText();
@@ -86,6 +85,10 @@ public class CreateMenuController {
 
         //Check for leading/trailing whitespaces
         if (newName.startsWith(" ") || newName.endsWith(" ")) {
+            return false;
+        }
+
+        if (newName.matches("uncut_files")) {
             return false;
         }
 

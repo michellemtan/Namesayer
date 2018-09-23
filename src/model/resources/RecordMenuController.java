@@ -35,9 +35,6 @@ public class RecordMenuController {
     private MediaPlayer audioPlayer;
     private int audioRecorded;
 
-    //TODO: recording something then pushing the back button breaks the code as replay is still enabled. Should disable buttons on pressing back
-
-
     public void setUpRecord(String name) {
         //Disable buttons when scene is initialised
         playbackButton.setDisable(true);

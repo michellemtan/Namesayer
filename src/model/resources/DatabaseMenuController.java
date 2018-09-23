@@ -191,7 +191,6 @@ public class DatabaseMenuController {
         }
     }
 
-    //TODO: if 1 item selected and create is pressed auto-fill text field in next window
     public void createButtonClicked() throws IOException {
         //If user selects one name a presses create, fill create textfield with name they selected
         if(dbListView.getSelectionModel().getSelectedItems().size() == 1) {

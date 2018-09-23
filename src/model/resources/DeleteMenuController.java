@@ -9,7 +9,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteMenuController {
@@ -17,10 +19,11 @@ public class DeleteMenuController {
     @FXML private Button backBtn;
     @FXML private ListView<String> deleteListView;
     @FXML private Label deleteLabel;
+    @FXML
+    private Label numberLabel;
     private List<String> toDelete;
     private String previousScenes;
-
-    //TODO: Delete name? Contains x subrecordings
+    private int numberRecordings;
 
     public void backBtnPressed() throws IOException {
         //Clear list view
@@ -39,21 +42,49 @@ public class DeleteMenuController {
 
     public void setUpList(List<String> list, String source) {
         previousScenes = source;
-        //Change label if only 1 to delete selected
-        if(list.size() == 1) {
-            deleteLabel.setText("Delete Name?");
-        } else {
-            deleteLabel.setText("Delete Names?");
-        }
-
-        if(previousScenes.equals("practiceDetails") || previousScenes.equals("dbDetails")) {
-            deleteLabel.setText("Delete files?");
-        }
-
         toDelete = list;
         deleteListView.getItems().addAll(list);
         //Consume event of selecting a name so as to make the names non-selectable
         deleteListView.addEventFilter(MouseEvent.MOUSE_PRESSED, Event::consume);
+
+        //Change labels if only 1 to delete selected
+        if (previousScenes.equals("practiceDetails") || previousScenes.equals("dbDetails")) {
+            deleteLabel.setText("Delete Files?");
+            numberLabel.setText("");
+        } else if (list.size() == 1) {
+            checkNumber(list);
+            deleteLabel.setText("Delete Name?");
+            numberLabel.setText("There are " + deleteListView.getItems().size() + " names containing " + numberRecordings + " recordings to be deleted:");
+                    
+        } else {
+            checkNumber(list);
+            deleteLabel.setText("Delete Names?");
+            numberLabel.setText("There are " + deleteListView.getItems().size() + " names containing " + numberRecordings + " recordings to be deleted:");
+        }
+
+
+
+    }
+
+    private void checkNumber(List<String> creationslist) {
+        String pathToDB = null;
+        try {
+            pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        List<String> list = new ArrayList<>();
+        numberRecordings = 0;
+
+        for (String selectedName : creationslist) {
+            File dir = new File(pathToDB + "/" + selectedName);
+            File[] files = dir.listFiles();
+            for (File file : files) {
+                list.add(file.getName());
+                numberRecordings++;
+            }
+        }
     }
 
     public void confirmBtnPressed() throws IOException {

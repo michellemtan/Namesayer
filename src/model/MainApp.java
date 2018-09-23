@@ -21,12 +21,5 @@ public class MainApp extends Application {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
-
-        /*Parent root = Menu.STARTMENU.loader().load();
-        primaryStage.setTitle("Name Sayer");
-        primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();*/
-
     }
 }

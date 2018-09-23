@@ -1,7 +1,89 @@
 .root{
-    -fx-background-color: #e0f2f1;
+    -fx-background-color: #E0F2F1;
 }
+
 .button{
     -fx-background-color: #009688;
     -fx-text-fill: #FFFFFF;
+    -fx-border-color: #000000;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 9px;
+}
+
+.button:hover{
+    -fx-background-color: #26A69A;
+}
+
+.button-transparent{
+    -fx-background-color: transparent;
+    -fx-text-fill: #000000;
+}
+
+.list-view{
+    -fx-background-color: #009688;
+}
+
+.text-field{
+    -fx-background-color: #E0F2F1;
+    -fx-border-color: #000000;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+.text-field:selected{
+    -fx-background-color: 009688;
+}
+
+.progress-bar{
+    -fx-accent: #009688;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+}
+
+.progress-bar .track{
+    -fx-text-box-border: #000000;
+    -fx-control-inner-background: #B2DFDB;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+}
+
+.text-area{
+    -fx-background-color: #E0F2F1;
+    -fx-text-fill: black;
+}
+
+.text-area .content{
+    -fx-background-color: #B2DFDB;
+    -fx-border-color: black;
+    -fx-border-radius: 8px;
+}
+
+.context-menu {
+    -fx-background-color: #E0F2F1;
+    -fx-text-fill: black;
+}
+
+.menu-item:focused {
+    -fx-background-color: #009688;
+}
+
+.scroll-bar{
+    -fx-border-color: #000000;
+    -fx-background-color: #E0F2F1;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb{
+    -fx-background-color: #009688;
+}
+
+.list-cell{
+    -fx-background-color: #E0F2F1;
+}
+
+.list-cell:even {
+    -fx-background-color: #B2DFDB;
+}
+
+.list-cell:selected{
+    -fx-background-color: #009688;
 }

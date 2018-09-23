@@ -2,6 +2,7 @@ package model.resources;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import model.MainApp;
 import model.redundant.MicrophoneCheckMenuController;
 
 import java.io.IOException;
@@ -82,9 +83,22 @@ public class SetUp {
         compareMenuLoader();
         createMenuLoader();
         recordCreationMenuLoader();
-        //compareMenuLoader();
-        //finishedMenuLoader();
-        //playMenuLoader();
+
+        compareMenu.getStylesheets().add("/model/resources/Theme.css");
+        createMenu.getStylesheets().add("/model/resources/Theme.css");
+        databaseMenu.getStylesheets().add("/model/resources/Theme.css");
+        deleteMenu.getStylesheets().add("/model/resources/Theme.css");
+        finishedMenu.getStylesheets().add("/model/resources/Theme.css");
+        databaseSelectMenu.getStylesheets().add("/model/resources/Theme.css");
+        practiceMenu.getStylesheets().add("/model/resources/Theme.css");
+        recordMenu.getStylesheets().add("/model/resources/Theme.css");
+        startMenu.getStylesheets().add("/model/resources/Theme.css");
+        badRecordingsMenu.getStylesheets().add("/model/resources/Theme.css");
+        instructionsMenu.getStylesheets().add("/model/resources/Theme.css");
+        nameDetailsMenu.getStylesheets().add("/model/resources/Theme.css");
+        microphoneCheckMenu.getStylesheets().add("/model/resources/Theme.css");
+        exitPracticeMenu.getStylesheets().add("/model/resources/Theme.css");
+        recordCreationMenu.getStylesheets().add("/model/resources/Theme.css");
 
     }
 

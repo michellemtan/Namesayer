@@ -108,6 +108,7 @@ public class PracticeMenuController {
 
     @FXML
     void detailsButtonClicked() throws IOException {
+        audioPlayer.stop();
         // Load the new scene
         //Scene scene = detailsButton.getScene();
         //scene.setRoot(Menu.NAMEDETAILSMENU.loader().load());
@@ -189,6 +190,7 @@ public class PracticeMenuController {
 
     @FXML
     void recordButtonClicked() throws IOException {
+        audioPlayer.stop();
         SetUp.getInstance().recordMenuController.setUpRecord(creationsListView.getSelectionModel().getSelectedItem());
 
         Scene scene = SetUp.getInstance().recordMenu;
@@ -198,6 +200,7 @@ public class PracticeMenuController {
 
     @FXML
     void shuffleButtonClicked() {
+        audioPlayer.stop();
         //Shuffle list
         Collections.shuffle(creationsListView.getItems());
         creationList = new ArrayList<>(new ArrayList<>(creationsListView.getItems()));

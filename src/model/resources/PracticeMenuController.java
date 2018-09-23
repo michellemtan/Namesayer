@@ -8,6 +8,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -17,10 +19,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class PracticeMenuController {
 
@@ -317,20 +316,42 @@ public class PracticeMenuController {
     }
 
     @FXML
-    public void sadFaceButtonClicked() throws IOException {
-        try {
+    public void sadFaceButtonClicked(MouseEvent event) throws IOException {
+        String selectedName = creationsListView.getSelectionModel().getSelectedItem() + ".wav";
+        String defaultName = SetUp.getInstance().nameDetailsController.checkDefault(selectedName);
 
-            String selectedName = creationsListView.getSelectionModel().getSelectedItem() + ".wav";
-            File f = new File("BadRecordings.txt");
-            BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
-            bw.append(selectedName+"\n");
-            bw.flush();
-            bw.close();
+        if (event.getButton() == MouseButton.PRIMARY) {
+            //Ask the user to rate their choice
+            List<String> choices = new ArrayList<>();
+            choices.add("★☆☆☆☆");
+            choices.add("★★☆☆☆");
+            choices.add("★★★☆☆");
+            choices.add("★★★★☆");
+            choices.add("★★★★★");
+            ChoiceDialog<String> dialog = new ChoiceDialog<>("★☆☆☆☆", choices);
+            dialog.setTitle("Recording Rating");
+            dialog.setGraphic(null);
+            dialog.setHeaderText("Rate " + defaultName + "?");
+            dialog.setContentText("Select a rating:");
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            //Get rating and format to string
+            Optional<String> result = dialog.showAndWait();
+
+            if (result.isPresent()) {
+                try {
+                    String rating = result.get();
+                    File f = new File("BadRecordings.txt");
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
+                    bw.append(defaultName + ": " + rating + "\n");
+                    bw.flush();
+                    bw.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                SetUp.getInstance().badRecordingsMenuController.updateTextLog();
+            }
         }
-        SetUp.getInstance().badRecordingsMenuController.updateTextLog();
     }
 
     public String returnSelectedName(){

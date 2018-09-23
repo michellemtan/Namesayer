@@ -6,6 +6,8 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -142,17 +144,49 @@ public class NameDetailsController {
     }
 
     @FXML
-    public void sadFaceButtonClicked() throws IOException {
-        try {
-            String selectedName = nameListView.getSelectionModel().getSelectedItem();
-            File f = new File("BadRecordings.txt");
-            BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
-            bw.append(selectedName + "\n");
-            bw.flush();
-            bw.close();
+    public void sadFaceButtonClicked(MouseEvent event) throws IOException {
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        String selectedName = nameListView.getSelectionModel().getSelectedItem();
+
+        if (selectedName == null) {
+            if (defaultNames == null) {
+                selectedName = nameName.getText() + ".wav";
+            } else {
+                selectedName = defaultNames.get(nameName.getText());
+            }
+        }
+
+        if (event.getButton() == MouseButton.PRIMARY) {
+            //Ask the user to rate their choice
+            List<String> choices = new ArrayList<>();
+            choices.add("★☆☆☆☆");
+            choices.add("★★☆☆☆");
+            choices.add("★★★☆☆");
+            choices.add("★★★★☆");
+            choices.add("★★★★★");
+            ChoiceDialog<String> dialog = new ChoiceDialog<>("★☆☆☆☆", choices);
+            dialog.setTitle("Recording Rating");
+            dialog.setGraphic(null);
+            dialog.setHeaderText("Rate " + selectedName + "?");
+            dialog.setContentText("Select a rating:");
+
+            //Get rating and format to string
+            Optional<String> result = dialog.showAndWait();
+
+            if (result.isPresent()) {
+                try {
+                    String rating = result.get();
+                    File f = new File("BadRecordings.txt");
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
+                    bw.append(selectedName + ": " + rating + "\n");
+                    bw.flush();
+                    bw.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                SetUp.getInstance().badRecordingsMenuController.updateTextLog();
+            }
         }
 
         SetUp.getInstance().badRecordingsMenuController.updateTextLog();
@@ -214,7 +248,7 @@ public class NameDetailsController {
         File[] files = dir.listFiles();
         //if name.wav is a file, set that as default. Else, just first file in list
         List<String> fileNames = new ArrayList<>();
-        List<File> fileList = Arrays.asList(files);
+        File[] fileList = files;
         for(File file : fileList) {
             fileNames.add(file.getName());
         }
@@ -232,7 +266,16 @@ public class NameDetailsController {
             defaultLabel.setText("Default: " + defaultNames.get(title));
             return defaultNames.get(title);
         } else {
-            System.out.println("this shouldn't print");
+            return title;
+        }
+    }
+
+    public String checkDefault(String title) {
+        if (defaultNames == null) {
+            return title;
+        } else if (defaultNames.containsKey(title.replaceAll(".wav", ""))) {
+            return defaultNames.get(title.replaceAll(".wav", ""));
+        } else {
             return title;
         }
     }

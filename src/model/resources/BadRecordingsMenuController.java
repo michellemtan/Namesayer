@@ -7,7 +7,7 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.HashSet;
+import java.util.*;
 
 public class BadRecordingsMenuController {
 
@@ -49,6 +49,8 @@ public class BadRecordingsMenuController {
 
         //Set storing unique values of creations
         HashSet<String> hs = new HashSet<String>();
+        HashMap<String, String> ratingMap = new HashMap<>();
+        List<String> lineList = new ArrayList<String>();
 
             //Read in the file containing the list of bad quality recordings
         try (BufferedReader reader = new BufferedReader(new FileReader(new File("BadRecordings.txt")))) {
@@ -57,9 +59,18 @@ public class BadRecordingsMenuController {
 
             while ((line = reader.readLine()) != null) {
                 //Concatenate each line of the file to the StringBuilder
-                if(hs.add(line)) {
-                    fieldContent.append(line + "\n");
-                }
+                String name = line.substring(0, line.indexOf(":"));
+                ratingMap.put(name, line);
+            }
+
+            for (String value : ratingMap.values()) {
+                lineList.add(value);
+            }
+
+            Collections.sort(lineList);
+
+            for (String outputLine : lineList) {
+                fieldContent.append(outputLine + "\n");
             }
 
             //Ensure the textArea is not editable by the user

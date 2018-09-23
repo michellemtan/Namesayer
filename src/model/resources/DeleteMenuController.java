@@ -62,8 +62,6 @@ public class DeleteMenuController {
             numberLabel.setText("There are " + deleteListView.getItems().size() + " names containing " + numberRecordings + " recordings to be deleted:");
         }
 
-
-
     }
 
     private void checkNumber(List<String> creationslist) {

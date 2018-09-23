@@ -3,7 +3,9 @@ package model.resources;
 import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -28,13 +30,23 @@ public class CreateMenuController {
 
     //TODO: if a user calls their name 'uncut_files' could cause a bug
     public void createBtnPressed() throws IOException {
+
         name = textInput.getText();
-        SetUp.getInstance().recordCreationMenuController.setUp(name);
 
+        if (checkName(name)) {
+            SetUp.getInstance().recordCreationMenuController.setUp(name);
 
-        Scene scene = SetUp.getInstance().recordCreationMenu;
-        Stage window = (Stage) createBtn.getScene().getWindow();
-        window.setScene(scene);
+            Scene scene = SetUp.getInstance().recordCreationMenu;
+            Stage window = (Stage) createBtn.getScene().getWindow();
+            window.setScene(scene);
+        } else {
+            Alert error = new Alert(Alert.AlertType.ERROR,
+                    "Please only use letters (a-z), numbers, spaces" +
+                            "\nunderscores, and hyphens.", ButtonType.OK);
+            error.setHeaderText("ERROR: Invalid Creation Name");
+            error.setTitle("Invalid Creation Name");
+            error.showAndWait();
+        }
     }
 
     //Create binding to create button is disabled if no input yet
@@ -55,4 +67,30 @@ public class CreateMenuController {
         return name;
     }
 
+    private boolean checkName(String newName) {
+        //Check if the new creation name is empty or null
+        if (newName.equals("") || newName.equals(null)) {
+            return false;
+        }
+
+        //Check if the new creation name only consists of white spaces
+        int count = 0;
+        for (char ch : newName.toCharArray()) {
+            if (Character.isWhitespace(ch)) {
+                count++;
+            }
+        }
+        if (count == newName.length()) {
+            return false;
+        }
+
+        //Check for leading/trailing whitespaces
+        if (newName.startsWith(" ") || newName.endsWith(" ")) {
+            return false;
+        }
+
+        //Check for valid characters
+        return newName.matches("^[a-zA-Z0-9 _-]+$");
+
+    }
 }

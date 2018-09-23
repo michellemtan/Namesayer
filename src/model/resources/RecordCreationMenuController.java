@@ -156,7 +156,7 @@ public class RecordCreationMenuController {
 
     //Changes these commands to have backslash before so bash works
     public String bashify(String name) {
-        //Characters that break the bash command TODO: test if these are all of them
+        //Characters that break the bash command
         char invalids[] = "$/%:\\ .,-()@".toCharArray();
         boolean found = false;
         String bashed = "";

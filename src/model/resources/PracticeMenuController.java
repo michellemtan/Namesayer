@@ -43,10 +43,6 @@ public class PracticeMenuController {
     private ObservableList<Media> mediaList;
     private boolean isFinished;
 
-    //TODO: ISSUE WITH DELETE: IF YOU HAVE MICHELLE.WAV, MICHELLE(1).WAV, MICHELLE(2).WAV AND DELETE MICHELLE(1).WAV,
-    //TODO: WHEN YOU RECORD, IT DOESN'T WORK ANYMORE
-    //TODO: OK so reoording works now, but it will record & overwrite Michelle(2) if you have Michelle.wav and Michelle(2).wav and you push record
-
     public void clearListView() {
         creationsListView.getItems().clear();
     }

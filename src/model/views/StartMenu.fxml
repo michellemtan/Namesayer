@@ -20,7 +20,7 @@
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-bold" text="Name Sayer" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
-                        <Font size="40.0" />
+                         <Font name="Ubuntu" size="40.0"/>
                      </font>
                   </Text>
                   <Button fx:id="micButton" mnemonicParsing="false" onMouseClicked="#micButtonClicked" text="Mic" translateX="-15.0" translateY="15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
@@ -42,12 +42,12 @@
                            prefHeight="295.0" prefWidth="250.0" text="Start" GridPane.halignment="CENTER"
                            GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
-                        <Font size="30.0" />
+                         <Font name="Ubuntu" size="30.0"/>
                      </font>
                   </Button>
                   <Button fx:id="instructionsButton" mnemonicParsing="false" onMouseClicked="#instructionsButtonClicked" prefHeight="295.0" prefWidth="250.0" text="Instructions" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
-                        <Font size="25.0" />
+                         <Font name="Ubuntu" size="30.0"/>
                      </font>
                   </Button>
                </children>

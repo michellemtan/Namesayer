@@ -68,7 +68,7 @@
          <children>
             <Label fx:id="nameName" alignment="CENTER" contentDisplay="CENTER" text="Database" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <font>
-                  <Font size="40.0" />
+                   <Font name="Ubuntu Bold" size="40.0"/>
                </font>
             </Label>
              <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtnPressed" text="←" translateX="15.0"

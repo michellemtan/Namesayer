@@ -23,7 +23,7 @@
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bad Quality Recordings" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
-                        <Font size="40.0" />
+                         <Font name="Ubuntu Bold" size="40.0"/>
                      </font>
                   </Text>
                    <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClicked" text="←"
@@ -31,7 +31,11 @@
                </children>
             </GridPane>
              <Button fx:id="clearButton" mnemonicParsing="false" onMouseClicked="#clearTextLog" text="Clear"
-                     translateX="697.0"/>
+                     translateX="697.0">
+                 <font>
+                     <Font name="Ubuntu" size="13.0"/>
+                 </font>
+             </Button>
             <HBox prefHeight="395.0" prefWidth="800.0">
                <children>
                   <TextArea fx:id="textArea" editable="false" prefHeight="305.0" prefWidth="700.0" wrapText="true">

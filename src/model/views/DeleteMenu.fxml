@@ -16,11 +16,11 @@
          <buttons>
             <Button mnemonicParsing="false" onAction="#confirmBtnPressed" text="Confirm" translateX="-300.0">
                <font>
-                  <Font size="24.0" />
+                   <Font name="Ubuntu" size="24.0"/>
                </font></Button>
             <Button mnemonicParsing="false" onAction="#backBtnPressed" text="Cancel" translateX="-230.0">
                <font>
-                  <Font size="24.0" />
+                   <Font name="Ubuntu" size="24.0"/>
                </font></Button>
          </buttons>
       </ButtonBar>
@@ -30,7 +30,7 @@
          <children>
              <Label fx:id="numberLabel" text="There are x recordings to be deleted:" textAlignment="CENTER">
                  <font>
-                     <Font name="System Bold" size="13.0"/>
+                     <Font name="Ubuntu" size="13.0"/>
                  </font>
                  <VBox.margin>
                      <Insets bottom="3.0"/>
@@ -55,7 +55,7 @@
          <children>
             <Label fx:id="deleteLabel" alignment="CENTER" contentDisplay="CENTER" text="Delete Creation?" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <font>
-                  <Font size="40.0" />
+                   <Font name="Ubuntu" size="40.0"/>
                </font>
             </Label>
              <Button fx:id="backBtn" disable="true" mnemonicParsing="false" onAction="#backBtnPressed" text="←"

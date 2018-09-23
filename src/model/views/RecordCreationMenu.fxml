@@ -22,7 +22,7 @@
                    <Label fx:id="recordLabel" alignment="CENTER" text="Record Audio for Creation" textAlignment="CENTER"
                           GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
-                        <Font size="40.0" />
+                         <Font name="Ubuntu Bold" size="40.0"/>
                      </font>
                    </Label>
                    <Button fx:id="micButton" layoutX="544.0" layoutY="72.0" mnemonicParsing="false"
@@ -38,12 +38,9 @@
             <ProgressBar fx:id="progressBar" prefHeight="59.0" prefWidth="556.0" progress="0.0" BorderPane.alignment="CENTER" />
          </center>
          <bottom>
-            <GridPane prefHeight="148.0" prefWidth="812.0" BorderPane.alignment="CENTER">
+             <GridPane prefHeight="148.0" BorderPane.alignment="CENTER">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.0" minWidth="10.0" prefWidth="189.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.0" minWidth="10.0" prefWidth="190.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="212.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="209.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0"/>
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -51,24 +48,29 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="playbackButton" mnemonicParsing="false" onAction="#playbackButtonClicked" text="↺ Replay" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                   <Button fx:id="recordButton" mnemonicParsing="false" onAction="#recordButtonClicked" text="Record"
+                           translateX="50.0" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                      <font>
-                        <Font size="24.0" />
+                         <Font name="Ubuntu" size="24.0"/>
                      </font>
                   </Button>
-                  <Button fx:id="recordButton" mnemonicParsing="false" onAction="#recordButtonClicked" text="Record" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                   <Button fx:id="playbackButton" mnemonicParsing="false" onAction="#playbackButtonClicked"
+                           text="↺ Replay" translateX="210.0" GridPane.halignment="LEFT" GridPane.rowIndex="1"
+                           GridPane.valignment="CENTER">
                      <font>
-                        <Font size="24.0" />
+                         <Font name="Ubuntu" size="24.0"/>
                      </font>
                   </Button>
-                  <Button fx:id="compareButton" mnemonicParsing="false" onAction="#compareButtonClicked" text="Compare" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                   <Button fx:id="compareButton" mnemonicParsing="false" onAction="#compareButtonClicked" text="Compare"
+                           translateX="390.0" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                      <font>
-                        <Font size="24.0" />
+                         <Font name="Ubuntu" size="24.0"/>
                      </font>
                   </Button>
-                  <Button fx:id="continueButton" mnemonicParsing="false" onAction="#continueButtonClicked" text="Save Audio" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                   <Button fx:id="continueButton" mnemonicParsing="false" onAction="#continueButtonClicked"
+                           text="Save Audio →" translateX="570.0" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                      <font>
-                        <Font size="24.0" />
+                         <Font name="Ubuntu" size="24.0"/>
                      </font>
                   </Button>
                </children>

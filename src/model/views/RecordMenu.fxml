@@ -26,7 +26,7 @@
                    <Label fx:id="recordLabel" alignment="CENTER" text="Record Audio" GridPane.halignment="CENTER"
                           GridPane.rowIndex="2">
                      <font>
-                        <Font size="40.0" />
+                         <Font name="Ubuntu Bold" size="40.0"/>
                      </font>
                    </Label>
                </children>
@@ -51,22 +51,22 @@
                <children>
                   <Button fx:id="playbackButton" mnemonicParsing="false" onMouseClicked="#playbackButtonClicked" text="↺ Replay" translateX="-10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
-                        <Font size="24.0" />
+                         <Font name="Ubuntu" size="24.0"/>
                      </font>
                   </Button>
                   <Button fx:id="recordButton" mnemonicParsing="false" onMouseClicked="#recordButtonClicked" text="Record" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
-                        <Font size="24.0" />
+                         <Font name="Ubuntu" size="24.0"/>
                      </font>
                   </Button>
                   <Button fx:id="compareButton" mnemonicParsing="false" onMouseClicked="#compareButtonClicked" text="Compare" translateX="-15.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
-                        <Font size="24.0" />
+                         <Font name="Ubuntu" size="24.0"/>
                      </font>
                   </Button>
                   <Button fx:id="continueButton" mnemonicParsing="false" onMouseClicked="#continueButtonClicked" text="Save Audio →" translateX="-10.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <font>
-                        <Font size="24.0" />
+                         <Font name="Ubuntu" size="24.0"/>
                      </font>
                   </Button>
                </children>

@@ -9,9 +9,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.resources.StartMenuController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.resources.StartMenuController">
    <children>
-      <VBox prefHeight="500.0" prefWidth="800.0">
+      <VBox prefHeight="500.0" prefWidth="800.0" stylesheets="@Theme.css">
          <children>
             <GridPane prefHeight="110.0" prefWidth="800.0">
               <columnConstraints>
@@ -43,7 +43,7 @@
                 <RowConstraints maxHeight="77.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="startButton" mnemonicParsing="false" onMouseClicked="#startButtonClicked" prefHeight="297.0" prefWidth="250.0" text="Start" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <Button fx:id="startButton" mnemonicParsing="false" onMouseClicked="#startButtonClicked" prefHeight="297.0" prefWidth="250.0" stylesheets="@Theme.css" text="Start" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
                         <Font size="30.0" />
                      </font>

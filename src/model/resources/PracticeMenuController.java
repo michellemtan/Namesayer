@@ -41,6 +41,7 @@ public class PracticeMenuController {
     private String pathToDB;
     private ObservableList<Media> mediaList;
     private boolean isFinished;
+    private Timeline timeline;
 
     public void clearListView() {
         creationsListView.getItems().clear();
@@ -183,8 +184,10 @@ public class PracticeMenuController {
             detailsButton.setDisable(false);
             playSingleButton.setDisable(false);
             audioPlayer.pause();
+            timeline.pause();
         } else if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
             audioPlayer.play();
+            timeline.play();
         } else {
             mediaPlayerCreator();
         }
@@ -269,12 +272,16 @@ public class PracticeMenuController {
     }
 
     private void progressBar() {
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
-                new KeyFrame((audioPlayer.getTotalDuration()), new KeyValue(progressBar.progressProperty(), 1))
-        );
-        timeline.setCycleCount(1);
-        timeline.play();
+        try {
+            timeline = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
+                    new KeyFrame((audioPlayer.getTotalDuration()), new KeyValue(progressBar.progressProperty(), 1))
+            );
+            timeline.setCycleCount(1);
+            timeline.play();
+        } catch (IllegalArgumentException e) {
+            //WHOOPS
+        }
     }
 
     @FXML

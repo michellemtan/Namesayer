@@ -88,12 +88,21 @@ public class DeleteMenuController {
     public void confirmBtnPressed() throws IOException {
         //If come from details menu call different delete method
         if(previousScenes.equals("practiceDetails")) {
+
             SetUp.getInstance().nameDetailsController.clearListView();
             SetUp.getInstance().practiceMenuController.deleteAudioFiles(toDelete.get(0));
-            //Switch scenes back
-            Scene scene = SetUp.getInstance().practiceMenu;
-            Stage window = (Stage) backBtn.getScene().getWindow();
-            window.setScene(scene);
+
+            //If deleting the only audio file, return the user to the database to select more names
+            if (toDelete.size() == 1 && SetUp.getInstance().dbMenuController.getDbListView().getSelectionModel().getSelectedItems().size() == 1) {
+                Scene scene = SetUp.getInstance().databaseMenu;
+                Stage window = (Stage) backBtn.getScene().getWindow();
+                window.setScene(scene);
+            } else {
+                //Switch scenes back
+                Scene scene = SetUp.getInstance().practiceMenu;
+                Stage window = (Stage) backBtn.getScene().getWindow();
+                window.setScene(scene);
+            }
         } else if(previousScenes.equals("dbDetails")) {
             SetUp.getInstance().nameDetailsController.clearListView();
             SetUp.getInstance().practiceMenuController.deleteAudioFiles(toDelete.get(0));

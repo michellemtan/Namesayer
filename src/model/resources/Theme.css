@@ -12,6 +12,7 @@
 
 .button:hover{
     -fx-background-color: #26A69A;
+    transition: -fx-background-color 1s;
 }
 
 .label-bold {

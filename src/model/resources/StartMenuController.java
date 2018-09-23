@@ -3,6 +3,8 @@ package model.resources;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -10,14 +12,17 @@ import java.io.IOException;
 
 public class StartMenuController {
 
-    @FXML
-    private Button startButton;
-    @FXML
-    private Button instructionsButton;
-    @FXML
-    private Button micButton;
-    @FXML
-    private Button sadFaceButton;
+    @FXML private Button startButton;
+    @FXML private Button instructionsButton;
+    @FXML private Button micButton;
+    @FXML private Button sadFaceButton;
+
+/*    public void initialize() {
+        Image img = new Image("/model/resources/thumbs_down.png");
+        ImageView imgView = new ImageView(img);
+        sadFaceButton.setGraphic(imgView);
+        sadFaceButton.setMaxSize(50, 50);
+    }*/
 
     //When the startButton is clicked, the scene changes to the "MainMenu" where the user selects the database they
     //wish to practice

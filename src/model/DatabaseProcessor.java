@@ -1,6 +1,9 @@
 package model;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class DatabaseProcessor {
@@ -31,22 +34,48 @@ public class DatabaseProcessor {
                     String fileTrim = file.getName().substring(file.getName().lastIndexOf("_") + 1); //Trims down to 'example.wav'
                     String finalName = fileTrim.substring(0, fileTrim.length() - 4); //Trims down to 'example'
 
-                    //Create directory of name
-                    boolean resultMkdir = new File(pathToDB + "/" + finalName).mkdir();
-
-                    //Create File object for trimmed audio file
-                    File trimFile = new File(file.getPath().substring(0, file.getPath().length() - 4) + "_TRIM.wav");
-
-                    File parentDir = new File(file.getParent() + "/" + finalName);
-                    //Move trimmed audio file into it's directory, rename to correct file if there is more than 1 of them
-                    if(parentDir.isDirectory() && Objects.requireNonNull(parentDir.list()).length == 0) {
-                        boolean resultMove = trimFile.renameTo(new File(pathToDB + "/" + finalName + "/" + finalName + ".wav"));
-                    } else {
-                        boolean resultMove = trimFile.renameTo(new File(pathToDB + "/" + finalName + "/" + finalName + "(" + Objects.requireNonNull(parentDir.list()).length + ")" + ".wav"));
+                    //If finalName already has a similar folder (e.g finalName = Jonothan, and jonothan exists), make same name
+                    List<File> fileList = Arrays.asList(dir.listFiles());
+                    List<String> fileNames = new ArrayList<>();
+                    for(File file1 : fileList) {
+                        fileNames.add(file1.getName()); //Create list of string of existing files
                     }
+                    String upcased = finalName.substring(0, 1).toUpperCase() + finalName.substring(1);
+                    if(fileNames.contains(finalName.toLowerCase()) || fileNames.contains(upcased)) {
+                        //This code runs if name being processed already has a similar folder
+                        if(fileNames.contains(finalName.toLowerCase())) {
+                            File parentDir = new File(file.getParent() + "/" + finalName.toLowerCase());
+                            //Create File object for trimmed audio file
+                            File trimFile = new File(file.getPath().substring(0, file.getPath().length() - 4) + "_TRIM.wav");
+                            trimFile.renameTo(new File(pathToDB + "/" + finalName.toLowerCase() + "/" + finalName.toLowerCase() + "(" + Objects.requireNonNull(parentDir.listFiles()).length + ").wav"));
+                            //Save uncut files into uncut_files folder
+                            boolean resultMoveUncut = file.renameTo(new File(pathToDB + "/uncut_files/" + file.getName()));
+                        } else if(fileNames.contains(upcased)) {
+                            File parentDir = new File(file.getParent() + "/" + upcased);
+                            //Create File object for trimmed audio file
+                            File trimFile = new File(file.getPath().substring(0, file.getPath().length() - 4) + "_TRIM.wav");
+                            trimFile.renameTo(new File(pathToDB + "/" + upcased + "/" + upcased + "(" + Objects.requireNonNull(parentDir.listFiles()).length + ").wav"));
+                            //Save uncut files into uncut_files folder
+                            boolean resultMoveUncut = file.renameTo(new File(pathToDB + "/uncut_files/" + file.getName()));
+                        }
+                    } else {
+                        //Create directory of name
+                        boolean resultMkdir = new File(pathToDB + "/" + finalName).mkdir();
 
-                    //Save uncut files into uncut_files folder
-                    boolean resultMoveUncut = file.renameTo(new File(pathToDB + "/uncut_files/" + file.getName()));
+                        //Create File object for trimmed audio file
+                        File trimFile = new File(file.getPath().substring(0, file.getPath().length() - 4) + "_TRIM.wav");
+
+                        File parentDir = new File(file.getParent() + "/" + finalName);
+                        //Move trimmed audio file into it's directory, rename to correct file if there is more than 1 of them
+                        if(parentDir.isDirectory() && Objects.requireNonNull(parentDir.list()).length == 0) {
+                            boolean resultMove = trimFile.renameTo(new File(pathToDB + "/" + finalName + "/" + finalName + ".wav"));
+                        } else {
+                            boolean resultMove = trimFile.renameTo(new File(pathToDB + "/" + finalName + "/" + finalName + "(" + Objects.requireNonNull(parentDir.list()).length + ").wav"));
+                        }
+
+                        //Save uncut files into uncut_files folder
+                        boolean resultMoveUncut = file.renameTo(new File(pathToDB + "/uncut_files/" + file.getName()));
+                    }
                 }
             }
         }

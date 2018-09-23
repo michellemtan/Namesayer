@@ -205,12 +205,15 @@ public class NameDetailsController {
             //When the media player has finished, the buttons will be enabled
             if (isFinished) {
                 deleteBtn.setDisable(false);
-                setDefaultBtn.setDisable(false);
+                if(nameListView.getItems().size() <= 1) {
+                    setDefaultBtn.setDisable(true);
+                } else {
+                    setDefaultBtn.setDisable(false);
+                }
                 backBtn.setDisable(false);
                 playButton.setDisable(false);
                 //When the media player is playing the audio file, the buttons will be disabled to prevent the user from navigating away
             } else {
-
                 deleteBtn.setDisable(true);
                 setDefaultBtn.setDisable(true);
                 backBtn.setDisable(true);

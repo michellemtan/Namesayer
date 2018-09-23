@@ -282,4 +282,9 @@ public class NameDetailsController {
             return title;
         }
     }
+
+    public int returnDetailsViewSize() {
+        System.out.println(nameListView.getItems().size());
+        return nameListView.getItems().size();
+    }
 }

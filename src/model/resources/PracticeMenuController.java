@@ -33,8 +33,6 @@ public class PracticeMenuController {
     @FXML private Label creationName;
     @FXML private Button backButton;
     @FXML private Button playSingleButton;
-    @FXML
-    private ContextMenu sadContext;
     private MediaPlayer audioPlayer;
     private List<String> creationList;
     private String selectedName;

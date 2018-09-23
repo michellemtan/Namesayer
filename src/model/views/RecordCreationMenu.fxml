@@ -27,9 +27,10 @@
                    </Label>
                    <Button fx:id="micButton" layoutX="544.0" layoutY="72.0" mnemonicParsing="false"
                            onAction="#micButtonClicked" text="Mic" translateX="-15.0" translateY="15.0"
-                           GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
+                           GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP"/>
                    <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backButtonClicked" text="←"
-                           translateX="15.0" translateY="15.0" GridPane.columnIndex="1"/>
+                           translateX="15.0" translateY="15.0" GridPane.columnIndex="1" GridPane.halignment="LEFT"
+                           GridPane.valignment="TOP"/>
                </children>
             </GridPane>
          </top>

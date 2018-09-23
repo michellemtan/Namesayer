@@ -54,7 +54,7 @@ public class DeleteMenuController {
         } else if (list.size() == 1) {
             checkNumber(list);
             deleteLabel.setText("Delete Name?");
-            numberLabel.setText("There are " + deleteListView.getItems().size() + " names containing " + numberRecordings + " recordings to be deleted:");
+            numberLabel.setText("There is one name containing " + numberRecordings + " recordings to be deleted:");
                     
         } else {
             checkNumber(list);

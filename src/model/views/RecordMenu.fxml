@@ -20,9 +20,9 @@
                <children>
                    <Button fx:id="micButton" layoutX="544.0" layoutY="72.0" mnemonicParsing="false"
                            onMouseClicked="#micButtonClicked" text="Mic" translateX="-15.0" translateY="15.0"
-                           GridPane.halignment="RIGHT"/>
+                           GridPane.halignment="RIGHT" GridPane.valignment="TOP"/>
                    <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backButtonClicked" text="←"
-                           translateX="15.0" translateY="15.0"/>
+                           translateX="15.0" translateY="15.0" GridPane.halignment="LEFT" GridPane.valignment="TOP"/>
                    <Label fx:id="recordLabel" alignment="CENTER" text="Record Audio" GridPane.halignment="CENTER"
                           GridPane.rowIndex="2">
                      <font>

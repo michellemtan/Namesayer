@@ -63,9 +63,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text fill="#393939" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label-bold" text="Name Sayer" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Text fill="#393939" strokeType="OUTSIDE" strokeWidth="0.0" text="Name Sayer" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
-                   <Font name="Ubuntu" size="40.0" />
+                   <Font name="Ubuntu Bold" size="40.0" />
                </font>
             </Text>
              <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backButtonClicked" text="←" translateX="15.0" translateY="15.0" GridPane.halignment="LEFT" GridPane.valignment="TOP" />

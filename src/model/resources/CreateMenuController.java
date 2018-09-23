@@ -19,6 +19,7 @@ public class CreateMenuController {
     private String name;
 
     public void backBtnClicked() throws IOException {
+        textInput.clear();
         Scene scene = SetUp.getInstance().databaseMenu;
         Stage window = (Stage) backBtn.getScene().getWindow();
         window.setScene(scene);

@@ -40,10 +40,9 @@ public class CreateMenuController {
             Stage window = (Stage) createBtn.getScene().getWindow();
             window.setScene(scene);
         } else {
-
             Alert error = new Alert(Alert.AlertType.ERROR,
-                    "Please only use letters (a-z), numbers," +
-                            "\nunderscores, spaces and hyphens.", ButtonType.OK);
+                    "Please only use letters (a-z), numbers, spaces" +
+                            "\nunderscores, and hyphens.", ButtonType.OK);
             error.setHeaderText("ERROR: Invalid Creation Name");
             error.setTitle("Invalid Creation Name");
             error.showAndWait();

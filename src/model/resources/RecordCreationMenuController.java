@@ -9,11 +9,11 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.DatabaseProcessor;
@@ -21,7 +21,6 @@ import model.DatabaseProcessor;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,7 +33,8 @@ public class RecordCreationMenuController {
     @FXML private Button continueButton;
     @FXML private ProgressBar progressBar;
     @FXML private Button micButton;
-    @FXML private Text recordLabel;
+    @FXML
+    private Label recordLabel;
     private String creationName;
     private  String pathToDB;
     private MediaPlayer audioPlayer;
@@ -135,7 +135,7 @@ public class RecordCreationMenuController {
             File dir = new File(pathToDB + "/" + creationName);
             int count = Objects.requireNonNull(dir.listFiles()).length;
             //If would be overwriting a recording, increment counter
-            List<File> files = Arrays.asList(dir.listFiles());
+            File[] files = dir.listFiles();
             List<String> stringFiles = new ArrayList<>();
             for(File file : files) {
                 stringFiles.add(file.getName());

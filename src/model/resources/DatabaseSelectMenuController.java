@@ -113,7 +113,9 @@ public class DatabaseSelectMenuController {
 
         progressStage = new Stage();
         progressStage.setTitle("Processing Database");
-        progressStage.setScene(new Scene(new StackPane(progressBar), 400, 150));
+        Scene scene = new Scene(new StackPane(progressBar), 400, 150);
+        scene.getStylesheets().add("/model/resources/Theme.css");
+        progressStage.setScene(scene);
         progressStage.setAlwaysOnTop(true);
 
         //Code to clear preferences

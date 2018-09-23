@@ -31,12 +31,12 @@
                </children>
             </GridPane>
              <Button fx:id="clearButton" mnemonicParsing="false" onMouseClicked="#clearTextLog" text="Clear"
-                     translateX="693.0"/>
+                     translateX="697.0"/>
             <HBox prefHeight="395.0" prefWidth="800.0">
                <children>
                   <TextArea fx:id="textArea" editable="false" prefHeight="305.0" prefWidth="700.0" wrapText="true">
                      <HBox.margin>
-                         <Insets bottom="50.0" left="50.0" right="50.0" top="5.0"/>
+                         <Insets bottom="50.0" left="50.0" right="50.0" top="6.0"/>
                      </HBox.margin>
                      <cursor>
                         <Cursor fx:constant="NONE" />

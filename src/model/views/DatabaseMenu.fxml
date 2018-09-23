@@ -52,7 +52,8 @@
                   <Font size="40.0" />
                </font>
             </Label>
-            <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtnPressed" text="←" translateX="10.0" />
+             <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtnPressed" text="←" translateX="15.0"
+                     translateY="15.0" GridPane.halignment="LEFT" GridPane.valignment="TOP"/>
          </children>
       </GridPane>
    </top>

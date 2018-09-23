@@ -214,7 +214,8 @@ public class PracticeMenuController {
         for (String creation : audioList) {
             //Set up the file to be played
             selectedName = creation;
-            Media media = new Media(new File(databasePath + "/" + selectedName + "/" + selectedName).toURI().toString() + ".wav");
+            String defaultName = SetUp.getInstance().nameDetailsController.returnDefault(selectedName).replaceAll(".wav", "");
+            Media media = new Media(new File(databasePath + "/" + selectedName + "/" + defaultName).toURI().toString() + ".wav");
             mediaList.add(media);
         }
 
@@ -271,6 +272,8 @@ public class PracticeMenuController {
         }
 
         selectedName = creationsListView.getSelectionModel().getSelectedItem();
+        creationName.setText(selectedName);
+
         String defaultName = SetUp.getInstance().nameDetailsController.returnDefault(selectedName);
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 

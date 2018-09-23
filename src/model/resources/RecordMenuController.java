@@ -129,7 +129,7 @@ public class RecordMenuController {
     }
 
     public String bashify(String name) {
-        //Characters that break the bash command TODO: test if these are all of them
+        //Characters that break the bash command
         char invalids[] = "$/%:\\ .,-".toCharArray();
         boolean found = false;
         String bashed = "";

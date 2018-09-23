@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: Should we rename this class to creations list or something else? That sounds like a good idea
 public class DatabaseMenuController {
 
     @FXML private Label databaseName;
@@ -36,8 +35,6 @@ public class DatabaseMenuController {
         dbListView.getItems().sort(String.CASE_INSENSITIVE_ORDER);
     }
 
-    //TODO: refactor controllers and fxml files into different packages
-    //TODO: should jonothan and Jonothan be the same name!?
     void initialize(String path) {
         pathToDB = path;
         databaseName.setText(path.substring(path.lastIndexOf("/") + 1));
@@ -140,7 +137,6 @@ public class DatabaseMenuController {
 
     public void deleteBtnPressed() throws IOException {
         if (dbListView.getSelectionModel().getSelectedIndex() != -1) {
-            //TODO: Look into directing with tool tip
             List<String> toDelete = new ArrayList<>(dbListView.getSelectionModel().getSelectedItems());
             //Pass list into deleteMenuController
             SetUp.getInstance().deleteMenuController.setUpList(toDelete, "db");

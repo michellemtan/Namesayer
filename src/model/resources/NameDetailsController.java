@@ -32,17 +32,6 @@ public class NameDetailsController {
     private MediaPlayer audioPlayer;
     private HashMap<String, String> defaultNames;
 
-
-    //TODO: HI ROWAN
-    //TODO: PLEASE MOVE THIS THANK YOU! ok sure thing
-/*    private void toMoveIntoDelete() {
-        Alert error = new Alert(Alert.AlertType.ERROR, "The default audio file cannot be deleted.", ButtonType.OK);
-        error.setGraphic(null);
-        error.setHeaderText("ERROR: Invalid Deletion");
-        error.setTitle("Invalid Deletion");
-        error.showAndWait();
-    }*/
-
     public String getName() {
         return dirName;
     }

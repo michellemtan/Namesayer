@@ -30,9 +30,6 @@ public class DatabaseSelectMenuController {
     private Scene scene; //The database menu scene which is next scene
     private String selectedDir;
 
-    //TODO: instead of directory path make directory name displayed, and implement numbers for matching name dirs. Possibly
-    //store keys in hash map in initialise to do this?
-    //Code to be run when add directory button is pressed, opens simple directory chooser and adds selected item to list
     public void addBtnPressed() {
         DirectoryChooser dc = new DirectoryChooser();
         dc.setTitle("Choose database folder");

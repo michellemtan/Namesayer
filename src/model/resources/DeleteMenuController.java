@@ -91,7 +91,7 @@ public class DeleteMenuController {
 
         List<String> toBeDeleted;
         toBeDeleted = deleteListView.getItems();
-        SetUp.getInstance().badRecordingsMenuController.deleteName(toBeDeleted);
+        SetUp.getInstance().audioRatingsController.deleteName(toBeDeleted);
 
         if(previousScenes.equals("practiceDetails")) {
 

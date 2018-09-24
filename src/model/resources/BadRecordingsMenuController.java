@@ -7,14 +7,21 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class BadRecordingsMenuController {
 
-    @FXML private Button backButton;
-    @FXML private TextArea textArea;
-    @FXML private Button clearTextButton;
+    HashMap<String, String> ratingMap = new HashMap<>();
+    @FXML
+    private Button backButton;
+    @FXML
+    private TextArea textArea;
     private String previousScene = "";
+    @FXML
+    private Button clearTextButton;
 
     //Return the user to the start menu when the back button is clicked
     @FXML
@@ -27,11 +34,11 @@ public class BadRecordingsMenuController {
             Scene scene = SetUp.getInstance().nameDetailsMenu;
             Stage window = (Stage) backButton.getScene().getWindow();
             window.setScene(scene);
-        } else if(previousScene.equals("startMenu")) {
+        } else if (previousScene.equals("startMenu")) {
             Scene scene = SetUp.getInstance().startMenu;
             Stage window = (Stage) backButton.getScene().getWindow();
             window.setScene(scene);
-        } else if(previousScene.equals("compareMenu")) {
+        } else if (previousScene.equals("compareMenu")) {
             Scene scene = SetUp.getInstance().compareMenu;
             Stage window = (Stage) backButton.getScene().getWindow();
             window.setScene(scene);
@@ -47,12 +54,9 @@ public class BadRecordingsMenuController {
 
     public void updateTextLog() throws IOException {
 
-        //Set storing unique values of creations
-        HashSet<String> hs = new HashSet<String>();
-        HashMap<String, String> ratingMap = new HashMap<>();
         List<String> lineList = new ArrayList<String>();
 
-            //Read in the file containing the list of bad quality recordings
+        //Read in the file containing the list of bad quality recordings
         try (BufferedReader reader = new BufferedReader(new FileReader(new File("BadRecordings.txt")))) {
             String line;
             StringBuilder fieldContent = new StringBuilder();
@@ -91,7 +95,7 @@ public class BadRecordingsMenuController {
     public void clearTextLog() throws IOException {
         File file = new File("BadRecordings.txt");
         PrintWriter writer = new PrintWriter(file);
+        ratingMap = new HashMap<>();
         updateTextLog();
     }
 }
-

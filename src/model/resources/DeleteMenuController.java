@@ -24,6 +24,7 @@ public class DeleteMenuController {
     private List<String> toDelete;
     private String previousScenes;
     private int numberRecordings;
+    private List<String> deletedNames;
 
     public void backBtnPressed() throws IOException {
         //Clear list view

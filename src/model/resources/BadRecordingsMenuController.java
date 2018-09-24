@@ -57,7 +57,7 @@ public class BadRecordingsMenuController {
         List<String> lineList = new ArrayList<String>();
 
         //Read in the file containing the list of bad quality recordings
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File("BadRecordings.txt")))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("AudioRatings.txt")))) {
             String line;
             StringBuilder fieldContent = new StringBuilder();
 
@@ -84,7 +84,7 @@ public class BadRecordingsMenuController {
 
         } catch (IOException e) {
             //If there are no bad recordings saved, create a new text file to store them
-            File f = new File("BadRecordings.txt");
+            File f = new File("AudioRatings.txt");
             BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
             bw.flush();
             bw.close();
@@ -93,9 +93,36 @@ public class BadRecordingsMenuController {
 
     @FXML
     public void clearTextLog() throws IOException {
-        File file = new File("BadRecordings.txt");
+        File file = new File("AudioRatings.txt");
         PrintWriter writer = new PrintWriter(file);
         ratingMap = new HashMap<>();
         updateTextLog();
     }
+
+
+    public void deleteName(List<String> toBeDeletedList) throws IOException {
+
+        File inputFile = new File("AudioRatings.txt");
+        File tempFile = new File("myTempFile.txt");
+
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+        String currentLine;
+        while ((currentLine = reader.readLine()) != null) {
+            // trim newline when comparing with lineToRemove
+            for (String name : toBeDeletedList) {
+                String lineToRemove = name.concat(".wav");
+                if (currentLine.contains(lineToRemove)) {
+                } else {
+                    writer.write(currentLine + System.getProperty("line.separator"));
+                }
+            }
+        }
+        writer.close();
+        reader.close();
+        boolean successful = tempFile.renameTo(inputFile);
+        updateTextLog();
+    }
 }
+

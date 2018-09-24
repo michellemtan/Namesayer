@@ -88,6 +88,11 @@ public class DeleteMenuController {
 
     public void confirmBtnPressed() throws IOException {
         //If come from details menu call different delete method
+
+        List<String> toBeDeleted;
+        toBeDeleted = deleteListView.getItems();
+        SetUp.getInstance().badRecordingsMenuController.deleteName(toBeDeleted);
+
         if(previousScenes.equals("practiceDetails")) {
 
             List<String> creation = new ArrayList<String>();

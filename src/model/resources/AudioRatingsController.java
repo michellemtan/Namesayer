@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class BadRecordingsMenuController {
+public class AudioRatingsController {
 
     HashMap<String, String> ratingMap = new HashMap<>();
     @FXML

@@ -15,7 +15,7 @@ public class SetUp {
     DeleteMenuController deleteMenuController;
     PracticeMenuController practiceMenuController;
     RecordMenuController recordMenuController;
-    BadRecordingsMenuController badRecordingsMenuController;
+    AudioRatingsController audioRatingsController;
     NameDetailsController nameDetailsController;
     CompareMenuController compareMenuController;
     CreateMenuController createMenuController;
@@ -56,8 +56,8 @@ public class SetUp {
         recordMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/RecordMenu.fxml")));
         //startMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/StartMenu.fxml")));
         startMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/StartMenu.fxml")));
-        //badRecordingsMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/BadRecordingsMenu.fxml")));
-        badRecordingsMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/BadRecordingsMenu.fxml")));
+        //badRecordingsMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/AudioRatings.fxml")));
+        badRecordingsMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/AudioRatings.fxml")));
         //instructionsMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/InstructionsMenu.fxml")));
         instructionsMenu = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("model/views/InstructionsMenu.fxml")));
         //nameDetailsMenu = new Scene(FXMLLoader.load(getClass().getResource("../views/NameDetailsMenu.fxml")));
@@ -155,11 +155,11 @@ public class SetUp {
     }
 
     private void badRecordingsMenuLoader() throws IOException {
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/BadRecordingsMenu.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("model/views/BadRecordingsMenu.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/AudioRatings.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("model/views/AudioRatings.fxml"));
 
         badRecordingsMenu = new Scene(loader.load());
-        badRecordingsMenuController = loader.getController();
+        audioRatingsController = loader.getController();
     }
 
     private void instructionsMenuLoader() throws IOException {

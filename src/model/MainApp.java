@@ -21,5 +21,7 @@ public class MainApp extends Application {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
+
+        //xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
     }
 }

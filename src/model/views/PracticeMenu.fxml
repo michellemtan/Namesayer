@@ -64,14 +64,14 @@
                </font>
             </Label>
              <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backButtonClicked" text="←" translateX="15.0" translateY="15.0" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
-            <Button fx:id="sadFaceButton" mnemonicParsing="false" onMouseClicked="#sadFaceButtonClicked" text="☹" translateX="70.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Button fx:id="sadFaceButton" mnemonicParsing="false" onMouseClicked="#sadFaceButtonClicked" text="★" translateX="70.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font size="18.0" />
                </font>
                <contextMenu>
                    <ContextMenu fx:id="sadContext">
                     <items>
-                        <MenuItem fx:id="badRecordings" mnemonicParsing="false" onAction="#badRecordingsPressed" text="Bad Recordings" />
+                        <MenuItem fx:id="badRecordings" mnemonicParsing="false" onAction="#badRecordingsPressed" text="Audio Ratings" />
                     </items>
                   </ContextMenu>
                </contextMenu>

@@ -77,7 +77,7 @@ public class NameDetailsController {
     @FXML
     public void badRecordingsPressed() throws IOException {
         //Pass current class through to bad recordings
-        SetUp.getInstance().badRecordingsMenuController.setPreviousScene("nameDetailsMenu");
+        SetUp.getInstance().audioRatingsController.setPreviousScene("nameDetailsMenu");
         Scene scene = SetUp.getInstance().badRecordingsMenu;
         Stage window = (Stage) backBtn.getScene().getWindow();
         window.setScene(scene);
@@ -185,11 +185,11 @@ public class NameDetailsController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                SetUp.getInstance().badRecordingsMenuController.updateTextLog();
+                SetUp.getInstance().audioRatingsController.updateTextLog();
             }
         }
 
-        SetUp.getInstance().badRecordingsMenuController.updateTextLog();
+        SetUp.getInstance().audioRatingsController.updateTextLog();
     }
 
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly

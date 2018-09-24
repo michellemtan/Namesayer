@@ -3,8 +3,6 @@ package model.resources;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -54,9 +52,9 @@ public class StartMenuController {
 
     @FXML
     void sadFaceButtonClicked(MouseEvent event) throws IOException {
-        SetUp.getInstance().badRecordingsMenuController.setPreviousScene("startMenu");
+        SetUp.getInstance().audioRatingsController.setPreviousScene("startMenu");
         Scene scene = SetUp.getInstance().badRecordingsMenu;
-        SetUp.getInstance().badRecordingsMenuController.updateTextLog();
+        SetUp.getInstance().audioRatingsController.updateTextLog();
         Stage window = (Stage) sadFaceButton.getScene().getWindow();
         window.setScene(scene);
     }

@@ -80,7 +80,7 @@ public class PracticeMenuController {
     @FXML
     public void badRecordingsPressed() throws IOException {
         //Pass current class through to bad recordings
-        SetUp.getInstance().badRecordingsMenuController.setPreviousScene("practiceMenu");
+        SetUp.getInstance().audioRatingsController.setPreviousScene("practiceMenu");
         Scene scene = SetUp.getInstance().badRecordingsMenu;
         Stage window = (Stage) backButton.getScene().getWindow();
         window.setScene(scene);
@@ -374,7 +374,7 @@ public class PracticeMenuController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                SetUp.getInstance().badRecordingsMenuController.updateTextLog();
+                SetUp.getInstance().audioRatingsController.updateTextLog();
             }
         }
     }

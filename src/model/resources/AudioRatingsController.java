@@ -64,6 +64,8 @@ public class AudioRatingsController {
                 //Concatenate each line of the file to the StringBuilder
                 String name = line.substring(0, line.indexOf(":"));
                 //Add each recording name and the rating to a hash map
+                name = name.replaceAll(".wav", "");
+                name = name.concat(".wav");
                 ratingMap.put(name, line.trim());
             }
 
@@ -116,12 +118,13 @@ public class AudioRatingsController {
             while ((line = reader.readLine()) != null) {
                 //Concatenate each line of the file to the StringBuilder
                 String name = line.substring(0, line.indexOf(":"));
+                name = name.replaceAll(".wav", "");
+                name = name.concat(".wav");
                 ratingMap.put(name, line.trim());
             }
 
             //Iterate through names to be deleted and remove from hash map
             for (String key : toBeDeletedList) {
-                System.out.println("Removed " + key + ".wav");
                 ratingMap.remove(key + ".wav");
             }
 

@@ -24,10 +24,5 @@ public class InstructionsMenuController {
         Stage window = (Stage) backButton.getScene().getWindow();
         window.setScene(scene);
 
-////        // Load the new scene
-//        Scene scene = backButton.getScene();
-//        scene.setRoot(Menu.STARTMENU.loader().load());
-
     }
-
 }

@@ -38,6 +38,7 @@ public class PracticeMenuController {
     private ObservableList<Media> mediaList;
     private boolean isFinished;
     private Timeline timeline;
+    private List<String> deleteList;
 
     public void clearListView() {
         creationsListView.getItems().clear();
@@ -137,6 +138,7 @@ public class PracticeMenuController {
 
     //Method to delete files if coming from the NameDetails menu
     public void deleteAudioFiles(String toDelete) throws IOException {
+
         String dirName = SetUp.getInstance().nameDetailsController.getName();
         File dir = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + dirName);
         //If deleting the default file, must set another to be default
@@ -165,6 +167,7 @@ public class PracticeMenuController {
             //Remove from dbListView also
             SetUp.getInstance().dbMenuController.removeListItem(dirName);
         }
+        deleteList = creationsListView.getItems();
     }
 
     @FXML
@@ -375,5 +378,9 @@ public class PracticeMenuController {
     public String returnSelectedName(){
         String selectedName = creationsListView.getSelectionModel().getSelectedItem();
         return selectedName;
+    }
+
+    public int returnListSize() {
+        return deleteList.size();
     }
 }

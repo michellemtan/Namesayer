@@ -36,14 +36,16 @@ public class CreateMenuController {
 
         name = textInput.getText();
 
+        //Check if the name is valid
         if (checkName(name)) {
 
+            //If the name is valid, reformat it to follow typical name conventions and change scenes
             name = reformat(name);
             SetUp.getInstance().recordCreationMenuController.setUp(name);
-
             Scene scene = SetUp.getInstance().recordCreationMenu;
             Stage window = (Stage) createBtn.getScene().getWindow();
             window.setScene(scene);
+
         } else {
             Alert error = new Alert(Alert.AlertType.ERROR,
                     "Please only use letters (a-z), numbers, spaces" +
@@ -95,6 +97,7 @@ public class CreateMenuController {
             return false;
         }
 
+        //This is the name of the folder unrenamed files are stored in
         if (newName.matches("uncut_files")) {
             return false;
         }
@@ -104,6 +107,7 @@ public class CreateMenuController {
 
     }
 
+    //This method reformats the user input to follow the conventions of a name
     private String reformat(String name) {
         char[] chars = name.toLowerCase().toCharArray();
         boolean found = false;

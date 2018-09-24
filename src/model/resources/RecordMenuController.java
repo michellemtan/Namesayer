@@ -90,6 +90,7 @@ public class RecordMenuController {
         //Pass list through to compare menu
         SetUp.getInstance().compareMenuController.setUpList(list, false, SetUp.getInstance().practiceMenuController.returnSelectedName());
 
+        //Change scenes
         Scene scene = SetUp.getInstance().compareMenu;
         Stage window = (Stage) compareButton.getScene().getWindow();
         window.setScene(scene);
@@ -97,7 +98,6 @@ public class RecordMenuController {
 
     @FXML
     void continueButtonClicked() throws IOException {
-
 
         //Processor object to remove silence
         DatabaseProcessor dbProcessor = new DatabaseProcessor("");
@@ -115,19 +115,24 @@ public class RecordMenuController {
         for(File file : files) {
             stringFiles.add(file.getName());
         }
+
         if(stringFiles.contains(bashify(creationName) + "(" + String.valueOf(count) + ").wav")) {
             count++;
         }
+
+        //Process audio to remove silence and reformat name
         String command = "ffmpeg -y -i " + audioFile.getPath() + " -af silenceremove=1:0:-35dB " + pathToDB + "/" + bashify(creationName) + "/" + bashify(creationName) + "\\(" + String.valueOf(count) + "\\)" + ".wav";
         dbProcessor.trimAudio(command);
 
         audioFile.delete();
 
+        //Change scenes
         Scene scene = SetUp.getInstance().practiceMenu;
         Stage window = (Stage) continueButton.getScene().getWindow();
         window.setScene(scene);
     }
 
+    //This method converts names to a String format that can be easily used in a process builder
     public String bashify(String name) {
         //Characters that break the bash command
         char invalids[] = "$/%:\\ .,-".toCharArray();
@@ -177,6 +182,7 @@ public class RecordMenuController {
 
     @FXML
     void recordButtonClicked() {
+        //If there are no recordings, start the recording from scratch
         if (audioRecorded==0) {
             record();
         } else {
@@ -197,7 +203,7 @@ public class RecordMenuController {
     }
 
     private void record() {
-
+        //Use a background thread to record audio files to prevent the GUI from freezing
         RecordAudioService service = new RecordAudioService();
         service.setOnSucceeded(e -> {
             audioRecorded++;
@@ -206,6 +212,7 @@ public class RecordMenuController {
         service.start();
     }
 
+    //Private method that sets the progress bar
     private void progressBar() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
@@ -215,14 +222,13 @@ public class RecordMenuController {
         timeline.play();
     }
 
+    //This script contains a bash command for ffmpeg to show the volume of the microphone
     @FXML
     void micButtonClicked() throws IOException {
-
         ProcessBuilder audioBuilder = new ProcessBuilder("/bin/bash", "-c", "bash myscript.sh");
         audioBuilder.start();
 
     }
-
     /**
      * Class that creates/runs the task to record the audio in the background
      */
@@ -232,6 +238,7 @@ public class RecordMenuController {
             return new Task<Void>() {
                 @Override
                 protected Void call() {
+                    //Disable buttons and start progress bar
                     progressBar();
                     recordButton.setDisable(true);
                     playbackButton.setDisable(true);
@@ -241,12 +248,14 @@ public class RecordMenuController {
                     backButton.setDisable(true);
 
                     try {
+                        //Record audio for five seconds
                         ProcessBuilder builder = new ProcessBuilder("/bin/bash", "-c", "ffmpeg -y -f alsa -i default -t 5 ./audio.wav");
                         Process audio = builder.start();
 
                         PauseTransition delay = new PauseTransition(Duration.seconds(5));
                         delay.play();
                         delay.setOnFinished(event -> {
+                            //Enable buttons after recording has finished
                             playbackButton.setDisable(false);
                             compareButton.setDisable(false);
                             continueButton.setDisable(false);
@@ -255,10 +264,9 @@ public class RecordMenuController {
                             backButton.setDisable(false);
                         });
 
-
                     } catch (IOException e) {
+                        e.printStackTrace();
                     }
-
                     return null;
                 }
             };

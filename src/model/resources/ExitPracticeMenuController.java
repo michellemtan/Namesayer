@@ -17,6 +17,8 @@ public class ExitPracticeMenuController {
 
     @FXML
     void cancelButtonClicked() throws IOException {
+
+        //Change scenes
         Scene scene = SetUp.getInstance().practiceMenu;
         Stage window = (Stage) cancelButton.getScene().getWindow();
         window.setScene(scene);
@@ -24,9 +26,10 @@ public class ExitPracticeMenuController {
 
     @FXML
     void confirmButtonClicked() throws IOException {
-
+        //Reset the practice menu
         SetUp.getInstance().practiceMenuController.clearListView();
 
+        //Change scenes
         Scene scene = SetUp.getInstance().databaseMenu;
         Stage window = (Stage) confirmButton.getScene().getWindow();
         window.setScene(scene);

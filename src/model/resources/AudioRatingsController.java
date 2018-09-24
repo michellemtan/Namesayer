@@ -23,7 +23,7 @@ public class AudioRatingsController {
     @FXML
     private Button clearTextButton;
 
-    //Return the user to the start menu when the back button is clicked
+    //Return the user to the appropriate menu based on where they came from
     @FXML
     void backButtonClicked() throws IOException {
         if (previousScene.equals("practiceMenu")) {
@@ -50,8 +50,7 @@ public class AudioRatingsController {
         updateTextLog();
     }
 
-    //This method displays the contents of the text file containing a list of bad recordings
-
+    //This method updates the text area to display contents of the audio ratings text file
     public void updateTextLog() throws IOException {
 
         List<String> lineList = new ArrayList<String>();
@@ -64,15 +63,19 @@ public class AudioRatingsController {
             while ((line = reader.readLine()) != null) {
                 //Concatenate each line of the file to the StringBuilder
                 String name = line.substring(0, line.indexOf(":"));
+                //Add each recording name and the rating to a hash map
                 ratingMap.put(name, line.trim());
             }
 
+            //Add the line to be displayed
             for (String value : ratingMap.values()) {
                 lineList.add(value);
             }
 
+            //Sort the ratings alphabetically
             Collections.sort(lineList);
 
+            //Output to text field and display
             for (String outputLine : lineList) {
                 fieldContent.append(outputLine + "\n");
             }
@@ -80,7 +83,6 @@ public class AudioRatingsController {
             //Ensure the textArea is not editable by the user
             textArea.setText(fieldContent.toString());
             textArea.setEditable(false);
-            //textArea.setMouseTransparent(true);
 
         } catch (IOException e) {
             //If there are no bad recordings saved, create a new text file to store them
@@ -91,6 +93,7 @@ public class AudioRatingsController {
         }
     }
 
+    //This method is called when the clear button is pressed
     @FXML
     public void clearTextLog() throws IOException {
         File file = new File("AudioRatings.txt");
@@ -101,30 +104,6 @@ public class AudioRatingsController {
 
 
     public void deleteName(List<String> toBeDeletedList) throws IOException {
-
-//        File inputFile = new File("AudioRatings.txt");
-//        File tempFile = new File("myTempFile.txt");
-//
-//        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-//        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
-//
-//        String currentLine;
-//        while ((currentLine = reader.readLine()) != null) {
-//            // trim newline when comparing with lineToRemove
-//            for (String name : toBeDeletedList) {
-//                String lineToRemove = name.concat(".wav");
-//                if (currentLine.contains(lineToRemove)) {
-//                    System.out.println("Remove: " + lineToRemove);
-//                } else {
-//                    writer.write(currentLine + System.getProperty("line.separator"));
-//                    System.out.println("Add: " + currentLine);
-//                }
-//            }
-//        }
-//        writer.close();
-//        reader.close();
-//        boolean successful = tempFile.renameTo(inputFile);
-//        updateTextLog();
 
         List<String> lineList = new ArrayList<String>();
 
@@ -152,7 +131,6 @@ public class AudioRatingsController {
             }
             Collections.sort(lineList);
 
-
             //Write lines to display and text file
             PrintWriter print = new PrintWriter(new FileWriter("AudioRatings.txt"));
             for (String outputLine : lineList) {
@@ -175,6 +153,7 @@ public class AudioRatingsController {
         }
     }
 
+    //This method is used to add names to the audio ratings text file
     public void addName(String name) throws IOException {
         File f = new File("AudioRatings.txt");
         BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));

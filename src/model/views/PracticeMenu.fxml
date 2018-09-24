@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@../resources/Theme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.resources.PracticeMenuController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@../resources/Theme.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="model.resources.PracticeMenuController">
    <left>
       <Region prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
    </left>
@@ -64,14 +64,14 @@
                </font>
             </Label>
              <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backButtonClicked" text="←" translateX="15.0" translateY="15.0" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
-            <Button fx:id="sadFaceButton" mnemonicParsing="false" onMouseClicked="#sadFaceButtonClicked" text="☹" translateX="70.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Button fx:id="sadFaceButton" mnemonicParsing="false" onMouseClicked="#sadFaceButtonClicked" text="★" translateX="70.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font size="18.0" />
                </font>
                <contextMenu>
                    <ContextMenu fx:id="sadContext">
                     <items>
-                        <MenuItem fx:id="badRecordings" mnemonicParsing="false" onAction="#badRecordingsPressed" text="Bad Recordings" />
+                        <MenuItem fx:id="badRecordings" mnemonicParsing="false" onAction="#badRecordingsPressed" text="Audio Ratings" />
                     </items>
                   </ContextMenu>
                </contextMenu>

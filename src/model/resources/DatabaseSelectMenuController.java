@@ -83,12 +83,10 @@ public class DatabaseSelectMenuController {
             prefKeys = addPref.keys();
 
         } catch (BackingStoreException e) {
-            e.printStackTrace();
         }
 
         for(String key : prefKeys) {
-            if (key.equals("JetBrains.UserIdOnMachine")) {
-            } else {
+            if(key.startsWith("/")) {
                 dbListview.getItems().add(addPref.get(key, key));
             }
         }

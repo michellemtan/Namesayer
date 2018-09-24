@@ -74,8 +74,7 @@ public class DatabaseSelectMenuController {
     }
 
     //Initialize method is called when the fxml file is loaded, this code just iterates through previously loaded
-    //databases and ensures they're still in the listview.
-    //TODO: sometimes a garbage value appears in preferences, not too sure why/where it comes from.
+    //databases and ensures they're still in the list view.
     public void initialize() {
 
         String[] prefKeys = new String[0];
@@ -102,6 +101,7 @@ public class DatabaseSelectMenuController {
             }
         });
 
+        //New background service for processing database
         service = new TaskService();
         service.setOnScheduled(e -> progressStage.show());
         service.setOnSucceeded(e -> {
@@ -109,23 +109,18 @@ public class DatabaseSelectMenuController {
             window.setScene(scene);
         });
 
+        //Create progress bar for processing database
         ProgressBar progressBar = new ProgressBar();
         progressBar.progressProperty().bind(service.progressProperty());
         progressBar.setPrefSize(200, 50);
 
+        //Create new stage for progress bar
         progressStage = new Stage();
         progressStage.setTitle("Processing Database");
         Scene scene = new Scene(new StackPane(progressBar), 400, 150);
         scene.getStylesheets().add("/model/resources/Theme.css");
         progressStage.setScene(scene);
         progressStage.setAlwaysOnTop(true);
-
-        //Code to clear preferences
-        /*try {
-            addPref.clear();
-        } catch (BackingStoreException e) {
-            e.printStackTrace();
-        }*/
     }
 
 

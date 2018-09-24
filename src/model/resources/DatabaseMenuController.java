@@ -22,19 +22,25 @@ public class DatabaseMenuController {
     @FXML private Button selectAllButton;
     private String pathToDB;
 
-    public ListView<String> getDbListView() {
+    //Return list view of names in database
+    ListView<String> getDbListView() {
         return dbListView;
     }
 
-    public String getPathToDB() {
+    //Return path to current database
+    String getPathToDB() {
         return pathToDB;
     }
 
-    public void addItem(String name) {
+    void addItem(String name) {
         dbListView.getItems().add(name);
         dbListView.getItems().sort(String.CASE_INSENSITIVE_ORDER);
     }
 
+    /**Method invoked upon loading database menu scene, fills list with names and sets up context menu via cell factory
+     * Sorts list alphabetically and enabled/disabled correct buttons
+     * @param path path to current database
+     */
     void initialize(String path) {
         pathToDB = path;
         databaseName.setText(path.substring(path.lastIndexOf("/") + 1));
@@ -45,7 +51,7 @@ public class DatabaseMenuController {
         File[] directoryListing = dir.listFiles();
         if (directoryListing != null) {
             for (File child : directoryListing) {
-                if(!child.getName().equals("uncut_files")){
+                if(!child.getName().equals("uncut_files")){ //Don't add uncut_files folder to list
                     names.add(child.getName());
                 }
             }
@@ -75,7 +81,6 @@ public class DatabaseMenuController {
                 Scene scene = null;
                 try {
                     scene = SetUp.getInstance().nameDetailsMenu;
-                    //SetUp.getInstance().nameDetailsController.setName(cell.itemProperty().get());
                     SetUp.getInstance().nameDetailsController.setUpList(getChildrenFromParent(cell.itemProperty().get()), cell.itemProperty().get(), "db");
                 } catch (IOException e) {
                 }
@@ -101,21 +106,10 @@ public class DatabaseMenuController {
         dbListView.getItems().addAll(names);
         dbListView.getItems().sort(String.CASE_INSENSITIVE_ORDER);
         dbListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-//        dbListView.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-//                //Add to practice menu
-//                try {
-//                    SetUp.getInstance().practiceMenuController.setUpList(
-//                            dbListView.getSelectionModel().getSelectedItems());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
     }
 
-    public List<String> getChildrenFromParent(String parent) {
+    //Returns list of files (children) given the name (parent)
+    private List<String> getChildrenFromParent(String parent) {
         List<String> children = new ArrayList<>();
         File dir = new File(pathToDB + "/" + parent);
         File[] dirListing = dir.listFiles();
@@ -125,16 +119,19 @@ public class DatabaseMenuController {
         return children;
     }
 
-   public void removeListItem(String name) {
+    //Removes item from list view, invoked by delete controller when name/file is deleted
+   void removeListItem(String name) {
        dbListView.getItems().remove(name);
    }
 
+   //Selects every name in the list view
     public void selectAllButtonClicked() {
         dbListView.getSelectionModel().selectAll();
         deleteBtn.setDisable(false);
         practiceButton.setDisable(false);
     }
 
+    //Code to be run when the delete button is pressed, switches to
     public void deleteBtnPressed() throws IOException {
         if (dbListView.getSelectionModel().getSelectedIndex() != -1) {
             List<String> toDelete = new ArrayList<>(dbListView.getSelectionModel().getSelectedItems());
@@ -148,8 +145,8 @@ public class DatabaseMenuController {
         }
     }
 
-    //Method to delete files if coming from this menu
-    public void deleteFiles(List<String> list) {
+    //Method to delete names including files if coming from database menu
+    void deleteFiles(List<String> list) {
         for (String name : list) {
             //Delete all files inside folder (.delete doesn't work on non-empty directories)
             File dir = new File(pathToDB + "/" + name);
@@ -168,6 +165,7 @@ public class DatabaseMenuController {
         dbListView.getItems().removeAll(list);
     }
 
+    //Take user to previous scene
     public void backBtnPressed() throws IOException {
         dbListView.getItems().clear();
         Scene scene = SetUp.getInstance().databaseSelectMenu;
@@ -175,6 +173,7 @@ public class DatabaseMenuController {
         window.setScene(scene);
     }
 
+    //Takes user to practice menu
     public void practiceButtonClicked() throws IOException {
         //Only change scenes if they've actually selected something
         if(dbListView.getSelectionModel().getSelectedItems().size() > 0) {
@@ -187,10 +186,13 @@ public class DatabaseMenuController {
         }
     }
 
+    //Takes user to practice menu
     public void createButtonClicked() throws IOException {
         //If user selects one name a presses create, fill create textfield with name they selected
         if(dbListView.getSelectionModel().getSelectedItems().size() == 1) {
             SetUp.getInstance().createMenuController.setCreatePrompt(dbListView.getSelectionModel().getSelectedItem());
+        } else {
+            SetUp.getInstance().createMenuController.clearTextField();
         }
 
         SetUp.getInstance().createMenuController.setUpButton();

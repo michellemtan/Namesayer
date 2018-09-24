@@ -13,9 +13,12 @@ import java.io.IOException;
 
 public class CreateMenuController {
 
-    @FXML private Button backBtn;
-    @FXML private Button createBtn;
-    @FXML private TextField textInput;
+    @FXML
+    private Button backBtn;
+    @FXML
+    private Button createBtn;
+    @FXML
+    private TextField textInput;
     private String name;
 
     public void backBtnClicked() throws IOException {
@@ -34,6 +37,8 @@ public class CreateMenuController {
         name = textInput.getText();
 
         if (checkName(name)) {
+
+            name = reformat(name);
             SetUp.getInstance().recordCreationMenuController.setUp(name);
 
             Scene scene = SetUp.getInstance().recordCreationMenu;
@@ -55,6 +60,7 @@ public class CreateMenuController {
             {
                 super.bind(textInput.textProperty());
             }
+
             protected boolean computeValue() {
                 return textInput.getText().isEmpty() || textInput.getText() == null;
             }
@@ -96,5 +102,19 @@ public class CreateMenuController {
         //Check for valid characters
         return newName.matches("^[a-zA-Z0-9 _-]+$");
 
+    }
+
+    private String reformat(String name) {
+        char[] chars = name.toLowerCase().toCharArray();
+        boolean found = false;
+        for (int i = 0; i < chars.length; i++) {
+            if (!found && Character.isLetter(chars[i])) {
+                chars[i] = Character.toUpperCase(chars[i]);
+                found = true;
+            } else if (Character.isWhitespace(chars[i]) || chars[i] == '-' || chars[i] == '_') {
+                found = false;
+            }
+        }
+        return String.valueOf(chars);
     }
 }

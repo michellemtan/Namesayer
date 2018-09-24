@@ -6,7 +6,10 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -78,12 +81,16 @@ public class DatabaseSelectMenuController {
         String[] prefKeys = new String[0];
         try {
             prefKeys = addPref.keys();
+
         } catch (BackingStoreException e) {
             e.printStackTrace();
         }
 
         for(String key : prefKeys) {
-            dbListview.getItems().add(addPref.get(key, key));
+            if (key.equals("JetBrains.UserIdOnMachine")) {
+            } else {
+                dbListview.getItems().add(addPref.get(key, key));
+            }
         }
 
         checkButtonBehaviour();

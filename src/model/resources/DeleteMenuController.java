@@ -89,28 +89,21 @@ public class DeleteMenuController {
         //If come from details menu call different delete method
         if(previousScenes.equals("practiceDetails")) {
 
-            String pathToDB = SetUp.getInstance().dbMenuController.getPathToDB();
-            String selectedName = SetUp.getInstance().nameDetailsController.getName();
-            //Initialise list of name to
-            List<String> list = new ArrayList<>();
-            //Add all files in directory to list
-            File dir = new File(pathToDB + "/" + selectedName);
-            File[] files = dir.listFiles();
-            for (File file : files) {
-                list.add(file.getName());
-            }
+            List<String> creation = new ArrayList<String>();
+            creation.add(SetUp.getInstance().nameDetailsController.getName());
+            checkNumber(creation);
 
             SetUp.getInstance().nameDetailsController.clearListView();
             SetUp.getInstance().practiceMenuController.deleteAudioFiles(toDelete.get(0));
+            //Switch scenes back
 
-            //If deleting the only audio file, return the user to the database to select more names
-            if (toDelete.size() == 1 && list.size() == 1) {
+            if (numberRecordings == 1) {
                 Scene scene = SetUp.getInstance().databaseMenu;
                 Stage window = (Stage) backBtn.getScene().getWindow();
                 window.setScene(scene);
+
             } else {
-                //Switch scenes back
-                Scene scene = SetUp.getInstance().nameDetailsMenu;
+                Scene scene = SetUp.getInstance().practiceMenu;
                 Stage window = (Stage) backBtn.getScene().getWindow();
                 window.setScene(scene);
             }
@@ -132,3 +125,4 @@ public class DeleteMenuController {
         deleteListView.getItems().clear();
     }
 }
+

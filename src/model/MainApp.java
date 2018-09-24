@@ -22,6 +22,10 @@ public class MainApp extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
 
+        //Generate microphone script
+        MicrophoneScriptGenerator mic = new MicrophoneScriptGenerator();
+        mic.makeBashScript();
+
         //xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
     }
 }

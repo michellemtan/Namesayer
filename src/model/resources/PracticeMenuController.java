@@ -15,9 +15,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
@@ -356,7 +354,7 @@ public class PracticeMenuController {
             ChoiceDialog<String> dialog = new ChoiceDialog<>("★☆☆☆☆", choices);
             dialog.setTitle("Recording Rating");
             dialog.setGraphic(null);
-            dialog.setHeaderText("Rate " + defaultName + "?");
+            dialog.setHeaderText("Rate " + selectedName + "?");
             dialog.setContentText("Select a rating:");
 
             //Get rating and format to string
@@ -365,16 +363,11 @@ public class PracticeMenuController {
             if (result.isPresent()) {
                 try {
                     String rating = result.get();
-                    File f = new File("BadRecordings.txt");
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
-                    bw.append(defaultName + ": " + rating + "\n");
-                    bw.flush();
-                    bw.close();
-
+                    defaultName = defaultName.concat(": " + rating + "\n");
+                    SetUp.getInstance().audioRatingsController.addName(defaultName);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                SetUp.getInstance().audioRatingsController.updateTextLog();
             }
         }
     }

@@ -14,9 +14,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -126,7 +124,7 @@ public class CompareMenuController {
     }
 
     @FXML
-    void sadFaceButtonClicked(MouseEvent event) throws IOException {
+    void sadFaceButtonClicked(MouseEvent event) {
 
         String selectedName = recordingsList.getSelectionModel().getSelectedItem();
 
@@ -150,16 +148,11 @@ public class CompareMenuController {
             if (result.isPresent()) {
                 try {
                     String rating = result.get();
-                    File f = new File("BadRecordings.txt");
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
-                    bw.append(selectedName + ": " + rating + "\n");
-                    bw.flush();
-                    bw.close();
-
+                    selectedName = selectedName.concat(": " + rating + "\n");
+                    SetUp.getInstance().audioRatingsController.addName(selectedName);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                SetUp.getInstance().audioRatingsController.updateTextLog();
             }
         }
     }

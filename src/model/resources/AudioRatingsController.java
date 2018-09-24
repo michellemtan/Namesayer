@@ -64,7 +64,7 @@ public class AudioRatingsController {
             while ((line = reader.readLine()) != null) {
                 //Concatenate each line of the file to the StringBuilder
                 String name = line.substring(0, line.indexOf(":"));
-                ratingMap.put(name, line);
+                ratingMap.put(name, line.trim());
             }
 
             for (String value : ratingMap.values()) {
@@ -102,26 +102,85 @@ public class AudioRatingsController {
 
     public void deleteName(List<String> toBeDeletedList) throws IOException {
 
-        File inputFile = new File("AudioRatings.txt");
-        File tempFile = new File("myTempFile.txt");
+//        File inputFile = new File("AudioRatings.txt");
+//        File tempFile = new File("myTempFile.txt");
+//
+//        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+//        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+//
+//        String currentLine;
+//        while ((currentLine = reader.readLine()) != null) {
+//            // trim newline when comparing with lineToRemove
+//            for (String name : toBeDeletedList) {
+//                String lineToRemove = name.concat(".wav");
+//                if (currentLine.contains(lineToRemove)) {
+//                    System.out.println("Remove: " + lineToRemove);
+//                } else {
+//                    writer.write(currentLine + System.getProperty("line.separator"));
+//                    System.out.println("Add: " + currentLine);
+//                }
+//            }
+//        }
+//        writer.close();
+//        reader.close();
+//        boolean successful = tempFile.renameTo(inputFile);
+//        updateTextLog();
 
-        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+        List<String> lineList = new ArrayList<String>();
 
-        String currentLine;
-        while ((currentLine = reader.readLine()) != null) {
-            // trim newline when comparing with lineToRemove
-            for (String name : toBeDeletedList) {
-                String lineToRemove = name.concat(".wav");
-                if (currentLine.contains(lineToRemove)) {
-                } else {
-                    writer.write(currentLine + System.getProperty("line.separator"));
-                }
+        //Read in the file containing the list of bad quality recordings
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("AudioRatings.txt")))) {
+            String line;
+            StringBuilder fieldContent = new StringBuilder();
+
+            //Read audio ratings text file
+            while ((line = reader.readLine()) != null) {
+                //Concatenate each line of the file to the StringBuilder
+                String name = line.substring(0, line.indexOf(":"));
+                ratingMap.put(name, line.trim());
             }
+
+            //Iterate through names to be deleted and remove from hash map
+            for (String key : toBeDeletedList) {
+                System.out.println("Removed " + key + ".wav");
+                ratingMap.remove(key + ".wav");
+            }
+
+            //Create list of lines to be printed and sort alphabetically
+            for (String value : ratingMap.keySet()) {
+                lineList.add(ratingMap.get(value));
+            }
+            Collections.sort(lineList);
+
+
+            //Write lines to display and text file
+            PrintWriter print = new PrintWriter(new FileWriter("AudioRatings.txt"));
+            for (String outputLine : lineList) {
+                fieldContent.append(outputLine + "\n");
+                print.write(outputLine + "\n");
+            }
+
+            //Ensure the textArea is not editable by the user
+            textArea.setText(fieldContent.toString());
+            textArea.setEditable(false);
+            print.close();
+            //textArea.setMouseTransparent(true);
+
+        } catch (IOException e) {
+            //If there are no bad recordings saved, create a new text file to store them
+            File f = new File("AudioRatings.txt");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
+            bw.flush();
+            bw.close();
         }
-        writer.close();
-        reader.close();
-        boolean successful = tempFile.renameTo(inputFile);
+    }
+
+    public void addName(String name) throws IOException {
+        File f = new File("AudioRatings.txt");
+        BufferedWriter bw = new BufferedWriter(new FileWriter(f, true));
+        bw.append(name);
+        bw.flush();
+        bw.close();
         updateTextLog();
     }
 }

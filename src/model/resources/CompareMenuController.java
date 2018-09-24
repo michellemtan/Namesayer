@@ -35,6 +35,7 @@ public class CompareMenuController {
     private boolean fromCreate;
 
 
+    //Takes user back to appropriate menu upon back button being pushed
     @FXML
     void backButtonClicked() throws IOException {
         if(fromCreate) {
@@ -48,7 +49,8 @@ public class CompareMenuController {
         }
     }
 
-    public void setUpList(List<String> list, boolean create, String name) {
+    //Method invoked whenever this scene is switched to, fills list with existing files that can be compared to
+    void setUpList(List<String> list, boolean create, String name) {
         fromCreate = create;
         progressBar.setProgress(0.0);
         existProgressBar.setProgress(0.0);
@@ -56,18 +58,16 @@ public class CompareMenuController {
         recordingsList.getItems().setAll(list);
         recordingsList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         recordingsList.getSelectionModel().select(0);
+        //Sort list alphabetically
         Collections.sort(recordingsList.getItems());
     }
 
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
     private class AudioRunnable implements Runnable {
-
         private boolean isFinished;
-
         private AudioRunnable(boolean status){
             isFinished = status;
         }
-
         @Override
         public void run() {
             //When the media player has finished, the buttons will be enabled
@@ -80,6 +80,7 @@ public class CompareMenuController {
         }
     }
 
+    //Pauses/plays audio file
     @FXML
     void playPauseButtonClicked() {
 
@@ -88,6 +89,7 @@ public class CompareMenuController {
             audioPlayer.stop();
         }
 
+        //Create new timeline for progress bar to show how much of the recording is being played
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
                 new KeyFrame(Duration.seconds(5), new KeyValue(progressBar.progressProperty(), 1))
@@ -104,30 +106,16 @@ public class CompareMenuController {
         audioPlayer.play();
     }
 
+    //Plays audio on button being pressed
     @FXML
     private void playExistingBtnPressed() throws IOException {
-        //Create a new media player instance and set the event handlers to create a thread that listens for when the audio is playing
-        /*Media media = new Media(new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + dirName + "/" + recordingsList.getSelectionModel().getSelectedItem()).toURI().toString());
-        audioPlayer = new MediaPlayer(media);
-        audioPlayer.setOnPlaying(new AudioRunnable(false));
-        audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
-
-        System.out.println(audioPlayer.getTotalDuration());
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(existProgressBar.progressProperty(), 0)),
-                new KeyFrame(audioPlayer.getTotalDuration(), new KeyValue(existProgressBar.progressProperty(), 1))
-        );
-        timeline.setCycleCount(1);
-        timeline.play();
-        audioPlayer.play();*/
         mediaPlayerCreator();
     }
 
+    //Allows user to rate the recording being played
     @FXML
     void sadFaceButtonClicked(MouseEvent event) {
-
         String selectedName = recordingsList.getSelectionModel().getSelectedItem();
-
         if (event.getButton() == MouseButton.PRIMARY) {
             //Ask the user to rate their choice
             List<String> choices = new ArrayList<>();
@@ -157,6 +145,7 @@ public class CompareMenuController {
         }
     }
 
+    //Context menu to take user to list of audio ratings
     @FXML
     public void badRecordingsPressed() throws IOException {
         //Pass current class through to bad recordings
@@ -166,6 +155,7 @@ public class CompareMenuController {
         window.setScene(scene);
     }
 
+    //Takes user back to record menu
     @FXML
     public void continueBtnPressed() throws IOException {
         if(fromCreate) {
@@ -179,8 +169,9 @@ public class CompareMenuController {
         }
     }
 
+    //Create media player object and initialises behaviour of progress bar
     private void mediaPlayerCreator() throws IOException {
-
+        //Create new media object of audio file
         Media media = new Media(new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + dirName + "/" + recordingsList.getSelectionModel().getSelectedItem()).toURI().toString());
         audioPlayer = new MediaPlayer(media);
         audioPlayer.setOnPlaying(new AudioRunnable(false));
@@ -196,6 +187,7 @@ public class CompareMenuController {
         audioPlayer.setOnReady(this::progressBar);
     }
 
+    //Sets up progress bar to indicate how long the audio player for
     private void progressBar() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(existProgressBar.progressProperty(), 0)),

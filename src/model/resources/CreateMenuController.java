@@ -13,14 +13,12 @@ import java.io.IOException;
 
 public class CreateMenuController {
 
-    @FXML
-    private Button backBtn;
-    @FXML
-    private Button createBtn;
-    @FXML
-    private TextField textInput;
+    @FXML private Button backBtn;
+    @FXML private Button createBtn;
+    @FXML private TextField textInput;
     private String name;
 
+    //Takes user to database menu
     public void backBtnClicked() throws IOException {
         textInput.clear();
         Scene scene = SetUp.getInstance().databaseMenu;
@@ -28,24 +26,26 @@ public class CreateMenuController {
         window.setScene(scene);
     }
 
-    public void setCreatePrompt(String name) {
+    //Clears text field, invoked in database menu if create is pressed and there are multiple items selected
+    void clearTextField() {
+        textInput.clear();
+    }
+
+    //Sets text field with string, invoked in database menu if create is pressed and a single name is selected
+    void setCreatePrompt(String name) {
         textInput.setText(name);
     }
 
+    //Code that runs when create is pressed.
     public void createBtnPressed() throws IOException {
-
         name = textInput.getText();
-
-        //Check if the name is valid
         if (checkName(name)) {
-
-            //If the name is valid, reformat it to follow typical name conventions and change scenes
             name = reformat(name);
             SetUp.getInstance().recordCreationMenuController.setUp(name);
+
             Scene scene = SetUp.getInstance().recordCreationMenu;
             Stage window = (Stage) createBtn.getScene().getWindow();
             window.setScene(scene);
-
         } else {
             Alert error = new Alert(Alert.AlertType.ERROR,
                     "Please only use letters (a-z), numbers, spaces" +
@@ -75,6 +75,7 @@ public class CreateMenuController {
         return name;
     }
 
+    //Ensure name isn't something that could cause issues with processing
     private boolean checkName(String newName) {
         //Check if the new creation name is empty or null
         if (newName.equals("") || newName.equals(null)) {
@@ -107,7 +108,7 @@ public class CreateMenuController {
 
     }
 
-    //This method reformats the user input to follow the conventions of a name
+    //Reformats string input for better readability
     private String reformat(String name) {
         char[] chars = name.toLowerCase().toCharArray();
         boolean found = false;

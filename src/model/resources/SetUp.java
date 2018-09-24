@@ -21,6 +21,8 @@ public class SetUp {
     CreateMenuController createMenuController;
     RecordCreationMenuController recordCreationMenuController;
 
+
+    //Scenes to load the fxml files to
     Scene compareMenu;
     Scene createMenu;
     Scene databaseMenu;
@@ -34,7 +36,6 @@ public class SetUp {
     Scene nameDetailsMenu;
     Scene exitPracticeMenu;
     Scene recordCreationMenu;
-    //public Scene playMenu;
 
     private SetUp() throws IOException {
 
@@ -81,6 +82,7 @@ public class SetUp {
         createMenuLoader();
         recordCreationMenuLoader();
 
+        //Add Theme.css to all scenes
         compareMenu.getStylesheets().add("/model/resources/Theme.css");
         createMenu.getStylesheets().add("/model/resources/Theme.css");
         databaseMenu.getStylesheets().add("/model/resources/Theme.css");
@@ -104,6 +106,8 @@ public class SetUp {
         }
         return setUp;
     }
+
+    //Methods to load FXML files to scenes
 
     private void startMenuLoader() throws IOException {
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/StartMenu.fxml"));

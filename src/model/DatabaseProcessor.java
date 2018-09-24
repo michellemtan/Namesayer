@@ -14,10 +14,9 @@ public class DatabaseProcessor {
         pathToDB = path;
     }
 
-    //TODO: Possible functionality to add: if jonothan and Jonothan, ask user if they want to merge?
     /**Iterates through files in database directory and converts to readable name. Creates folders of said names, and places
      audio files into corresponding folder. If 2 of same name found, they go into the same folder. Trims audio at same time,
-     overwriting, original file with trimmed one **/
+     and places original uncut files in uncut_files folder.**/
     public void processDB() {
         File dir = new File(pathToDB);
         File[] directoryListing = dir.listFiles();
@@ -40,17 +39,11 @@ public class DatabaseProcessor {
                     for(File file1 : fileList) {
                         fileNames.add(file1.getName()); //Create list of string of existing files
                     }
+                    //Make first letter capitilised.
                     String upcased = finalName.substring(0, 1).toUpperCase() + finalName.substring(1);
                     if(fileNames.contains(finalName.toLowerCase()) || fileNames.contains(upcased)) {
                         //This code runs if name being processed already has a similar folder
-                        /*if(fileNames.contains(finalName.toLowerCase())) {
-                            File parentDir = new File(file.getParent() + "/" + finalName.toLowerCase());
-                            //Create File object for trimmed audio file
-                            File trimFile = new File(file.getPath().substring(0, file.getPath().length() - 4) + "_TRIM.wav");
-                            trimFile.renameTo(new File(pathToDB + "/" + finalName.toLowerCase() + "/" + finalName.toLowerCase() + "(" + Objects.requireNonNull(parentDir.listFiles()).length + ").wav"));
-                            //Save uncut files into uncut_files folder
-                            boolean resultMoveUncut = file.renameTo(new File(pathToDB + "/uncut_files/" + file.getName()));
-                        } else*/ if(fileNames.contains(upcased)) {
+                        if(fileNames.contains(upcased)) {
                             File parentDir = new File(file.getParent() + "/" + upcased);
                             //Create File object for trimmed audio file
                             File trimFile = new File(file.getPath().substring(0, file.getPath().length() - 4) + "_TRIM.wav");
@@ -100,9 +93,7 @@ public class DatabaseProcessor {
         } catch (IOException e) {
         }
     }
-
     //ffmpeg -y -i path/to/in.wav -af silenceremove=1:0:-35dB path/to/out.wav for removing silence
-
 }
 
 

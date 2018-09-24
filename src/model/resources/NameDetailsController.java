@@ -32,18 +32,13 @@ public class NameDetailsController {
     private MediaPlayer audioPlayer;
     private HashMap<String, String> defaultNames;
 
+    //Returns directory name of .wav files being displayed
     public String getName() {
         return dirName;
     }
 
-    public int getSize() {
-        System.out.println(nameListView.getItems() + String.valueOf(nameListView.getItems().size()));
-        return nameListView.getItems().size();
-    }
-
     //Builds list of audio files within 'name' folder
-    public void setUpList(List<String> list, String name, String source) throws IOException {
-
+    void setUpList(List<String> list, String name, String source) throws IOException {
         //Clear list view
         nameListView.getItems().clear();
         dirName = name;
@@ -53,8 +48,10 @@ public class NameDetailsController {
         nameName.setText(dirName);
         nameListView.getItems().addAll(list);
         nameListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        //Sort list alphabetically
         Collections.sort(nameListView.getItems());
 
+        //Disable appropriate buttons until selection make
         setDefaultBtn.setDisable(true);
         deleteBtn.setDisable(true);
         playButton.setDisable(true);
@@ -72,6 +69,7 @@ public class NameDetailsController {
         });
     }
 
+    //Switch to audio ratings menu
     @FXML
     public void badRecordingsPressed() throws IOException {
         //Pass current class through to bad recordings
@@ -81,6 +79,7 @@ public class NameDetailsController {
         window.setScene(scene);
     }
 
+    //Takes user to previous scene, taking into account which scene that was
     public void backBtnPressed() throws IOException {
         //Clear list view
         nameListView.getItems().clear();
@@ -97,10 +96,10 @@ public class NameDetailsController {
 
     }
 
+    //Switch to delete scene and set up list of files potentially being deleted
     public void deleteBtnPressed() throws IOException {
-
         if(nameListView.getSelectionModel().getSelectedIndex() != -1) {
-            List<String> toDelete = new ArrayList<>(nameListView.getSelectionModel().getSelectedItems());             //Pass list of files to delete through to delete menu
+            List<String> toDelete = new ArrayList<>(nameListView.getSelectionModel().getSelectedItems()); //Pass list of files to delete through to delete menu
                 if(previousScene.equals("practice")) {
                     SetUp.getInstance().deleteMenuController.setUpList(toDelete, "practiceDetails");
                 } else {
@@ -114,24 +113,30 @@ public class NameDetailsController {
             }
     }
 
+    //Play/pause .wav file.
     @FXML
     public void playButtonClicked() throws IOException {
+        //Stop audio player if there's currently one playing
         if (audioPlayer != null && audioPlayer.getStatus() == MediaPlayer.Status.PLAYING){
             audioPlayer.stop();
         }
 
+        //Get strings of audio file paths
         String selectedName = nameListView.getSelectionModel().getSelectedItem().replaceAll(".wav","");
         String databasePath = SetUp.getInstance().dbMenuController.getPathToDB();
 
+        //Create and start media player
         Media media = new Media(new File(databasePath+"/"+dirName+"/"+selectedName).toURI().toString() + ".wav");
         audioPlayer = new MediaPlayer(media);
         audioPlayer.setOnPlaying(new AudioRunnable(false));
         audioPlayer.setOnEndOfMedia(new AudioRunnable(true));
         audioPlayer.play();
+        //Set progress bar to 0 on start
         audioPlayer.setOnReady(() -> progressBar.setProgress(0.0));
         audioPlayer.setOnReady(this::progressBar);
     }
 
+    //Creates and starts progress bar for creation playing
     private void progressBar() {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
@@ -141,6 +146,7 @@ public class NameDetailsController {
         timeline.play();
     }
 
+    //Lets user rate audio currently being played
     @FXML
     public void sadFaceButtonClicked(MouseEvent event) {
 
@@ -185,9 +191,7 @@ public class NameDetailsController {
 
     //AudioRunnable is a thread that runs in the background and acts as a listener for the media player to ensure buttons are enabled/disabled correctly
     private class AudioRunnable implements Runnable {
-
         private boolean isFinished;
-
         private AudioRunnable(boolean status){
             isFinished = status;
         }
@@ -213,13 +217,15 @@ public class NameDetailsController {
         }
     }
 
-    public void setDefaultOnDelete(String newDefault) {
+    //Set new default when old is deleted
+    void setDefaultOnDelete(String newDefault) {
         if (defaultNames == null) {
             defaultNames = new HashMap<>();
         }
         defaultNames.put(nameName.getText(), newDefault);
     }
 
+    //Changes default file to be played in practice
     public void setDefaultClicked() {
         String titleName = nameName.getText();
         String selectedName = nameListView.getSelectionModel().getSelectedItem().replaceAll(".wav", "");
@@ -232,12 +238,14 @@ public class NameDetailsController {
         defaultLabel.setText("Default: " + selectedName + ".wav");
     }
 
-    public void clearListView() {
+    void clearListView() {
         //Clear list view
         nameListView.getItems().clear();
     }
 
-    public String getNewDefault(String directoryName) throws IOException {
+    //When passed a directory, this method iterates through the files within it and chooses a new default. Chooses name.wav
+    //if that exists, else just the first in the directory listing
+    private String getNewDefault(String directoryName) throws IOException {
         File dir = new File(SetUp.getInstance().dbMenuController.getPathToDB() + "/" + directoryName);
         File[] files = dir.listFiles();
         //if name.wav is a file, set that as default. Else, just first file in list
@@ -246,14 +254,15 @@ public class NameDetailsController {
         for(File file : fileList) {
             fileNames.add(file.getName());
         }
+        //Return name.wav if it exists
         if(fileNames.contains(directoryName + ".wav")) {
             return directoryName + ".wav";
         }
         return files[0].getName();
     }
 
-    public String returnDefault(String title) throws IOException {
-
+    //Returns default audio file at the time
+    String returnDefault(String title) throws IOException {
         if (defaultNames == null) {
             return getNewDefault(title);
         } else if (defaultNames.containsKey(title)) {
@@ -264,13 +273,10 @@ public class NameDetailsController {
         }
     }
 
-    public String checkDefault(String title) {
+    //Checks default file
+    String checkDefault(String title) {
         if (defaultNames == null) {
             return title;
-        } else if (defaultNames.containsKey(title.replaceAll(".wav", ""))) {
-            return defaultNames.get(title.replaceAll(".wav", ""));
-        } else {
-            return title;
-        }
+        } else return defaultNames.getOrDefault(title.replaceAll(".wav", ""), title);
     }
 }
